@@ -1,0 +1,4 @@
+[app]
+app_name	=	"LogAnalysis"
+script_true	=	"LogAnalysis wurde erfolgreich in die Gruppe [ log ] aufgenommen und verfügt nun über erweiterte Systemrechte."
+script_false	=	"Das erweitern der Systemrechte ist fehlgeschlagen! LogAnalysis konnte nicht in die Gruppe [ log ] aufgenommen werden."

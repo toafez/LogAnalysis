@@ -1,0 +1,2 @@
+#!/bin/sh
+/var/packages/LogAnalysis/scripts/start-stop-status "$@"

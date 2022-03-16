@@ -1,0 +1,13 @@
+[{
+	"step_title": "Einstellungen entfernen",
+	"items": 
+		[{
+		"type": "multiselect",
+		"desc" : "<p>Während der Deinstallation von LogAnalysis werden alle temprären Daten sowie Benutzereinstellungen gelöscht.</p>",
+		"subitems": 
+			[{
+				"key": "pkgwizard_remove_settings",
+				"desc": "Alle Daten und Einstellungen entfernen"
+			}]
+		}]
+}]

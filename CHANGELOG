@@ -1,0 +1,132 @@
+LogAnalysis - DSM 7 - Release Notes
+
+Version 1.0-100 vom 21.02.2022
+	- Upgrade von Bootstrap 5.1.0 auf 5.1.3
+	- Upgrade von Bootstrap Icons 1.5.0 auf 1.8.1
+	- Schriftgröße der GUI von 1rem auf 0.9rem umgestellt
+	- Das Sprachdateisystem wurde umgestellt sowie einige Fehler bereinigt.
+	- Internernes Debug-Interface implementiert um die Fehleranalyse zu verbessern.
+	- Dateiname zum Erweitern der Systemrechte von kickme_into_group.sh nach app_permissions.sh umbenannt.
+	- Kleinere Detailverbesserungen, Fehlerbehebungen und Codebereinigungen vorgenommen.
+
+
+Version 1.0-015 vom 30.08.2021
+	- Upgrade von Bootstrap 5.0.0 auf 5.1.0
+	- Upgrade von Bootstrap Icons 1.4.0 auf 1.5.0
+ 	- Wenn in der DSM Systemsteuerung der -Schutz gegen Cross-Site Request Forgery Attacken- deaktiviert war, konnte LogAnalysis nicht ausgeführt werden. Fehler wurde behoben.
+	- Der SynoToken wird jetzt nur noch an den QUERY_STRING angehangen, wenn -der Schutz gegen Cross-Site Request Forgery Attacken- in der DSM Systemsteuerung aktiviert wurde.
+	- Die primäre Absicherung des System erfolgt somit nicht mehr über den SynoToken, sondern über die Auswertung zweier weiterer Schalter der login.cgi.
+	- Hinzufügen diverser Debug Funktionen in der index.cgi um den Support zu verbessern. 
+	
+	
+Version 1.0-004 vom 14.07.2021
+	- Versionsbenennung erweitert von Major.Minor nach Major.Minor-Build.
+	- Das Anzeigen des App-Icons innerhalb des Paketzentrums sowie auf den Seiten von CPHub hat wieder nicht funktioniert. Daher erscheint diesbezüglich nochmal ein Update (... und ich hoffe, es ist das letzte dieser Art).  
+
+
+Version 1.0 vom 11.07.2021
+	- Das Design des Icon-Sets wurde nochmal überarbeitet und um fehlende Formatgrößen erweitert. Somit sollten im DSM Paketzentrum sowie auf CPHub die fehlenden Icons wieder erscheinen.
+	- Beim Aufruf des benutzerdefinierten Scriptes über den Aufgabenplaner wurde die ausgelöste DSM Benachrichtigung nicht korrekt angezeigt, wenn LogAnalysis nicht aktiv war. Fehler wurde behoben. 
+	
+
+Version 0.9 vom 07.07.2021
+	- Für die Nutzung von LogAnalysis unter DSM 7 mussten diverse Systemanpassungen vorgenommen werden. Diese Anpassungen haben zur Folge, das LogAnalysis unter DSM 6 in der Form nicht mehr betrieben werden kann. Daher werde ich, bis auf weiteres, eine Version für den Betrieb unter DSM 6 und eine Version für den Betrieb unter DSM 7 zur bei CPHub zur Verfügung stellen. 
+	- Damit das Paketzentrum beide Pakete anzeigt, wurde der Paketname für DSM 7 von LogAnalysis auf Log_Analysis geändert. 
+	- Erneute Anpassung der App-Berechtigungen bzw. Gruppenzugehörigkeit. 
+	Aufgrund der unterschiedlichen Hardware Architekturen ist kein einheitlicher Zugriff auf systemrelevante Binär-Dateien nicht möglich. Daher wurde LogAnalysis wieder der Gruppe "system" unterstellt. Dieser Umstand hat zur Folge, das die App nur noch stark eingeschänkte Berechtigungen auf den Ordner /var/log/ hat. Durch den manuellen Aufruf eines Scriptes über den Aufgabenplaner wird LogAnalysis zusätzlich der Gruppe "log" hinzugefügt und erhält dadurch mehr Rechte.   
+	
+	
+Version 0.8 vom 01.07.2021 - Finale Protierung von LogAnalysis auf DSM 7
+	- Beendigung der Beta Phase für DSM 7 Public Beta bzw. RC.
+	- Hilfe bzw. Zeichenerklärung hinzugefügt. 
+	- Weitere Code Optimierungen zur Auswertung des SynoToken, der Benutzer und Gruppenzugehörigkeit sowie der App Privilegien vorgenommen.
+	
+	
+Version 0.7 Beta für DSM 7 Public Beta
+	- Unter DSM 7.0 wird eine App dazu gezwungen, ihre Privilegien zu senken. Bedingt dadurch, ist die Verwendung des Systembenutzers root nicht mehr möglich. Daher wurde ein neuer Benutzer sowie eine neue Benutzergruppe mit dem Namen "LogAnalysis" dem System hinzugefügt. Außerdem wurde der Benutzer "LogAnalysis" der Benutzergruppe "log" hinzugefügt um fortan Lese- und Schreibzugriff auf den Ordner /var/log/ zu erhalten.
+	- Des Weiteren wurden die Prüfungen, ob ein Benutzer existiert, er der Gruppe der Administratoren angehört sowie privilegiert ist, die App zu nutzen, überarbeitet. Ebenfalls wurde die Auswertung und Implementierung des SynoTokens überarbeitet. Dank der grade aufgeführten Änderungen wird für das Auslesen der Daten nur noch BASH und kein PHP mehr benötigt. Vielen Dank an @TosoBoso aus dem Synology-Forum für seine tatkräftige Unterstützung.
+	- Upgrade von Bootstrap 4.4.1 auf Bootstrap 5.0.0
+	- Upgrade von jQuery 3.4.1 auf jQuery 3.6.0
+	- Umstellung von Google Material Icons auf Bootstrap Icons 1.4.0
+	- Optimierung der Optik und Haptik des Verzeichnisbaumes.
+	- Erweiterung der Suche, um auch "Symbolic Links" mit einzubeziehen. Vielen Dank an @AndyHH aus dem Synolog Forum 
+	- Anpassung der Ordnerstruktur sowie diverser Konfigurationseinstellungen in Anlehnung der Vorgaben des "Synology Developer Guide"
+	- Weitere Codeoptimierungen und Stilverbesserungen vorgenommen.
+	
+	
+Version 0.6 Beta für DSM 7 Public Beta
+	- Erste Implementierungsversuche sowie Erfahrungssammlung zur Umstellung der App auf die neuen Begebenheiten von DSM 7
+	- Diese Version sollte nach Möglichkeit nicht mehr verwendet werden.
+	
+	
+Version 0.5 vom 02.05.2020
+
+	- Das Ausgabefeld (textarea) für die Anzeige von Dateiinhalten sowie Suchergebnissen wurde auf "readonly" gesetzt.
+	- Durch weitere Codeoptimierungen konnten die anfänglich bemängelten "Gedenksekunden" wärend des Seitenladevorganges weiter verkürzt werden.
+	- Wenn man während des Ladevorganges großer Log-Dateien auf die Schaltfläche "Ausgabe ohne Zeilenumbrüche" geklickt hat, wurde kein Popup-Fenster geöffnet, sondern der Inhalt auf der aktuellen Seite ausgegeben. Fehler wurde in so fern behoben, das die o.a. Schaltfläche erst angezeigt wird, wenn die Seite vollständig geladen ist.
+	- Beim wechseln in einen Hauptordner oder beim verzweigen in einen Unterordner von /var/log wurde eine Systemvariable nicht zurückgesetzt, was dazu führte, das in den nachfolgenden Suchergebnissen Pfad und Datei des Fundortes nicht mehr angezeigt wurden oder die Suche komplett fehlgeleitet wurde. Fehler wurde behoben.
+	- Die Überschrift des Ausgabefeldes für die Suchergebnisse zeigt jetzt die aktuelle Aktion an (Ordnersuche, Dateisuche, Dateiinhalt anzeigen).
+	- Die Überschrift des Popup-Fensters zur Anzeige der Suchergbnisse bzw. des Dateiinhaltes zeigt jetzt ebenfalls die aktuelle Aktion an (Ordnersuche, Dateisuche, Dateiinhalt anzeigen).
+	- Beim durchsuchen von Ordnern als auch beim durchsuchen innerhalb von Dateien wird die Zeilennummer des Treffers und ggf. der Pfad ausgegeben.
+	
+	
+Version 0.4 vom 25.04.2020
+
+	- Anzeigefehler beim leeren von Dateiinhalten behoben. Popup-Fenster zu groß dimensioniert.
+	- Auswertung, ob die Dateigröße 0 - die Datei also leer ist - wurde falsch formuliert und erzeugt somit einen Fehler.
+	- Falls eine Datei keinen Inhalt hat oder ein Suchergebnis keine Treffer aufweist, werden die Buttons Dateiinhalt löschen, Download sowie Ausgabe ohne Zeilenumbrüche, ausgeblendet. Des Weiteren erfolgt im Ausgabebereich ein Hinweis, das eine Datei entweder leer ist oder das eine Suchanfrage keine Treffer erzielte.  
+	
+	
+Version 0.3 vom 24.04.2020
+
+	- Aus Gründen der Usability wurde eine Seitenladeanzeige hinzugefügt, um Ladezyklen besser zu visualisieren.
+	- Im Verzeichnisbaum wurden Unterverzeichnisse nicht korrekt dargestellt. Anzeigefehler behoben.
+	- Aus Gründen der Usability wurden im Verzeichnisbaum - Ordner ohne Inhalt - hellgrau dargestellt. Ordner, die weiteren Inhalt enthalten werden dagegen blau dargestellt. Gepackte Logfile Archive (mit der Dateiendung. xz) werden orange dargestellt und können nicht geöffnet bzw. angezeigt werden.
+	- Zur verbesserten Bedienung mit Screenreadern wurde der Verzeichnisbaum in eine barrierefreie Aufzählungsliste überführt.
+	- In der Suchfunktion wurde die Minutenangabe um ein Leer Feld erweitert, um sich die komplette Stunde ausgeben lassen zu können.
+	- Beim Anzeigen von Dateiinhalten führte der Link zur -Ausgabe ohne Zeilenumbrüche- auf eine leere Seite. Fehler wurde behoben.
+	- Die Auswertung und Anzeige der Suchergebisse wurde nochmal stark überarbeitet. Abgeschnittene Zeilen, zerstückelte Datumsangaben sowie unnötige Zeilenumbrüche usw. sollten jetzt nicht mehr ausgegeben werden.
+	- Um die Lesbarkeit der Logfileinhalte sowie die Auswertung der Suchergebnisse mit alternativen Hilfstechnologien barrierefreier zu gestalten, wurden diese in ein HTML-Textarea Feld überführt.
+	- Es wurde eine Funktion eingebaut um den Inhalt des aktuell ausgewählten Logfile zu leeren. Das leeren aller Dateien bzw. löschen von gepackten Archiv Dateien innerhalb /var/log/ ist - bis auf weiters - erstmal nicht möglich.  
+	- Um die Barrierefreiheit und den Seitenaufbau weiter zu optimieren wurden weitere, diverse Änderungen an der HTML-Formatierung vorgenommen.
+
+	
+Version 0.2 vom 19.04.2020
+
+	- Das responsive Design wurde auf eine maximale Breite von 992px begrenzt um das Layout bei größeren Auflösungen nicht zu sehr auseinander zu ziehen.
+	- Aus Gründen der Usability wurde im Verzeichnisbaum das Zeichen /.. entfernt, solange man sich im eigentlichen Ordner /var/log befindet.
+	- Es wurden nur Suchbegriffe gefunden, die keine Leerzeichen enthielten, also nur aus einem Wort bestanden. Fehler wurde behoben.
+	- Dateinamen die Leerzeichen enthalten, wurden nicht angezeigt bzw. verarbeitet. Fehler wurde behoben.
+	- Die Suche nach Datum und/oder Uhrzeit wurde nicht korrekt verarbeitet. Fehler sollte behoben sein.
+	- Bei den dateiübergreifenden Suchergebnissen kann jetzt über den angezeigten Dateipfad in die entsprechende Datei gewechselt werden.
+	- Rekusives Suchen innerhalb des Verzeichnisbaumes wurde hinzugefügt. Somit wird nur der ausgewählte Ordner bei der Suche herangezogen.
+	- PHP-Logdateien werden nun angezeigt.
+	- Weitere Codeoptimierungen vorgenommen. Vielen Dank an BigRonin und PsychoHH
+	
+	
+Version 0.1 vom 17.04.2020
+
+	Beschreibung der App
+	Das dem DSM zugrunde liegende Linux-System protokolliert in sogenannten Protokoll- oder auch Logdateien (engl. logfiles) sämtliche Ereignisse, Probleme und Fehler des Systems sowie laufender Dienste. Abgelegt werden diese Informationen hierbei in unterschiedlichen Textdateien, welche sich in der Regel im Ordner /var/log sowie angeschlossenen Unterordnern befinden. Das Betrachten dieser Textdateien erfolgt normalerweise in einem beliebigen Editor, welcher über das Terminal ausgeführt wird. Innerhalb des Synology DiskStation Managers (DSM) können diese Dateien nun komfortabel über die GUI von LogAnalysis betrachtet und durchsucht werden.
+
+	Was kann die App bereits
+	- Anzeigen und auswählen von Ordnern und Protokolldateien innerhalb /var/log über einen Verzeichnisbaum
+	- Betrachten von Protokolldateiinhalten, welche zuvor über den Verzeichnisbaum ausgewählt wurde
+	- Durchsuchen aller Protokolldateien innerhalb /var/log nach individuellen Suchbegriffen, eines bestimmten Datums und/oder einer bestimmten Uhrzeit
+	- Durchsuchen einer zuvor ausgewählten Protokolldatei nach individuellen Suchbegriffen, eines bestimmten Datums und/oder einer bestimmten Uhrzeit
+	- Das Betrachten von Protokolldateiinhalten sowie Suchergebnissen werden innerhalb der GUI wegen der besseren Lesbarkeit mit Zeilenumbrüchen ausgegeben
+	- Über ein auswählbares Popup-Fenster können die Suchergebnisse auch ohne Zeilenumbrüche und somit - originalgetreu - angezeigt werden.
+	- Alle Suchergebnisse können als Textdatei gespeichert werden
+
+	Die Grafische Benutzeroberfläche (GUI)
+	- Der Zugriff auf die Inhalte von LogAnalysis ist nur Benutzern aus der Gruppe der Administratoren gestattet.
+	- Die GUI ist für Mehrsprachigkeit ausgelegt und wird der Systemsprache des DSM angepasst. Aktuell sind die Sprachen Deutsch und Englisch implementiert.
+	- Der responsive, grafische Aufbau der Benutzeroberfläche basiert auf dem Bootstrap 4 Framework und unterliegt somit dem HTML 5 / CSS 3 Standard. Von einer Überprüfung der Validität nach dem W3C - Standard wurde aber abgesehen.
+	- Bis auf das LogAnalysis Logo und einiger weniger, auf bootstrap 4 basierender Grafiken, stammen sämtliche Grafikelemente (Icons) aus dem Portfolio der Google Material Design Icons. Hierbei werden sämtliche Komponenten lokal vorgehalten und nicht übers Internet nachgeladen.
+	- Die GUI ist des Weiteren auf die Verwendung von JavaScript sowie jQuery Elementen ausgelegt, wobei auch hier sämtliche Elemente lokal vorgehalten und nicht übers Internet nachgeladen werden.
+
+	Das im Hintergrund arbeitende System
+	- Die komplette Programmlogik beruht auf der jeweils aktuellen, im DSM implementierten BASH Version.
+	- JavaScript und jQuery Elemente unterstützen hierbei optional die Abläufe und die Verarbeitung der Datenströme.
+	- Implementierung einer GET/POST Request Engine um anfallende Formulardaten, Parameterübergaben und Seitenaufrufe zu verarbeiten, wobei sämtliche Formulardaten über die POST-Methode, an Links angegangene Variablen über die GET-Methode übertragen werden. Aus Gründen der Sicherheit werden alle übertragenen Variablen intern durch ein assoziatives Array maskiert bevor diese weiterverarbeitet werden.
+		
