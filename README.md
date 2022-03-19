@@ -5,6 +5,11 @@ Das dem DSM zugrunde liegende Linux-System protokolliert in sogenannten Protokol
 # Systemvoraussetzungen
 **LogAnalysis** wurde speziell für die Verwendung auf **Synology NAS Systemen** entwickelt die das Betriebsystem **DiskStation Mangager 7** verwenden.
 
+  - ### Hinweise zur Installation von LogAnalysis auf DSM 6 Systemen
+    - **LogAnalysis** kann in der jeweils aktuellsten Version über die alternative Paketquelle - **Community Package Hub** - (https://www.cphub.net/?p=loganalysis) heruntergeladen und im Anschluss über das **DSM Paket-Zentrum** manuell installiert werden.
+    - Weiterhin kann **LogAnalysis** auch direkt über das **DSM Paket-Zentrum** als Installationspaket, sowie für die Bereitstellung zukünftiger Updates zur Verfügung gestellt werden. Hierfür muß im Vorfeld https://www.cphub.net dem Paket-Zentrum als **"alternative Paketquelle"** hinzugefügt werden.
+
+
 # Installationshinweise
   - ## App-Berechtigung erweitern
     Unter DSM 7 wird eine 3rd_Party Anwendung wie LogAnalysis (im folgenden App genannt) mit stark eingeschränkten Benutzer- und Gruppenrechten ausgestattet. Dies hat u.a. zur Folge, das systemnahe Befehle nicht ausgeführt werden können. Für den reibungslosen Betrieb von LogAnalysis werden jedoch erweiterte Systemrechte benötigt um z.B. auf die Ordnerstuktur des Ordners "/var/log" zugreifen zu können. Zum erweitern der App-Berechtigungen muss LogAnalysis in die Gruppe **log** aufgenommen werden, was jedoch nur durch den Benutzer selbst durchgeführt werden kann. Die nachfolgende Anleitung beschreibt diesen Vorgang.
