@@ -35,18 +35,18 @@ Das dem DSM zugrunde liegende Linux-System protokolliert in sogenannten Protokol
       - Die grade erstellte Aufgabe in der Übersicht des Aufgabenplaners markieren, jedoch **nicht** aktivieren (die Zeile sollte nach dem markieren blau hinterlegt sein).
       - Führen Sie die Aufgabe durch Betätigen Sie Schaltfläche **Ausführen** einmalig aus.
 
-## Versionsgeschichte
+# Versionsgeschichte
 - Details zur Versionsgeschichte finden Sie in der Datei [CHANGELOG](CHANGELOG).
 
-## Entwickler-Information
+# Entwickler-Information
 - Details zum Backend entnehmen Sie bitte dem [Synology DSM 7.0 Developer Guide](https://help.synology.com/developer-guide/)
 - Details zum Frontend entnehmen Sie bitte dem [Bootstrap Framework](https://getbootstrap.com/)
 - Details zu jQuery entnehmen Sie bitte der [jQuery API](https://api.jquery.com/)
 
-## Hilfe und Diskussion
+# Hilfe und Diskussion
 - Hilfe und Diskussion gerne über [Das deutsche Synology Support Forum](https://www.synology-forum.de/threads/loganalysis-gui-zum-betrachten-und-durchsuchen-von-var-log.107180/) 
 
-## Lizenz
+# Lizenz
 Dieses Programm ist freie Software. Sie können es unter den Bedingungen der **GNU General Public License**, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß **Version 3** der Lizenz oder (nach Ihrer Option) jeder späteren Version.
 
 Die Veröffentlichung dieses Programms erfolgt in der Hoffnung, daß es Ihnen von Nutzen sein wird, aber **OHNE IRGENDEINE GARANTIE**, sogar **ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK**. Details finden Sie in der Datei [GNU General Public License](LICENSE).
