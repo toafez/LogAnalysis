@@ -1,7 +1,8 @@
 LogAnalysis - DSM 7 - Release Notes
 
 Version 1.0-200 vom 18.03.2022
-	- LogAnalysis wird ab sofort als Repository auf GitHub angeboten. Zu diesem Zweck wurden einige interne App-Einstellungen angepasst.  
+	- LogAnalysis wird ab sofort als Repository auf GitHub angeboten. Zu diesem Zweck wurden einige interne App-Einstellungen angepasst. 
+	- App Versions Check implementiert. Es wird anhand der INFO Datei geprüft, ob auf GitHub eine neue Version von Basic Backup verfügbar ist.  
 
 Version 1.0-100 vom 21.02.2022
 	- Upgrade von Bootstrap 5.1.0 auf 5.1.3
