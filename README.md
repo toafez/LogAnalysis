@@ -11,6 +11,8 @@ Das dem DSM zugrunde liegende Linux-System protokolliert in sogenannten Protokol
 
 
 # Installationshinweise
+Laden Sie sich die **jeweils aktuellste Version** von LogAnalysis aus dem Bereich [Releases](https://github.com/toafez/LogAnalysis/releases) herunter. Öffnen Sie anschließend im **DiskStation Manager (DSM)** das **Paket-Zentrum**, wählen oben rechts die Schaltfläche **Manuelle Installation** aus und folgen dem **Assistenten**, um das neue **Paket** bzw. die entsprechende **.spk-Datei** hochzuladen und zu installieren. Dieser Vorgang ist sowohl für eine Erstinstallation als auch für die Durchführung eines Updates identisch. 
+
   - ## App-Berechtigung erweitern
     Unter DSM 7 wird eine 3rd_Party Anwendung wie LogAnalysis (im folgenden App genannt) mit stark eingeschränkten Benutzer- und Gruppenrechten ausgestattet. Dies hat u.a. zur Folge, das systemnahe Befehle nicht ausgeführt werden können. Für den reibungslosen Betrieb von LogAnalysis werden jedoch erweiterte Systemrechte benötigt um z.B. auf die Ordnerstuktur des Ordners "/var/log" zugreifen zu können. Zum erweitern der App-Berechtigungen muss LogAnalysis in die Gruppe **log** aufgenommen werden, was jedoch nur durch den Benutzer selbst durchgeführt werden kann. Die nachfolgende Anleitung beschreibt diesen Vorgang.
 
@@ -44,7 +46,7 @@ Das dem DSM zugrunde liegende Linux-System protokolliert in sogenannten Protokol
 - Details zu jQuery entnehmen Sie bitte der [jQuery API](https://api.jquery.com/)
 
 # Hilfe und Diskussion
-- Hilfe und Diskussion gerne über [Das deutsche Synology Support Forum](https://www.synology-forum.de/threads/loganalysis-gui-zum-betrachten-und-durchsuchen-von-var-log.107180/) 
+- Hilfe und Diskussion gerne über [Das deutsche Synology Support Forum](https://www.synology-forum.de/threads/loganalysis-gui-zum-betrachten-und-durchsuchen-von-var-log.107180/) oder über [heimnetz.de](https://forum.heimnetz.de/threads/loganalysis-3rdparty-app-fuer-synology-nas-dsm-7.484/)
 
 # Lizenz
 Dieses Programm ist freie Software. Sie können es unter den Bedingungen der **GNU General Public License**, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß **Version 3** der Lizenz oder (nach Ihrer Option) jeder späteren Version.
