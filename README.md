@@ -20,7 +20,7 @@ Laden Sie sich die **jeweils aktuellste Version** von LogAnalysis aus dem Bereic
 
     - ### Erweitern der App-Berechtigungen über die Konsole
 
-      - Melden Sie sich als Benutzer **root** auf der Konsole Ihrer DiskStation an.
+      - Melden Sie sich als Benutzer **root** auf der Konsole Ihrer Synology NAS an.
       - Befehl zum erweitern der App-Berechtigungen
 
         `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh`
