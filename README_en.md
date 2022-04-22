@@ -25,6 +25,10 @@ Download the **most recent version** of LogAnalysis from the [Releases](https://
       - Command to extend the app permissions
 
         `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh`
+        
+      - Command to revoke the extended app permissions again
+
+        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh "deluser`
  
     - ### Extending app permissions via the task scheduler
 
@@ -35,6 +39,10 @@ Download the **most recent version** of LogAnalysis from the [Releases](https://
       - Command to extend app permissions
 
         `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh`
+       
+      - Command to revoke the extended app permissions again
+
+        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh "deluser`
    
       - Save the entries with **OK** and also confirm the subsequent warning message with **OK**.
       - Mark the task you have just created in the overview of the task planner, but **do not** activate it (the line should be highlighted in blue after marking).
