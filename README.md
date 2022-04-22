@@ -24,7 +24,11 @@ Laden Sie sich die **jeweils aktuellste Version** von LogAnalysis aus dem Bereic
       - Melden Sie sich als Benutzer **root** auf der Konsole Ihrer Synology NAS an.
       - Befehl zum erweitern der App-Berechtigungen
 
-        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh`
+        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh "adduser`
+        
+      - Befehl, um die erweiterten App-Berechtigungen wieder zurückzunehmen
+
+        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh "deluser`
  
     - ### Erweitern der App-Berechtigungen über den Aufgabenplaner
 
@@ -34,7 +38,11 @@ Laden Sie sich die **jeweils aktuellste Version** von LogAnalysis aus dem Bereic
       - Im Reiter **Aufgabeneinstellungen** > **Befehl ausführen** > **Benutzerdefiniertes Script** nachfolgenden Befehl in das Textfeld einfügen...
       - Befehl zum erweitern der App-Berechtigungen
 
-        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh`
+        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh adduser`
+        
+      - Befehl, um die erweiterten App-Berechtigungen wieder zurückzunehmen
+
+        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh "deluser`
    
       - Eingaben mit **OK** speichern und die anschließende Warnmeldung ebenfalls mit **OK** bestätigen.
       - Die grade erstellte Aufgabe in der Übersicht des Aufgabenplaners markieren, jedoch **nicht** aktivieren (die Zeile sollte nach dem markieren blau hinterlegt sein).
