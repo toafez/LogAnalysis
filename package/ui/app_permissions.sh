@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Filename: app_permissions.sh - coded in utf-8
 # call: /usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh
 
@@ -24,49 +24,69 @@
 # with this program. If not, see http://www.gnu.org/licenses/  !
 
 
-# Kickme into group
-# ---------------------------------------------------------------------
-
-	# Prüfe ob Version min. DSM 7 entspricht
-	# -----------------------------------------------------------------
-	if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
-	
-		[ -d /var/packages/Log_Analysis ] && rm -Rf /var/packages/Log_Analysis/
-		[ -d /volume1/@appconf/Log_Analysis ] && rm -Rf /volume1/@appconf/Log_Analysis/
-		[ -d /volume1/@appdata/Log_Analysis ] && rm -Rf /volume1/@appdata/Log_Analysis/
-		[ -d /volume1/@apphome/Log_Analysis ] && rm -Rf /volume1/@apphome/Log_Analysis/
-		[ -d /volume1/@appstore/Log_Analysis ] && rm -Rf /volume1/@appstore/Log_Analysis/
-		[ -d /volume1/@apptemp/Log_Analysis ] && rm -Rf /volume1/@apptemp/Log_Analysis/
-		[ -f /var/log/packages/Log_Analysis.* ] && rm -f /var/log/packages/Log_Analysis.*
-
-		# Füge den Benutzer LogAnalysis der Gruppe log hinzu
-		# -------------------------------------------------------------
-		if ! cat /etc/group | grep ^log | grep -q LogAnalysis ; then
-			sed -i "/^log:/ s/$/,LogAnalysis/" /etc/group
-		fi
-
-		# Füge den Benutzer LogAnalysis der Gruppe system hinzu
-		# ---------------------------------------------------------------------
-		#if ! cat /etc/group | grep ^system | grep -q LogAnalysis ; then
-		#	sed -i "/^system:/ s/$/,LogAnalysis/" /etc/group
-		#fi
-
-		# Füge den Benutzer LogAnalysis der Gruppe administrators hinzu
-		# ---------------------------------------------------------------------
-		#if ! cat /etc/group | grep ^administrators | grep -q LogAnalysis ; then
-		#	sed -i "/^administrators:/ s/$/,LogAnalysis/" /etc/group
-		#fi
-
-		# Gib eine DSM-Benachrichtung über Erfolg bzw. Misserfolg aus
-		# -------------------------------------------------------------
-		if cat /etc/group | grep ^log | grep -q LogAnalysis ; then
-			synodsmnotify -c SYNO.SDS._ThirdParty.App.LogAnalysis @administrators LogAnalysis:app:app_name LogAnalysis:app:script_true
+# Funktion: Benutzer einer Gruppe hinzufügen oder entfernen
+# --------------------------------------------------------------
+# Aufruf: synogroupuser "[adduser or deluser]" "GROUP" "USER"
+function synogroupuser()
+{
+	oldIFS=${IFS}
+	IFS=$'\n'
+	query=${1}
+	group=${2}
+	user=${3}
+	userlist=$(synogroup --get ${group} | grep -E '^[0-9]*:'| sed -e 's/^[0-9]*:\[\(.*\)\]/\1/')
+	updatelist=()
+	for i in ${userlist}; do
+		if [[ "${query}" == "adduser" ]]; then
+			[[ "${i}" != "${user}" ]] && updatelist+=(${i})
+			[[ "${i}" == "${user}" ]] && userexists="true"
+		elif [[ "${query}" == "deluser" ]]; then
+			[[ "${i}" != "${user}" ]] && updatelist+=(${i})
+			[[ "${i}" == "${user}" ]] && userexists="true"
 		else
-			synodsmnotify -c SYNO.SDS._ThirdParty.App.LogAnalysis @administrators LogAnalysis:app:app_name LogAnalysis:app:script_false
+			synodsmnotify -c SYNO.SDS._ThirdParty.App.LogAnalysis @administrators LogAnalysis:app:app_name LogAnalysis:app:groupuser_error
+			exit 1
 		fi
+	done
 
+	if [[ -z "${userexists}" && "${query}" == "adduser" ]]; then
+		updatelist+=(${user})
+		synogroup --member ${group} ${updatelist[@]}
+		synodsmnotify -c SYNO.SDS._ThirdParty.App.LogAnalysis @administrators LogAnalysis:app:app_name LogAnalysis:app:adduser_true
+	elif [[ -n "${userexists}" && "${query}" == "adduser" ]]; then
+		synodsmnotify -c SYNO.SDS._ThirdParty.App.LogAnalysis @administrators LogAnalysis:app:app_name LogAnalysis:app:adduser_exists
+		exit 2
+	elif [[ -n "${userexists}" && "${query}" == "deluser" ]]; then
+		synogroup --member ${group} ${updatelist[@]}
+		synodsmnotify -c SYNO.SDS._ThirdParty.App.LogAnalysis @administrators LogAnalysis:app:app_name LogAnalysis:app:deluser_true
+	elif [[ -z "${userexists}" && "${query}" == "deluser" ]]; then
+		synodsmnotify -c SYNO.SDS._ThirdParty.App.LogAnalysis @administrators LogAnalysis:app:app_name LogAnalysis:app:deluser_notexist
+		exit 3
 	fi
 
+	IFS=${oldIFS}
+}
 
+# Prüfe ob Version min. DSM 7 entspricht
+# -----------------------------------------------------------------
+if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 
+	# Lösche, falls vorhanden, alte Paketdaten von Log_Analysis
+	[ -d /var/packages/Log_Analysis ] && rm -Rf /var/packages/Log_Analysis/
+	[ -d /volume1/@appconf/Log_Analysis ] && rm -Rf /volume1/@appconf/Log_Analysis/
+	[ -d /volume1/@appdata/Log_Analysis ] && rm -Rf /volume1/@appdata/Log_Analysis/
+	[ -d /volume1/@apphome/Log_Analysis ] && rm -Rf /volume1/@apphome/Log_Analysis/
+	[ -d /volume1/@appstore/Log_Analysis ] && rm -Rf /volume1/@appstore/Log_Analysis/
+	[ -d /volume1/@apptemp/Log_Analysis ] && rm -Rf /volume1/@apptemp/Log_Analysis/
+	[ -f /var/log/packages/Log_Analysis.* ] && rm -f /var/log/packages/Log_Analysis.*
 
+	# LogAnalysis der Grupp log hinzufügen
+	if [[ "${1}" == "adduser" ]]; then
+		synogroupuser "adduser" "log" "LogAnalysis"
+	fi
+
+	# LogAnalysis aus der Gruppe log entfernen
+	if [[ "${1}" == "deluser" ]]; then
+		synogroupuser "deluser" "log" "LogAnalysis"
+	fi
+fi

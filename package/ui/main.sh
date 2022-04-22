@@ -394,7 +394,7 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 						# Hilfe: Zeichenerklärung
 						# --------------------------------------
 						echo '
-						<span class="text-secondary">'${txtHelpHeader}'</span><br />
+						<span class="text-secondary"><strong>'${txtHelpHeader}'</strong></span><br />
 						<ul style="list-style-type: none">
 							<li><span class="text-secondary">
 									<i class="bi-house text-secondary"></i>
@@ -442,34 +442,90 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 						if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 							if ! cat /etc/group | grep ^log | grep -q LogAnalysis ; then
 								echo '
-								<span class="text-secondary">'${txtGroupNote}'</span><br />
+								<span class="text-secondary"><strong>'${txtGroupNote}'</strong></span><br />
 								<ul style="list-style-type: none">
-									<li>
-										<small class="text-danger">
-											<strong>'${txtGroupLimited_1}'</strong><br />
-											<span class="text-secondary">'${txtGroupLimited_2}'</span>
-										</small>
+									<li class="pb-2">
+										<strong class="text-danger">'${txtGroupLimited_1}'</strong><br />
+										<span class="text-secondary">'${txtGroupLimited_2}'</span>
 									</li>
-								</ul>
-								<span class="text-secondary">
-									<ul style="list-style-type: none">
-										<li>
-											<ol>
-												<li><small>'${txt_group_step_1}'</small></li>
-												<li><small>'${txt_group_step_2}'</small></li>
-												<li><small>'${txt_group_step_3}'</small></li>
-												<li>
-													<small>'${txt_group_step_4}'</small><br /><br />
-													<small><strong>'${txt_group_step_5}'</strong></small><br /><br />
-												</li>
-												<li><small>'${txt_group_step_6}'</small></li>
-												<li><small>'${txt_group_step_7}'</small></li>
-												<li><small>'${txt_group_step_8}'</small></li>
-												<li><small>'${txt_group_step_9}'</small></li>
-											</ol>
-										</li>
-									</ul>
-								</span>'
+									<li>
+										<strong class="text-secondary">'${txt_group_console_1}'</strong>
+									</li>
+										<ol>
+											<li>'${txt_group_console_step_1}'
+												<ul class="list-unstyled ps-3 pt-2">
+													<li>'${txt_group_console_step_2}'</li>
+													<li>
+														<small>
+															<pre class="text-dark p-1 border border-1 rounded bg-light">'${txt_group_step_5a}'</pre>
+														</small>
+													</li>
+												</ul>
+											</li>
+										</ol>
+									<li><strong class="text-secondary">'${txt_group_taskmanager_1}'</strong></li>
+										<ul style="list-style-type: none">
+											<li>
+												<ol>
+													<li>'${txt_group_step_1}'</li>
+													<li>'${txt_group_step_2}'</li>
+													<li>'${txt_group_step_3}'</li>
+													<li>
+														'${txt_group_step_4}'<br /><br />
+														<small>
+															<pre class="text-dark p-1 border border-1 rounded bg-light">'${txt_group_step_5a}'</pre>
+														</small>
+													</li>
+													<li>'${txt_group_step_6}'</li>
+													<li>'${txt_group_step_7}'</li>
+													<li>'${txt_group_step_8}'</li>
+												</ol>
+											</li>
+										</ul>
+								</ul>'
+							fi
+							if cat /etc/group | grep ^log | grep -q LogAnalysis ; then
+								echo '
+								<span class="text-secondary"><strong>'${txtGroupNote}'</strong></span><br />
+								<ul style="list-style-type: none">
+									<li class="pb-2">
+										<strong class="text-success">'${txtGroupPermission_1}'</strong><br />
+										<span class="text-secondary">'${txtGroupPermission_2}'</span>
+										
+									</li>
+									<li><strong class="text-secondary">'${txt_group_console_2}'</strong></li>
+										<ol>
+											<li>'${txt_group_console_step_1}'
+												<ul class="list-unstyled ps-3 pt-2">
+													<li>'${txt_group_console_step_3}'</li>
+													<li>
+														<small>
+															<pre class="text-dark p-1 border border-1 rounded bg-light">'${txt_group_step_5b}'</pre>
+														</small>
+													</li>
+												</ul>
+											</li>
+										</ol>
+									<li><strong class="text-secondary">'${txt_group_taskmanager_2}'</strong></li>
+										<ul style="list-style-type: none">
+											<li>
+												<ol>
+													<li>'${txt_group_step_1}'</li>
+													<li>'${txt_group_step_2}'</li>
+													<li>'${txt_group_step_3}'</li>
+													<li>
+														'${txt_group_step_4}'<br /><br />
+														<small>
+															<pre class="text-dark p-1 border border-1 rounded bg-light">'${txt_group_step_5b}'</pre>
+														</small>
+													</li>
+													<li>'${txt_group_step_6}'</li>
+													<li>'${txt_group_step_7}'</li>
+													<li>'${txt_group_step_8}'</li>
+												</ol>
+											</li>
+										</ul>
+								</ul>'
 							fi
 						fi
 						echo '

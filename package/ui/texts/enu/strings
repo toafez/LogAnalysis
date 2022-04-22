@@ -1,4 +1,8 @@
 [app]
 app_name	=	"LogAnalysis"
-script_true	=	"LogAnalysis was successfully added to the [ log ] group and now has extended system rights."
-script_false	=	"Expanding the system rights has failed! LogAnalysis could not be added to the [ log ] group."
+adduser_true	=	"Execution successful. LogAnalysis has been added to the [ log ] group. This allows extended access to folders and files within the log folder /var/log."
+adduser_exists	=	"Operation aborted. LogAnalysis is already a member of the group [ log ]."
+deluser_true	=	"Execution successful. LogAnalysis has been removed from the group [ log ]. As a result, access to folders and files within the log folder /var/log is still restricted."
+deluser_notexist	=	"Process aborted. LogAnalysis is not a member of the group [ log ]."
+groupuser_error	=	"An error has occurred. Check your entries and execute the process again."
+

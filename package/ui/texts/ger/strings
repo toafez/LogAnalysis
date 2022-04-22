@@ -1,4 +1,7 @@
 [app]
 app_name	=	"LogAnalysis"
-script_true	=	"LogAnalysis wurde erfolgreich in die Gruppe [ log ] aufgenommen und verfügt nun über erweiterte Systemrechte."
-script_false	=	"Das erweitern der Systemrechte ist fehlgeschlagen! LogAnalysis konnte nicht in die Gruppe [ log ] aufgenommen werden."
+adduser_true	= 	"Ausführung erfolgreich. LogAnalysis wurde der Gruppe [ log ] hinzugefügt. Dadurch ist ein erweiterter Zugriff auf Ordner und Dateien innerhalb des Protokollordner /var/log möglich."
+adduser_exists	=	"Vorgang abgebrochen. LogAnalysis ist bereits Mitglied der Gruppe [ log ]."
+deluser_true	= 	"Ausführung erfolgreich. LogAnalysis wurde aus der Gruppe [ log ] entfernt. Dadurch ist der Zugriff auf Ordner und Dateien innerhalb des Protokollordner /var/log noch noch eingeschränkt möglich."
+deluser_notexist	=	"Vorgang abgebrochen. LogAnalysis ist kein Mitglied der Gruppe [ log ]."
+groupuser_error	=	"Ein Fehler ist aufgetreten. Überprüfen Sie Ihre Eingaben und führen den Vorgang erneut aus."
