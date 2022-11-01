@@ -230,8 +230,8 @@ group_membership="off"
 		<!-- Einbinden von bootstrap Icons 1.9.1 -->
 		<link rel="stylesheet" href="template/bootstrap/font/bootstrap-icons.css" />
 
-		<!-- Einbinden von jQuery -->
-		<script src="template/jquery/jquery-3.6.0.min.js"></script>
+		<!-- Einbinden von jQuery 3.6.1 -->
+		<script src="template/jquery/jquery-3.6.1.min.js"></script>
 
 	</head>
 	<body>
