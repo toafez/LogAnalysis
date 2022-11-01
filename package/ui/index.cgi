@@ -224,7 +224,7 @@ group_membership="off"
 		<!-- Einbinden eigener CSS Formatierungen -->
 		<link rel="stylesheet" href="template/css/mystyle.css" />
 
-		<!-- Einbinden von bootstrap Framework 5.1.3 -->
+		<!-- Einbinden von bootstrap Framework 5.2.2 -->
 		<link rel="stylesheet" href="template/bootstrap/css/bootstrap.min.css" />
 
 		<!-- Einbinden von bootstrap Icons 1.8.1 -->
