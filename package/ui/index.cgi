@@ -331,8 +331,8 @@ group_membership="off"
 			</article>
 		</form>
 
-		<!-- Einbinden von bootstrap JavaScript 5.0.0 -->
-		<script src="template/bootstrap/js/bootstrap.min.js"></script>
+		<!-- Einbinden von bootstrap JavaScript 5.2.2 -->
+		<script src="template/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 		<!-- Script für Popupfenster (z.B. für die Hilfe) -->
 		<script src="template/js/popup.js"></script>
