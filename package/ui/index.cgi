@@ -227,7 +227,7 @@ group_membership="off"
 		<!-- Einbinden von bootstrap Framework 5.2.2 -->
 		<link rel="stylesheet" href="template/bootstrap/css/bootstrap.min.css" />
 
-		<!-- Einbinden von bootstrap Icons 1.8.1 -->
+		<!-- Einbinden von bootstrap Icons 1.9.1 -->
 		<link rel="stylesheet" href="template/bootstrap/font/bootstrap-icons.css" />
 
 		<!-- Einbinden von jQuery -->
