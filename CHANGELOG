@@ -1,5 +1,12 @@
 LogAnalysis - DSM 7 - Release Notes
 
+Version 1.0-400 vom 02.11.2022
+    - Update Bootstrap Framework auf 5.2.2
+    - Update Bootstrap JavaScript auf 5.2.2
+    - Update Bootsrap Icons auf 1.9.1
+    - Update jQuery auf 3.6.1
+
+
 Version 1.0-300 vom 22.04.2022
 	- Ändern der Art und Weise, wie LogAnalysis einer Gruppe hinzugefügt werden kann, um Ordner- und Dateirechte zu erweitern (App-Berechtigungen). 
 	- Die App-Berechtigungen können ab sofort, falls gewünscht, wieder entzogen werden. LogAnalysis wird dabei aus der entsprechenden Gruppe entfernt.
