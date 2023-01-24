@@ -232,11 +232,11 @@ group_membership="off"
 
 		<!-- Einbinden von jQuery 3.6.1 -->
 		<script src="template/jquery/jquery-3.6.1.min.js"></script>
-    <script> function setBoxHeight() { var h0=window.innerHeight; var o1=document.getElementById("file-content-box"); var h1=o1.style.height; var t1=o1.getBoundingClientRect().top; let h2=h0-t1-25; o1.style.height = h2+"px"; var o2=document.getElementById("file-content-txt"); o2.style.height=h2+"px";}
-             function myLoad() { setBoxHeight(); var o2=document.getElementById("file-content-txt"); var sy=o2.scrollHeight; if (!!sy) {o2.scrollTo(0, sy);} }
-     </script>
+
+		<!-- Einbinden von resize für box mit Logfile-Inhalt (class="card-body px-0 py-1" in main.sh) -->
+		<script src="template/js/resize.js"></script>
 	</head>
-	<body onload="myLoad()" onresize="setBoxHeight()">
+	<body>
 		<form action="index.cgi" method="post" id="myform" autocomplete="on">
 			<header></header>
 			<article>
