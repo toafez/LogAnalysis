@@ -1,4 +1,4 @@
-// Script um die HÃ¶he der Box mit Logfileausgabe an FenstergrÃ¶ÃŸe anzupassen
+// Script um die Höhe der Box mit Logfileausgabe an Fenstergröße anzupassen
 
 function setBoxHeight() {
   var h0=window.innerHeight;
@@ -19,8 +19,8 @@ function setBoxHeight() {
 function myLoad() {
   setBoxHeight();
   var o2=document.getElementById("file-content-txt");
-  var sy=o2.scrollHeight;
-  if (!!sy) {
+  if (!!o2) {
+    var sy=o2.scrollHeight;
     o2.scrollTo(0, sy);
     }
   }
