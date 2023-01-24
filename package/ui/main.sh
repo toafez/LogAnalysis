@@ -674,7 +674,7 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 						</div>
 						<div class="card-body px-0 py-1">
 							<div id="file-content-box" class="form-group">
-								<textarea id="file-content-txt" spellcheck="false" class="form-control border-white bg-white text-monospace" style="font-size: 80%;" rows="13" readonly>'
+								<textarea id="file-content-txt" spellcheck="false" class="form-control border-white bg-white text-monospace" style="font-size: 80%; resize: none" rows="13" readonly>'
 									if [ -s "${get[file]}" ]; then
 										while read line; do
 											echo -e -n ''${line}'&#13;&#10;'
