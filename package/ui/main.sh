@@ -617,8 +617,8 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 							echo '
 						</div>
 						<div class="card-body px-1 py-1">
-							<div class="form-group">
-								<textarea spellcheck="false" class="form-control border-white bg-white text-monospace" style="font-size: 80%;" rows="13" readonly>'
+							<div id="file-content-box" class="form-group">
+								<textarea id="file-content-txt" spellcheck="false" class="form-control border-white bg-white text-monospace" style="font-size: 80%;" rows="13" readonly>'
 									if [ -s "${result}" ]; then
 										while read line; do
 											IFS=: read source row hit <<< "${line}"
@@ -673,8 +673,8 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 							echo '
 						</div>
 						<div class="card-body px-0 py-1">
-							<div class="form-group">
-								<textarea spellcheck="false" class="form-control border-white bg-white text-monospace" style="font-size: 80%;" rows="13" readonly>'
+							<div id="file-content-box" class="form-group">
+								<textarea id="file-content-txt" spellcheck="false" class="form-control border-white bg-white text-monospace" style="font-size: 80%;" rows="13" readonly>'
 									if [ -s "${get[file]}" ]; then
 										while read line; do
 											echo -e -n ''${line}'&#13;&#10;'

@@ -233,6 +233,8 @@ group_membership="off"
 		<!-- Einbinden von jQuery 3.6.1 -->
 		<script src="template/jquery/jquery-3.6.1.min.js"></script>
 
+		<!-- Einbinden von resize für box mit Logfile-Inhalt (class="card-body px-0 py-1" in main.sh) -->
+		<script src="template/js/resize.js"></script>
 	</head>
 	<body>
 		<form action="index.cgi" method="post" id="myform" autocomplete="on">

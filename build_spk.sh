@@ -8,8 +8,8 @@
 #             License GNU GPLv3
 #   https://www.gnu.org/licenses/gpl-3.0.html
 
-# Set Package Version
-version="1.0-400"
+# Get & set Package Version from INFO file:
+version=$(grep -i "version=" "./INFO" | /bin/sed 's/version=//i' | /bin/sed 's/"//g')
 
 # Set folder and file permissions
 chmod -R 755 ./package
