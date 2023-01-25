@@ -4,6 +4,8 @@ Version 1.0-500 vom 25.01.2023
     - Update Bootstrap Framework auf 5.2.3
     - Update Bootstrap JavaScript auf 5.2.3
     - Update Bootsrap Icons auf 1.10.3
+    - Update jQuery auf 3.6.3
+    - Automatisch angepasste Höhe der Dateiinhaltsbox. Vielen Dank an schmidhorst
 
 Version 1.0-400 vom 02.11.2022
     - Update Bootstrap Framework auf 5.2.2
