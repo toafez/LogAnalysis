@@ -1,0 +1,16 @@
+#!/bin/bash
+# Copyright (C) 2000-2020 Synology Inc. All rights reserved.
+
+case ${MakeClean} in
+	[Yy][Ee][Ss])
+		make clean
+		;;
+esac
+
+# You can use CC CFLAGS LD LDFLAGS CXX CXXFLAGS AR RANLIB READELF STRIP here
+echo "${CC} ${CFLAGS} LogAnalysis.c -o LogAnalysis.dummy"
+${CC} ${CFLAGS} LogAnalysis.c -o LogAnalysis.dummy
+
+# Or you can use Makefile to genarate executable.
+echo "make ${MAKE_FLAGS}"
+make ${MAKE_FLAGS}

@@ -3,7 +3,7 @@
 
 #                     LogAnalysis for DSM 7
 #
-#        Copyright (C) 2022 by Tommes | License GNU GPLv3
+#        Copyright (C) 2023 by Tommes | License GNU GPLv3
 #        Member from the  German Synology Community Forum
 #
 # Extract from  GPL3   https://www.gnu.org/licenses/gpl-3.0.html

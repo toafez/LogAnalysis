@@ -3,7 +3,7 @@
 
 #                     LogAnalysis for DSM 7
 #
-#        Copyright (C) 2022 by Tommes | License GNU GPLv3
+#        Copyright (C) 2023 by Tommes | License GNU GPLv3
 #        Member from the  German Synology Community Forum
 #
 # Extract from  GPL3   https://www.gnu.org/licenses/gpl-3.0.html
@@ -43,8 +43,10 @@ group_membership="off"
 # App Authentifizierung auswerten
 # --------------------------------------------------------------
 	# Zum auswerten des SynoToken, REQUEST_METHOD auf GET ändern
-	[[ "${REQUEST_METHOD}" == "POST" ]] && REQUEST_METHOD="GET" && OLD_REQUEST_METHOD="POST"
-
+	if [[ "${REQUEST_METHOD}" == "POST" ]]; then
+		REQUEST_METHOD="GET"
+		OLD_REQUEST_METHOD="POST"
+	fi
 
 	# Auslesen und prüfen der Login Berechtigung  ( login.cgi )
 	# ----------------------------------------------------------
@@ -70,9 +72,11 @@ group_membership="off"
 		fi
 		[[ ${login_success} != "true" ]] && { echo 'Access denied'; exit; }
 
-
 	# REQUEST_METHOD wieder zurück auf POST setzen
-	[[ "${OLD_REQUEST_METHOD}" == "POST" ]] && REQUEST_METHOD="POST" && unset OLD_REQUEST_METHOD
+	if [[ "${OLD_REQUEST_METHOD}" == "POST" ]]; then
+		REQUEST_METHOD="POST"
+		unset OLD_REQUEST_METHOD
+	fi
 
 
 	# Auslesen von Benutzer/Gruppe aus der authenticate.cgi
@@ -91,26 +95,6 @@ group_membership="off"
 		fi
 
 
-	# Authentifizierung auf Anwendungsebene auswerten
-	# ----------------------------------------------------------
-		# Zum auswerten der Authentifizierung muss die Datei /usr/syno/bin/synowebapi
-		# nach ${app_home}/modules/synowebapi kopiert, sowie die Besitzrechte
-		# auf ${app_name}:${app_name} angepasst werden.
-
-		if [ -f "${app_home}/modules/synowebapi" ]; then
-			rar_data=$($app_home/modules/synowebapi --exec api=SYNO.Core.Desktop.Initdata method=get version=1 runner="$syno_user" | jq '.data.AppPrivilege')
-			syno_privilege=$(echo "${rar_data}" | grep "SYNO.SDS._ThirdParty.App.${app_name}" | cut -d ":" -f2 | cut -d '"' -f2)
-			if echo "${syno_privilege}" | grep -q "true"; then
-				is_authenticated="yes"
-			else
-				is_authenticated="no"
-			fi
-		else
-			is_authenticated="no"
-			txtActivatePrivileg="<b>To enable app level authentication do...</b><br /><b>root@[local-machine]:~#</b> cp /usr/syno/bin/synowebapi /var/packages/${app_name}/target/ui/modules<br /><b>root@[local-machine]:~#</b> chown ${app_name}.${app_name} /var/packages/${app_name}/target/ui/modules/synowebapi"
-		fi
-
-
 	# Variablen zum Schutz auf "readonly" setzen oder Inhalt leeren
 	# ----------------------------------------------------------
 		unset syno_login rar_data syno_privilege
@@ -124,15 +108,6 @@ group_membership="off"
 	[ ! -d "${app_temp}" ] && mkdir -p -m 755 "${app_temp}"
 	result="${app_temp}/result.txt"
 	
-	# Konfigurationsdatei für Debug Modus einrichten
-	usr_debugfile="${usr_systemconfig}/debug.config"
-	if [ ! -f "${usr_debugfile}" ]; then
-		touch "${usr_debugfile}"
-		chmod 777 "${usr_debugfile}"
-		chown "${app_name}":"${app_name}" "${usr_debugfile}"
-	fi
-	[ -f "${usr_debugfile}" ] && source "${usr_debugfile}"
-
 	# POST und GET Requests auswerten und in Dateien zwischenspeichern
 	set_keyvalue="/usr/syno/bin/synosetkeyvalue"
 	get_keyvalue="/bin/get_key_value"
@@ -198,7 +173,6 @@ group_membership="off"
 	# Einbinden der temporär gespeicherten GET/POST-Requests ( key="value" ) sowie der Benutzereinstellungen
 	[ -f "${get_request}" ] && source "${get_request}"
 	[ -f "${post_request}" ] && source "${post_request}"
-	#[ -f "${user_settings}" ] && source "${user_settings}"
 
 
 # Layoutausgabe
@@ -245,9 +219,6 @@ group_membership="off"
 
 				if [[ "${is_admin}" == "yes" ]]; then
 
-					# Infotext: Authentifizierung auf Anwendungsebene aktivieren
-					[ -n "${txtActivatePrivileg}" ] && echo ''${txtActivatePrivileg}''
-
 					# Dynamische Seitenausgabe
 					if [ -f "${post[page]}.sh" ]; then
 						. ./"${post[page]}.sh"
@@ -282,7 +253,6 @@ group_membership="off"
 								syno_user='${syno_user}'<br />
 								user_exist='${user_exist}'<br />
 								is_admin='${is_admin}'<br />
-								is_authenticated='${is_authenticated}'<br />
 							</div>
 						</div>
 						<br />'

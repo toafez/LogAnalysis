@@ -1,0 +1,23 @@
+{
+	".url": {
+		"SYNO.SDS.3rdParty.LogAnalysis.Application": {
+			"title": "LogAnalysis",
+			"desc": "Analyzing log files",
+			"icon": "images/logo_{0}.png",		
+			"type": "legacy",
+			"url": "/webman/3rdparty/LogAnalysis/index.cgi",	
+			"allUsers": true,
+			"grantPrivilege": "all",
+			"advanceGrantPrivilege": true,
+			"appWindow": "SYNO.SDS.3rdParty.LogAnalysis.Main",
+			"texts": "texts",
+			"width": 992,
+			"height": 560,
+			"preloadTexts": [
+				"app:app_name",
+				"app:script_true",
+				"app:script_false"
+				]
+		}
+	}
+}

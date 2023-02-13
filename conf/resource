@@ -1,5 +1,5 @@
 {
     "usr-local-linker": {
-        "bin": ["bin/LogAnalysis-cli"]
+        "bin": ["usr/local/bin/LogAnalysis"]
     }
 }
