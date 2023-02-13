@@ -1,6 +1,6 @@
 English | [Deutsch](https://github.com/toafez/LogAnalysis/blob/main/README.md)
 
-# ![Package icon](/package/ui/images/logo_24.png) LogAnalysis - Package for Synology NAS (DSM 7)
+# ![Package icon](/ui/images/logo_24.png) LogAnalysis - Package for Synology NAS (DSM 7)
 The Linux system on which the DSM is based logs all events, problems and errors of the system and running services in so-called log files. This information is stored in various text files, which are usually located in the /var/log folder and connected subfolders. Viewing these text files is usually done in any editor, which is executed via the terminal. Within the Synology DiskStation Manager (DSM), these files can now be viewed and searched comfortably via the GUI of LogAnalysis.
 
 # System requirements
