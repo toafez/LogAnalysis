@@ -48,7 +48,7 @@ function synogroupuser()
 			[[ "${i}" != "${user}" ]] && updatelist+=(${i})
 			[[ "${i}" == "${user}" ]] && userexists="true"
 		else
-			synodsmnotify -c SYNO.SDS.3rdParty.${app_name}.Application @administrators ${app_name}:app:app_name ${app_name}:app:groupuser_error
+			synodsmnotify -c SYNO.SDS._ThirdParty.App.${app_name} @administrators ${app_name}:app:app_name ${app_name}:app:groupuser_error
 			exit 1
 		fi
 	done
@@ -56,15 +56,15 @@ function synogroupuser()
 	if [[ -z "${userexists}" && "${query}" == "adduser" ]]; then
 		updatelist+=(${user})
 		synogroup --member ${group} ${updatelist[@]}
-		synodsmnotify -c SYNO.SDS.3rdParty.${app_name}.Application @administrators ${app_name}:app:app_name ${app_name}:app:adduser_true
+		synodsmnotify -c SYNO.SDS._ThirdParty.App.${app_name} @administrators ${app_name}:app:app_name ${app_name}:app:adduser_true
 	elif [[ -n "${userexists}" && "${query}" == "adduser" ]]; then
-		synodsmnotify -c SYNO.SDS.3rdParty.${app_name}.Application @administrators ${app_name}:app:app_name ${app_name}:app:adduser_exists
+		synodsmnotify -c SYNO.SDS._ThirdParty.App.${app_name} @administrators ${app_name}:app:app_name ${app_name}:app:adduser_exists
 		exit 2
 	elif [[ -n "${userexists}" && "${query}" == "deluser" ]]; then
 		synogroup --member ${group} ${updatelist[@]}
-		synodsmnotify -c SYNO.SDS.3rdParty.${app_name}.Application @administrators ${app_name}:app:app_name ${app_name}:app:deluser_true
+		synodsmnotify -c SYNO.SDS._ThirdParty.App.${app_name} @administrators ${app_name}:app:app_name ${app_name}:app:deluser_true
 	elif [[ -z "${userexists}" && "${query}" == "deluser" ]]; then
-		synodsmnotify -c SYNO.SDS.3rdParty.${app_name}.Application @administrators ${app_name}:app:app_name ${app_name}:app:deluser_notexist
+		synodsmnotify -c SYNO.SDS._ThirdParty.App.${app_name} @administrators ${app_name}:app:app_name ${app_name}:app:deluser_notexist
 		exit 3
 	fi
 

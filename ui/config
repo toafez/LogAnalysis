@@ -1,6 +1,6 @@
 {
 	".url": {
-		"SYNO.SDS.3rdParty.LogAnalysis.Application": {
+		"SYNO.SDS._ThirdParty.App.LogAnalysis": {
 			"title": "LogAnalysis",
 			"desc": "Analyzing log files",
 			"icon": "images/logo_{0}.png",		
@@ -9,7 +9,7 @@
 			"allUsers": true,
 			"grantPrivilege": "all",
 			"advanceGrantPrivilege": true,
-			"appWindow": "SYNO.SDS.3rdParty.LogAnalysis.Main",
+			"appWindow": "SYNO.SDS._ThirdParty.App.LogAnalysis",
 			"texts": "texts",
 			"width": 992,
 			"height": 560,
