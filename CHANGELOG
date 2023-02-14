@@ -1,10 +1,10 @@
 LogAnalysis - DSM 7 - Release Notes
 
-Version 1.0-600 vom 13.02.2023
-    - Es wurden diverse Anpassungen an der Paketstruktur vorgenommen, um LogAnalysis zukünftig vollständig über das - Synology Package Framework - verwalten zu können.
-    - Bedingt durch diese Anpassungen lässt sich das GitHub Repository von LogAnalysis nun problemlos in das Synology Toolkit clonen und bearbeiten, ohne irgendwelche Änderungen an der Paketstruktur vornehmen zu  müssen.
-    - Die interne Überprüfung der Privilegien wurde deaktivert, da diese Funktion für den Betrieb von Loganalysis nicht relevant ist. 
-    - Kleinere Fehler im Quellcode bereinigt.
+Version 1.0-600 vom 14.02.2023
+    - Es wurden diverse Anpassungen an der Paketstruktur vorgenommen, um LogAnalysis zukünftig vollständig über das [ Synology Package Framework ] verwalten zu können.
+    - Bedingt durch diese Anpassungen lässt sich nun das GitHub Repository von LogAnalysis problemlos in das [ Synology Toolkit ] clonen, bearbeiten sowie neu packen, ohne irgendwelche Änderungen an der Paketstruktur vornehmen zu  müssen.
+    - Die interne Überprüfung der Benutzer Privilegien wurde deaktivert, da diese Funktion für den Betrieb von LogAnalysis nicht relevant ist. 
+    - Kleinere Fehler und Unstimmigkeiten im Quellcode bereinigt.
 
 
 Version 1.0-500 vom 25.01.2023
