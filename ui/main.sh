@@ -34,17 +34,17 @@ fi
 # --------------------------------------------------------------
 if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 	[ -z "${get[path]}" ] && get[path]="/var/log"
-	
+
 		# Überprüfen des App-Versionsstandes
 		# --------------------------------------------------------------
 		local_version=$(cat "/var/packages/${app_name}/INFO" | grep ^version | cut -d '"' -f2)
-		git_version=$(wget --no-check-certificate --timeout=60 --tries=1 -q -O- "https://raw.githubusercontent.com/toafez/${app_name}/main/INFO" | grep ^version | cut -d '"' -f2)		
+		git_version=$(wget --no-check-certificate --timeout=60 --tries=1 -q -O- "https://raw.githubusercontent.com/toafez/${app_name}/main/INFO.sh" | grep ^version | cut -d '"' -f2)
 		if [ -n "${git_version}" ] && [ -n "${local_version}" ]; then
 			if dpkg --compare-versions ${git_version} gt ${local_version}; then
 				echo '<p class="text-center">'${txt_update_available}' <a href="https://github.com/toafez/'${app_name}'/releases" target="_blank">'${git_version}'</a></p>'
 			fi
 		fi
-		
+
 	echo '
 	<div class="row mt-2">'
 		# Linke Spalte - Ordnerstruktur
