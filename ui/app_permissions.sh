@@ -25,7 +25,7 @@
 
 
 # call: /usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh
-app_name="${app_name}"
+app_name="LogAnalysis"
 
 
 # Funktion: Benutzer einer Gruppe hinzufügen oder entfernen
