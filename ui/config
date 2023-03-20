@@ -1,19 +1,32 @@
 {
-	".url": {
-		"SYNO.SDS._ThirdParty.App.LogAnalysis": {
+	"LogAnalysis.js": {
+		"SYNO.SDS.LogAnalysis.Application": {
+			"type": "app",
 			"title": "LogAnalysis",
+			"appWindow": "SYNO.SDS.LogAnalysis.MainWindow",
 			"desc": "Analyzing log files",
-			"icon": "images/logo_{0}.png",		
-			"type": "url",
-			"url": "/webman/3rdparty/LogAnalysis/index.cgi",	
+			"icon": "images\/logo_{0}.png",
+			"allowMultiInstance": false,
+			"allowStandalone": true,
+			"allowSharing": true,
 			"allUsers": true,
 			"grantPrivilege": "all",
 			"advanceGrantPrivilege": true,
+			"texts": "texts",
+			"depend": ["SYNO.SDS.LogAnalysis.MainWindow"],
 			"preloadTexts": [
 				"app:app_name",
 				"app:script_true",
 				"app:script_false"
 				]
-		}
+		},
+		"SYNO.SDS.LogAnalysis.MainWindow": {
+			"type": "lib",
+			"title": "LogAnalysis",
+			"icon": "images\/logo_{0}.png",	
+			"texts": "texts",
+			"depend": ["SYNO.SDS.LogAnalysis.Utils"]
+		},
+		"SYNO.SDS.LogAnalysis.Utils": []
 	}
 }
