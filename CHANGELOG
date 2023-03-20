@@ -1,9 +1,13 @@
 LogAnalysis - DSM 7 - Release Notes
 
-Version 1.0-... in progress
-    - Wert type=legacy nach type=url in der ../ui/config geändert, da die App unter DSM 7.2 aktuell nur in einem neuen Tab geöffnet werden kann.
+Version 1.0-650 vom 20.03.2023
 
-    - Changed value type=legacy to type=url in ../ui/config, because the app can currently only be opened in a new tab under DSM 7.2
+ - Deutsch
+    - iFrame-Unterstützung für DSM 7.2 integriert.
+
+ - Englisch
+    - iFrame support for DSM 7.2 integrated
+
 
 Version 1.0-600 vom 14.02.2023
     - Es wurden diverse Anpassungen an der Paketstruktur vorgenommen, um LogAnalysis zukünftig vollständig über das [ Synology Package Framework ] verwalten zu können.
