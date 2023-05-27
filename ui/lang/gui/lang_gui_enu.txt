@@ -85,6 +85,7 @@
 	txtSearchForTerms="Search the file and find terms, a date and/or a time"
 	txtSearch="Search"
 	txtSearchingFor="Enter search string..."
+	txtCaseSensitive="Case sensitive"
 	#txtDay="Day"
 	#txtMonth="Month"
 	#txtYear="Year"

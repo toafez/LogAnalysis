@@ -76,8 +76,7 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 										</span>
 									</a>
 								</nobr>
-							</li>
-							'
+							</li>'
 							while IFS= read -r folder; do
 								IFS="${backupIFS}"
 								[[ -z "${folder}" ]] && continue
@@ -268,6 +267,16 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 							[ -n "${post[searchstring]}" ] && echo -n '"'${post[searchstring]}'" />' || echo -n '"" placeholder="'${txtSearchingFor}'" />'
 						echo '
 					</div>
+					<div class="row px-4 mb-3">
+						<div class="form-group col-md-12">
+							<div class="form-check">'
+								echo -n '<input type="checkbox" class="form-check-input" id="casesensitive_check" name="casesensitive"'; \
+									[[ "${post[casesensitive]}" == "on" ]] && echo -n ' checked />' || echo -n ' />'
+								echo '<label for="casesensitive_check" class="form-check-label text-secondary">'${txtCaseSensitive}'</label>
+							</div>
+						</div>
+					</div>
+					<!-- row -->
 					<div class="row px-4 mb-3">
 						<div class="form-group col-md-5">
 							<div class="form-check">'
@@ -561,32 +570,38 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 					"${set_keyvalue}" "${get_request}" "get[file]" ""
 				fi
 
+				if [[ "${post[casesensitive]}" == "on" ]]; then
+					GrepOptions="-EnH"
+				else
+					GrepOptions="-EnHi"
+				fi
+
 				# Werte die Checkbox-Zustände aus...
 				if [ -z "${post[time]}" ] && [ -z "${post[date]}" ]; then
 					# Datum und Uhrzeit werden NICHT verwendet
-					find -L "${PathOrFile}" -type f -exec grep -EnH '.*(.*'"${post[searchstring]}"').*' {} \; >> ${result}
+					find -L "${PathOrFile}" -type f -exec grep "${GrepOptions}" '.*(.*'"${post[searchstring]}"').*' {} \; >> ${result}
 				fi
 
 				if [ -z "${post[date]}" ] && [[ "${post[time]}" == "on" ]]; then
 					# Uhrzeit wird verwendet
 					if [[ "${post[minute]}" == "---" ]]; then
-						find -L "${PathOrFile}" -type f -exec grep -EnH '.*('${post[hour]}':.{2}:.{2}.*'"${post[searchstring]}"').*' {} \; >> ${result}
+						find -L "${PathOrFile}" -type f -exec grep "${GrepOptions}" '.*('${post[hour]}':.{2}:.{2}.*'"${post[searchstring]}"').*' {} \; >> ${result}
 					else
-						find -L "${PathOrFile}" -type f -exec grep -EnH '.*('${post[hour]}':'${post[minute]}'.{1}:.{2}.*'"${post[searchstring]}"').*' {} \; >> ${result}
+						find -L "${PathOrFile}" -type f -exec grep "${GrepOptions}" '.*('${post[hour]}':'${post[minute]}'.{1}:.{2}.*'"${post[searchstring]}"').*' {} \; >> ${result}
 					fi
 				fi
 
 				if [[ "${post[date]}" == "on" ]] && [ -z "${post[time]}" ]; then
 					# Datum wird verwendet
-					find -L "${PathOrFile}" -type f -exec grep -EnH '.*('${post[year]}'.?'${post[month]}'.?'${post[day]}'.*'"${post[searchstring]}"').*' {} \; >> ${result}
+					find -L "${PathOrFile}" -type f -exec grep "${GrepOptions}" '.*('${post[year]}'.?'${post[month]}'.?'${post[day]}'.*'"${post[searchstring]}"').*' {} \; >> ${result}
 				fi
 
 				if [[ "${post[date]}" == "on" ]] && [[ "${post[time]}" == "on" ]]; then
 					# Datum und Uhrzeit wird verwendet
 					if [[ "${post[minute]}" == "---" ]]; then
-						find -L "${PathOrFile}" -type f -exec grep -EnH '.*('${post[year]}'.?'${post[month]}'.?'${post[day]}'.?'${post[hour]}':.{2}:.{2}.*'"${post[searchstring]}"').*' {} \; >> ${result}
+						find -L "${PathOrFile}" -type f -exec grep "${GrepOptions}" '.*('${post[year]}'.?'${post[month]}'.?'${post[day]}'.?'${post[hour]}':.{2}:.{2}.*'"${post[searchstring]}"').*' {} \; >> ${result}
 					else
-						find -L "${PathOrFile}" -type f -exec grep -EnH '.*('${post[year]}'.?'${post[month]}'.?'${post[day]}'.?'${post[hour]}':'${post[minute]}'.{1}:.{2}.*'"${post[searchstring]}"').*' {} \; >> ${result}
+						find -L "${PathOrFile}" -type f -exec grep "${GrepOptions}" '.*('${post[year]}'.?'${post[month]}'.?'${post[day]}'.?'${post[hour]}':'${post[minute]}'.{1}:.{2}.*'"${post[searchstring]}"').*' {} \; >> ${result}
 					fi
 				fi
 

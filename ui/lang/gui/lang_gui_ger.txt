@@ -85,6 +85,7 @@
 	txtSearchForTerms="Durchsuche die Datei und finde Begriffe, ein Datum und/oder eine Uhrzeit"
 	txtSearch="Durchsuche"
 	txtSearchingFor="Suchbegriff eingeben..."
+	txtCaseSensitive="Groß- und Kleinschreibung beachten"
 	#txtDay="Tag"
 	#txtMonth="Monat"
 	#txtYear="Jahr"
