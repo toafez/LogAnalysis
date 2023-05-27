@@ -204,8 +204,8 @@ group_membership="off"
 		<!-- Einbinden von bootstrap Icons 1.10.3 -->
 		<link rel="stylesheet" href="template/bootstrap/font/bootstrap-icons.css" />
 
-		<!-- Einbinden von jQuery 3.6.3 -->
-		<script src="template/jquery/jquery-3.6.3.min.js"></script>
+		<!-- Einbinden von jQuery 3.7.0 -->
+		<script src="template/jquery/jquery-3.7.0.min.js"></script>
 
 		<!-- Einbinden von resize für box mit Logfile-Inhalt (class="card-body px-0 py-1" in main.sh) -->
 		<script src="template/js/resize.js"></script>
