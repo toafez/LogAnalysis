@@ -3,10 +3,12 @@ LogAnalysis - DSM 7 - Release Notes
 Version 1.0-700 vom 27.05.2023
  - Deutsch
 	- Update jQuery auf 3.7.0
+	- Update Bootsrap Icons auf 1.10.5
     - Optionale Unterscheidung zwischen Groß- und Kleinschreibung für Suchbegriffe hinzugefügt
 
  - Englisch
 	- Update jQuery to 3.7.0
+	- Update Bootsrap Icons to 1.10.5
     - Added optional distinction between upper and lower case for search terms
 
 Version 1.0-650 vom 20.03.2023
