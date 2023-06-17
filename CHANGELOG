@@ -1,5 +1,19 @@
 LogAnalysis - DSM 7 - Release Notes
 
+
+Version 0.7-800 vom 17.06.2023
+
+ - Deutsch
+    - Update Bootstrap Framework auf 5.3.0
+    - Update Bootstrap JavaScript auf 5.3.0
+    - Kleinere Codeoptimierungen in der LogAnalysis.js vorgenommen.
+
+- Englisch
+    - Update Bootstrap Framework to 5.3.0
+    - Update Bootstrap JavaScript to 5.3.0
+    - Made minor code optimizations in LogAnalysis.js
+
+
 Version 1.0-700 vom 27.05.2023
 
  - Deutsch

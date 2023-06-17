@@ -198,7 +198,7 @@ group_membership="off"
 		<!-- Einbinden eigener CSS Formatierungen -->
 		<link rel="stylesheet" href="template/css/mystyle.css" />
 
-		<!-- Einbinden von bootstrap Framework 5.2.3 -->
+		<!-- Einbinden von bootstrap Framework 5.3.0 -->
 		<link rel="stylesheet" href="template/bootstrap/css/bootstrap.min.css" />
 
 		<!-- Einbinden von bootstrap Icons 1.10.5 -->
@@ -303,7 +303,7 @@ group_membership="off"
 			</article>
 		</form>
 
-		<!-- Einbinden von bootstrap JavaScript 5.2.3 -->
+		<!-- Einbinden von bootstrap JavaScript 5.3.0 -->
 		<script src="template/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 		<!-- Script für Popupfenster (z.B. für die Hilfe) -->
