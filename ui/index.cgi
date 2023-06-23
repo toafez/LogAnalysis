@@ -28,77 +28,47 @@ local_enviroment="off"
 global_enviroment="off"
 group_membership="off"
 
+
 # System initiieren
 # --------------------------------------------------------------
 	PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/syno/bin:/usr/syno/sbin
 
 	app_name="LogAnalysis"
+	app_title="LogAnalyis"
 	app_home=$(echo /volume*/@appstore/${app_name}/ui)
+	app_link=$(echo /webman/3rdparty/${app_name})
 	[ ! -d "${app_home}" ] && exit
-
-	# Zurücksetzten möglicher Zugangsberechtigungen
-	unset syno_login rar_data syno_privilege syno_token syno_user user_exist is_admin is_authenticated
 
 
 # App Authentifizierung auswerten
 # --------------------------------------------------------------
-	# Zum auswerten des SynoToken, REQUEST_METHOD auf GET ändern
+
+	# Zum auswerten der login.cgi, REQUEST_METHOD auf GET ändern
 	if [[ "${REQUEST_METHOD}" == "POST" ]]; then
 		REQUEST_METHOD="GET"
 		OLD_REQUEST_METHOD="POST"
 	fi
 
-	# Auslesen und prüfen der Login Berechtigung  ( login.cgi )
-	# ----------------------------------------------------------
-		syno_login=$(/usr/syno/synoman/webman/login.cgi)
+	# Auslesen und prüfen der Login Berechtigung ( login.cgi )
+	syno_login=$(/usr/syno/synoman/webman/login.cgi)
 
-		# SynoToken ( nur bei eingeschaltetem Schutz gegen Cross-Site Request Forgery Attacken )
-		if echo ${syno_login} | grep -q SynoToken ; then
-			syno_token=$(echo "${syno_login}" | grep SynoToken | cut -d ":" -f2 | cut -d '"' -f2)
-		fi
-		if [ -n "${syno_token}" ]; then
-			[ -z ${QUERY_STRING} ] && QUERY_STRING="SynoToken=${syno_token}" || QUERY_STRING="${QUERY_STRING}&SynoToken=${syno_token}"
-		fi
+	# Login Berechtigung ( result=success )
+	if echo ${syno_login} | grep -q result ; then
+		login_result=$(echo "${syno_login}" | grep result | cut -d ":" -f2 | cut -d '"' -f2)
+	fi
+	[[ ${login_result} != "success" ]] && { echo 'Access denied'; exit; }
 
-		# Login Berechtigung ( result=success )
-		if echo ${syno_login} | grep -q result ; then
-			login_result=$(echo "${syno_login}" | grep result | cut -d ":" -f2 | cut -d '"' -f2)
-		fi
-		[[ ${login_result} != "success" ]] && { echo 'Access denied'; exit; }
-
-		# Login erfolgreich ( success=true )
-		if echo ${syno_login} | grep -q success ; then
-			login_success=$(echo "${syno_login}" | grep success | cut -d "," -f3 | grep success | cut -d ":" -f2 | cut -d " " -f2 )
-		fi
-		[[ ${login_success} != "true" ]] && { echo 'Access denied'; exit; }
+	# Login erfolgreich ( success=true )
+	if echo ${syno_login} | grep -q success ; then
+		login_success=$(echo "${syno_login}" | grep success | cut -d "," -f3 | grep success | cut -d ":" -f2 | cut -d " " -f2 )
+	fi
+	[[ ${login_success} != "true" ]] && { echo 'Access denied'; exit; }
 
 	# REQUEST_METHOD wieder zurück auf POST setzen
 	if [[ "${OLD_REQUEST_METHOD}" == "POST" ]]; then
 		REQUEST_METHOD="POST"
 		unset OLD_REQUEST_METHOD
 	fi
-
-
-	# Auslesen von Benutzer/Gruppe aus der authenticate.cgi
-	# ----------------------------------------------------------
-		syno_user=$(/usr/syno/synoman/webman/authenticate.cgi)
-
-		# Prüfen, ob der Benutzer existiert
-		user_exist=$(grep -o "^${syno_user}:" /etc/passwd)
-		[ -n "${user_exist}" ] && user_exist="yes" || exit
-
-		# Prüfen, ob der lokale Benutzer der Gruppe "administrators" angehört
-		if id -G "${syno_user}" | grep -q 101; then
-			is_admin="yes"
-		else
-			is_admin="no"
-		fi
-
-
-	# Variablen zum Schutz auf "readonly" setzen oder Inhalt leeren
-	# ----------------------------------------------------------
-		unset syno_login rar_data syno_privilege
-		readonly syno_token syno_user user_exist is_admin is_authenticated
 
 
 # Umgebungsvariablen festlegen
@@ -118,7 +88,6 @@ group_membership="off"
 	if [ -z "${get[page]}" ]; then
 		"${set_keyvalue}" "${get_request}" "get[page]" "main"
 		"${set_keyvalue}" "${get_request}" "get[section]" "start"
-		"${set_keyvalue}" "${get_request}" "get[SynoToken]" "$syno_token"
 	fi
 
 
@@ -156,8 +125,6 @@ group_membership="off"
 		# Speichern von GET-Requests zur späteren Weiterverarbeitung
 		"${set_keyvalue}" "${get_request}" "$GET_key" "$GET_value"
 	done
-		# Hinzufügen des SynoTokens an die GET-Request Verarbeitung
-		"${set_keyvalue}" "${get_request}" "get[SynoToken]" "$syno_token"
 
 	# Analysieren eingehende POST-Anfragen und Verarbeitung zu ${post[key]}="$value" Variablen
 	declare -A post
@@ -177,6 +144,8 @@ group_membership="off"
 
 # Layoutausgabe
 # --------------------------------------------------------------
+if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
+
 	# Spracheinstellungen aus der ../modules/parse_language.sh laden
 	[ -f "${app_home}/modules/parse_language.sh" ] && source "${app_home}/modules/parse_language.sh" || exit
 	language "GUI"
@@ -191,7 +160,7 @@ group_membership="off"
 	<html lang="en">
 	<head>
 		<meta charset="utf-8" />
-		<title>LogAnalysis</title>
+		<title>'${app_title}'</title>
 		<link rel="shortcut icon" href="images/logo_32.png" type="image/x-icon" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
@@ -216,8 +185,6 @@ group_membership="off"
 			<article>
 				<!-- container -->
 				<div class="container-lg">'
-
-				if [[ "${is_admin}" == "yes" ]]; then
 
 					# Dynamische Seitenausgabe
 					if [ -f "${post[page]}.sh" ]; then
@@ -247,12 +214,8 @@ group_membership="off"
 						<div class="row">
 							<div class="col">
 								<strong>Local Enviroment</strong><br />
-								syno_token='${syno_token}'<br />
 								login_result='${login_result}'<br />
 								login_success='${login_success}'<br />
-								syno_user='${syno_user}'<br />
-								user_exist='${user_exist}'<br />
-								is_admin='${is_admin}'<br />
 							</div>
 						</div>
 						<br />'
@@ -292,10 +255,6 @@ group_membership="off"
 							</div>
 						</div>'
 					fi
-				else
-					# Infotext: Zugriff nur für Benutzer aus der Gruppe der Administratoren erlaubt.
-					echo '<p>&nbsp;</p><p class="text-center">'${txtAlertOnlyAdmin}'</p>'
-				fi
 
 					echo '
 				</div>
@@ -314,4 +273,5 @@ group_membership="off"
 
 	</body>
 	</html>'
-	exit
+fi
+exit

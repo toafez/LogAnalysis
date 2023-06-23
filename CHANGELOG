@@ -1,6 +1,19 @@
 LogAnalysis - DSM 7 - Release Notes
 
 
+Version 0.7-850 vom 23.06.2023
+
+ - Deutsch
+    - Neben lokalen DSM-Benutzern, kann die App nun auch von Domain- und LDAP-Benutzern verwendet werden.
+    - Die Authentifizierungsprüfung, ob ein lokaler Benutzer existiert und ob dieser Mitglied in der Gruppe der Administratoren ist, wurde entfernt.
+    - Die interne Auswertung sowie das Anhängen des SynoToken an den QUERY_STRING wurde entfernt, da dies bereits durch die zuletzt implementierte iFrame Einbindung geschieht.
+
+- Englisch
+    - In addition to local DSM users, the app can now be used by domain and LDAP users.
+    - The authentication check whether a local user exists and whether this user is a member of the administrators group has been removed.
+    - The internal evaluation as well as the appending of the SynoToken to the QUERY_STRING has been removed, as this is already done by the last implemented iFrame inclusion.
+
+
 Version 0.7-800 vom 17.06.2023
 
  - Deutsch
