@@ -214,7 +214,7 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 								<span class="text-secondary">&nbsp;&nbsp;<b>Debug</b></span>
 							</div>
 							<div class="card-body pb-0">'
-								if [ -z "${group_membership}" ] && [ -z "${http_requests}" ] && [ -z "${global_enviroment}"]; then
+								if [ -z "${group_membership}" ] && [ -z "${http_requests}" ] && [ -z "${global_enviroment}" ]; then
 									echo "<p>Bitte wählen Sie eine oder mehrere Debug Optionen aus der Liste aus!</p>"
 								fi
 

@@ -560,7 +560,6 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 				if [ ! -f "${result}" ]; then
 					touch "${result}"
 					chmod a+rx "${result}"
-					chown "$synouser":users "${result}"
 				fi
 
 				if [ -f "${post[searchfile]}" ]; then
