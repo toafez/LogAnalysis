@@ -61,6 +61,9 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 						<a href="index.cgi?page=main&section=reset" title="'${btnReset}'">
 							<i class="bi-icon bi-house text-secondary float-end"></i>
 						</a>
+						<a href="index.cgi?page=debug&section=start" title="'${btnDebug}'">
+							<i class="bi-icon bi-bug text-secondary float-end"></i>
+						</a>
 						<i id="load_loading" class="spinner-border text-secondary mt-1 float-end" style="width: 1rem; height: 1rem;" role="status">
 							<span class="visually-hidden">Loading...</span>
 						</i>

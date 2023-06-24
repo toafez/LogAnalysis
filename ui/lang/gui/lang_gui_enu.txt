@@ -30,6 +30,7 @@
 	btnUnderstood="Understood"
 	btnCancel="Cancel"
 	btnBack="Back"
+	btnDebug="Debug Mode"
 	btnReset="Reset"
 	btnOpen="Open"
 	btnClose="Close"
@@ -39,6 +40,7 @@
 	txtAlertInputError="Input error!"
 	txtAlertInputConfirmation="Input Confirmation!"
 	txtAlertProcessingError="An error has occurred during processing! Please repeat the process."
+	txtAlertOnlyAdmin="Access to the contents of LogAnalysis is only permitted to users from the administrators' group."
 	txt_update_available="<span class=\"text-danger\">A new update is available on GitHub.</span></br >Please update your LogAnaysis version ${local_version} to version"
 
 # Hinweis Erweitern von Berechtigungen
@@ -112,3 +114,14 @@
 	txtLine="line"
 	txtAlertInputConfirmation="Input Confirmation!"
 	txtAlertClearEntry="Should the file content really be deleted?"
+
+# debug.sh
+# --------------------------------------------------------------
+	txt_debug_title="Debug Mode - Error Analysis Options"
+	txt_debug_mode_on="Enable debugging console"
+	txt_debug_mode_off="Disable debugging console"
+	txt_debug_membership="Group membership(s) of the app"
+	txt_debug_requests="GET & POST request methods"
+	txt_debug_get="GET Request Method"
+	txt_debug_post="POST Request Method"
+	txt_debug_global="Global Environment Variables"
