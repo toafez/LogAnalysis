@@ -30,6 +30,7 @@
 	btnUnderstood="Verstanden"
 	btnCancel="Abbrechen"
 	btnBack="Zurück"
+	btnDebug="Debug Modus"
 	btnReset="Zurücksetzen"
 	btnOpen="Öffnen"
 	btnClose="Schließen"
@@ -85,6 +86,7 @@
 	txtSearchForTerms="Durchsuche die Datei und finde Begriffe, ein Datum und/oder eine Uhrzeit"
 	txtSearch="Durchsuche"
 	txtSearchingFor="Suchbegriff eingeben..."
+	txtCaseSensitive="Groß- und Kleinschreibung beachten"
 	#txtDay="Tag"
 	#txtMonth="Monat"
 	#txtYear="Jahr"
@@ -112,3 +114,14 @@
 	txtLine="Zeile"
 	txtAlertInputConfirmation="Eingabebestätigung!"
 	txtAlertClearEntry="Soll der Dateiinhalt wirklich gelöscht werden?"
+
+# debug.sh
+# --------------------------------------------------------------
+	txt_debug_title="Debug-Modus - Optionen zur Fehleranalyse"
+	txt_debug_mode_on="Debugging Konsole einschalten"
+	txt_debug_mode_off="Debugging Konsole ausschalten"
+	txt_debug_membership="Gruppenmitgliedschaft(en) der App"
+	txt_debug_requests="GET & POST Anfragemethoden"
+	txt_debug_get="GET Request Methode"
+	txt_debug_post="POST Request Methode"
+	txt_debug_global="Globale Umgebungsvariablen"
