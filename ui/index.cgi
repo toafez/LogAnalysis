@@ -176,14 +176,14 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 		<!-- Einbinden eigener CSS Formatierungen -->
 		<link rel="stylesheet" href="template/css/mystyle.css" />
 
-		<!-- Einbinden von bootstrap Framework 5.3.0 -->
+		<!-- Einbinden von bootstrap Framework 5.3.1 -->
 		<link rel="stylesheet" href="template/bootstrap/css/bootstrap.min.css" />
 
 		<!-- Einbinden von bootstrap Icons 1.10.5 -->
 		<link rel="stylesheet" href="template/bootstrap/font/bootstrap-icons.css" />
 
-		<!-- Einbinden von jQuery 3.7.0 -->
-		<script src="template/jquery/jquery-3.7.0.min.js"></script>
+		<!-- Einbinden von jQuery 3.7.1 -->
+		<script src="template/jquery/jquery-3.7.1.min.js"></script>
 
 		<!-- Einbinden von resize für box mit Logfile-Inhalt (class="card-body px-0 py-1" in main.sh) -->
 		<script src="template/js/resize.js"></script>
@@ -282,7 +282,7 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 			</article>
 		</form>
 
-		<!-- Einbinden von bootstrap JavaScript 5.3.0 -->
+		<!-- Einbinden von bootstrap JavaScript 5.3.1 -->
 		<script src="template/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 		<!-- Script für Popupfenster (z.B. für die Hilfe) -->

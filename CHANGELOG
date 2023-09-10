@@ -3,12 +3,16 @@ LogAnalysis - DSM 7 - Release Notes
 Version 1.1-000 vom 10.09.2023
     
  - Deutsch
+    - Update jQuery auf 3.7.1
     - Ein Sicherheitsproblem wurde behoben. Danke an @tompipe
     - Beschreibung zum erweitern bzw. zurücknehmen der App-Berechtigung überarbeitet.
+    - Die deutsche Anrede wurde von Sie auf Du umgestellt.
 
  - English
+    - Update jQuery to 3.7.1
     - A security issue has been resolved. thanks to @tompipe
     - Description for extending or revoking app permissions revised.
+    - The German form of address was changed from Sie to Du.
 
 
 Version 1.0-850 vom 24.06.2023
