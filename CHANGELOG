@@ -1,7 +1,15 @@
 LogAnalysis - DSM 7 - Release Notes
 
+Version 1.1-000 vom 10.09.2023
+    
+ - Deutsch
+    - Ein Sicherheitsproblem wurde behoben. Danke an @tompipe
 
-Version 0.7-850 vom 24.06.2023
+ - English
+    - A security issue has been resolved. thanks to @tompipe
+
+
+Version 1.0-850 vom 24.06.2023
 
  - Deutsch
     - Neben lokalen DSM-Benutzern, kann die App nun auch von Domain- und LDAP-Benutzern verwendet werden.
@@ -18,7 +26,7 @@ Version 0.7-850 vom 24.06.2023
     - Minor bugs fixed
 
 
-Version 0.7-800 vom 17.06.2023
+Version 1.0-800 vom 17.06.2023
 
  - Deutsch
     - Update Bootstrap Framework auf 5.3.0

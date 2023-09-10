@@ -57,7 +57,7 @@ echo '
 					IFS="${backupIFS}"
 					echo '
 				</div>'
-			else
+			elif [[ "${get[resultfile]}" == /var/log/* ]]; then
 				# Gebe Dateiinhalt aus
 				echo '
 				<h5>'${txtViewFile}' '${get[file]}'</h5>
@@ -70,6 +70,10 @@ echo '
 					unset counter
 					echo '
 				</div>'
+			else
+				echo '
+				<h5>'${txtAlertSystemError}'</h5>
+				'${txtAlertAccessDenied_step1}' <strong class="text-danger">'${get[resultfile]}'</strong> '${txtAlertAccessDenied_step2}''
 			fi
 			unset line
 		else

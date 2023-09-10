@@ -40,6 +40,8 @@
 	txtAlertInputError="Input error!"
 	txtAlertInputConfirmation="Input Confirmation!"
 	txtAlertProcessingError="An error has occurred during processing! Please repeat the process."
+	txtAlertAccessDenied_step1="Access to the folder"
+	txtAlertAccessDenied_step2="was denied because it is located outside the <strong class=\"text-success\">/var/log</strong> folder."
 	txtAlertOnlyAdmin="Access to the contents of LogAnalysis is only permitted to users from the administrators' group."
 	txt_update_available="<span class=\"text-danger\">A new update is available on GitHub.</span></br >Please update your LogAnaysis version ${local_version} to version"
 

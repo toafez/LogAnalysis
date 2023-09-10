@@ -40,6 +40,8 @@
 	txtAlertInputError="Eingabefehler!"
 	txtAlertInputConfirmation="Eingabebestätigung!"
 	txtAlertProcessingError="Während der Verarbeitung ist ein Fehler ist aufgetreten! Bitte wiederholen Sie den Vorgang."
+	txtAlertAccessDenied_step1="Der Zugriff auf den Ordner"
+	txtAlertAccessDenied_step2="wurde verweigert, da sich dieser außerhalb des Ordners <strong class=\"text-success\">/var/log</strong> befindet."
 	txtAlertOnlyAdmin="Der Zugriff auf die Inhalte von LogAnalysis ist nur Benutzern aus der Gruppe der Administratoren gestattet."
 	txt_update_available="<span class=\"text-danger\">Ein neues Update ist auf GitHub verfügbar.</span></br >Bitte aktualisiere deine LogAnalysis Version ${local_version} auf die Version"
 
