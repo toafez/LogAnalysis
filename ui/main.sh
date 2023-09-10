@@ -452,94 +452,81 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 						# Hinweis: Erweitern von Berechtigungen
 						# --------------------------------------
 						if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
-							if ! cat /etc/group | grep ^log | grep -q LogAnalysis ; then
-								echo '
-								<span class="text-secondary"><strong>'${txtGroupNote}'</strong></span><br />
-								<ul style="list-style-type: none">
-									<li class="pb-2">
-										<strong class="text-danger">'${txtGroupLimited_1}'</strong><br />
-										<span class="text-secondary">'${txtGroupLimited_2}'</span>
-									</li>
-									<li>
-										<strong class="text-secondary">'${txt_group_console_1}'</strong>
-									</li>
-										<ol>
-											<li>'${txt_group_console_step_1}'
-												<ul class="list-unstyled ps-3 pt-2">
-													<li>'${txt_group_console_step_2}'</li>
-													<li>
-														<small>
-															<pre class="text-dark p-1 border border-1 rounded bg-light">'${txt_group_step_5a}'</pre>
-														</small>
-													</li>
-												</ul>
-											</li>
-										</ol>
-									<li><strong class="text-secondary">'${txt_group_taskmanager_1}'</strong></li>
-										<ul style="list-style-type: none">
-											<li>
-												<ol>
-													<li>'${txt_group_step_1}'</li>
-													<li>'${txt_group_step_2}'</li>
-													<li>'${txt_group_step_3}'</li>
-													<li>
-														'${txt_group_step_4}'<br /><br />
-														<small>
-															<pre class="text-dark p-1 border border-1 rounded bg-light">'${txt_group_step_5a}'</pre>
-														</small>
-													</li>
-													<li>'${txt_group_step_6}'</li>
-													<li>'${txt_group_step_7}'</li>
-													<li>'${txt_group_step_8}'</li>
-												</ol>
-											</li>
+							echo '
+							<span class="text-secondary"><strong>'${txt_help_permissions_Note}'</strong></span>'
+								if cat /etc/group | grep ^log | grep -q LogAnalysis ; then
+									app_permissions="true"
+								else
+									app_permissions="false"
+								fi
+								if [[ "${app_permissions}" == "true" ]]; then
+									echo '
+									<ul style="list-style-type: none">
+										<li class="pb-2">
+											<strong class="text-success">'${txt_help_permissions_is_expand}'</strong><br />
+											<span class="text-secondary">'${txt_help_permissions_revoke}'</span>
+										</li>
+										<strong class="text-secondary">'${txt_help_permissions_revoke_terminal}'</strong>'
+								else
+									echo '
+									<ul style="list-style-type: none">
+										<li class="pb-2">
+											<strong class="text-danger">'${txt_help_permissions_is_revoke}'</strong><br />
+											<span class="text-secondary">'${txt_help_permissions_expand}'</span>
+										</li>
+										<strong class="text-secondary">'${txt_help_permissions_expand_terminal}'</strong>'
+								fi
+										echo '
+										<ul class="text-secondary list-unstyled ps-4">
+											<ol>
+												<li>'${txt_help_permissions_step_1}'</li>
+													<ul class="list-unstyled ps-3 pt-2">
+														<li>
+															<small>'
+																if [[ "${app_permissions}" == "true" ]]; then
+																	echo '<pre class="text-dark p-1 border border-1 rounded bg-light">/usr/syno/synoman/webman/3rdparty/'${app_name}'/app_permissions.sh "deluser"</pre>'
+																else
+																	echo '<pre class="text-dark p-1 border border-1 rounded bg-light">/usr/syno/synoman/webman/3rdparty/'${app_name}'/app_permissions.sh "adduser"</pre>'
+																fi						
+																echo '
+															</small>
+														</li>
+													</ul>
+											</ol>
+										</ul>'
+										if [[ "${app_permissions}" == "true" ]]; then
+											echo '<strong class="text-secondary">'${txt_help_permissions_revoke_dsm}'</strong>'
+										else
+											echo '<strong class="text-secondary">'${txt_help_permissions_expand_dsm}'</strong>'
+										fi
+										echo '	
+										<ul class="text-secondary list-unstyled ps-4">
+											<ol>
+												<li>'${txt_help_permissions_step_2}'</li>
+												<li>'${txt_help_permissions_step_3}'</li>
+												<li>'${txt_help_permissions_step_4}'</li>
+												<li>'${txt_help_permissions_step_5}'</li>
+													<ul class="list-unstyled ps-3 pt-2">
+														<li>
+															<small>'
+																if [[ "${app_permissions}" == "true" ]]; then
+																	echo '<pre class="text-dark p-1 border border-1 rounded bg-light">/usr/syno/synoman/webman/3rdparty/'${app_name}'/app_permissions.sh "deluser"</pre>'
+																else
+																	echo '<pre class="text-dark p-1 border border-1 rounded bg-light">/usr/syno/synoman/webman/3rdparty/'${app_name}'/app_permissions.sh "adduser"</pre>'
+																fi						
+																echo '
+															</small>
+														</li>
+													</ul>
+												<li>'${txt_help_permissions_step_6}'</li>
+												<li>'${txt_help_permissions_step_7}'</li>
+												<li>'${txt_help_permissions_step_8}'</li>
+												<li>'${txt_help_permissions_step_9}'</li>
+												<li>'${txt_help_permissions_step_10}'</li>
+											</ol>
 										</ul>
-								</ul>'
+									</ul><br />'
 							fi
-							if cat /etc/group | grep ^log | grep -q LogAnalysis ; then
-								echo '
-								<span class="text-secondary"><strong>'${txtGroupNote}'</strong></span><br />
-								<ul style="list-style-type: none">
-									<li class="pb-2">
-										<strong class="text-success">'${txtGroupPermission_1}'</strong><br />
-										<span class="text-secondary">'${txtGroupPermission_2}'</span>
-										
-									</li>
-									<li><strong class="text-secondary">'${txt_group_console_2}'</strong></li>
-										<ol>
-											<li>'${txt_group_console_step_1}'
-												<ul class="list-unstyled ps-3 pt-2">
-													<li>'${txt_group_console_step_3}'</li>
-													<li>
-														<small>
-															<pre class="text-dark p-1 border border-1 rounded bg-light">'${txt_group_step_5b}'</pre>
-														</small>
-													</li>
-												</ul>
-											</li>
-										</ol>
-									<li><strong class="text-secondary">'${txt_group_taskmanager_2}'</strong></li>
-										<ul style="list-style-type: none">
-											<li>
-												<ol>
-													<li>'${txt_group_step_1}'</li>
-													<li>'${txt_group_step_2}'</li>
-													<li>'${txt_group_step_3}'</li>
-													<li>
-														'${txt_group_step_4}'<br /><br />
-														<small>
-															<pre class="text-dark p-1 border border-1 rounded bg-light">'${txt_group_step_5b}'</pre>
-														</small>
-													</li>
-													<li>'${txt_group_step_6}'</li>
-													<li>'${txt_group_step_7}'</li>
-													<li>'${txt_group_step_8}'</li>
-												</ol>
-											</li>
-										</ul>
-								</ul>'
-							fi
-						fi
 						echo '
 					</div>
 					<!-- card-body -->
