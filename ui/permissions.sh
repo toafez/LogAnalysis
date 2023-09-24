@@ -1,6 +1,6 @@
 #!/bin/bash
 # Filename: app_permissions.sh - coded in utf-8
-# call: /usr/syno/synoman/webman/3rdparty/${app_name}/app_permissions.sh
+# call: /usr/syno/synoman/webman/3rdparty/LogAnalysis/permissions.sh
 
 
 #                     LogAnalysis for DSM 7
@@ -23,8 +23,6 @@
 # have received a copy of the GNU General Public  License  along
 # with this program. If not, see http://www.gnu.org/licenses/  !
 
-
-# call: /usr/syno/synoman/webman/3rdparty/LogAnalysis/app_permissions.sh
 app_name="LogAnalysis"
 
 

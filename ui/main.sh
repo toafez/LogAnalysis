@@ -30,51 +30,69 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "reset" ]]; then
 	echo '<meta http-equiv="refresh" content="0; url=index.cgi?page=main&section=start">'
 fi
 
+# Horizontale Navigationsleiste laden
+# --------------------------------------------------------------
+mainnav
+
 # Startseite anzeigen
 # --------------------------------------------------------------
 if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 	[ -z "${get[path]}" ] && get[path]="/var/log"
 
-		# Überprüfen des App-Versionsstandes
-		# --------------------------------------------------------------
-		local_version=$(cat "/var/packages/${app_name}/INFO" | grep ^version | cut -d '"' -f2)
-		git_version=$(wget --no-check-certificate --timeout=60 --tries=1 -q -O- "https://raw.githubusercontent.com/toafez/${app_name}/main/INFO.sh" | grep ^version | cut -d '"' -f2)
-		if [ -n "${git_version}" ] && [ -n "${local_version}" ]; then
-			if dpkg --compare-versions ${git_version} gt ${local_version}; then
-				echo '<p class="text-center">'${txt_update_available}' <a href="https://github.com/toafez/'${app_name}'/releases" target="_blank">'${git_version}'</a></p>'
-			fi
+	# Überprüfen des App-Versionsstandes
+	# --------------------------------------------------------------
+	local_version=$(cat "/var/packages/${app_name}/INFO" | grep ^version | cut -d '"' -f2)
+	git_version=$(wget --no-check-certificate --timeout=60 --tries=1 -q -O- "https://raw.githubusercontent.com/toafez/${app_name}/main/INFO.sh" | grep ^version | cut -d '"' -f2)
+	if [ -n "${git_version}" ] && [ -n "${local_version}" ]; then
+		if dpkg --compare-versions ${git_version} gt ${local_version}; then
+			echo '
+			<div class="card">
+				<div class="card-header bg-danger-subtle"><strong>'${txt_update_available}'</strong></div>
+				<div class="card-body">'${txt_update_from}'<span class="text-danger"> '${local_version}' </span>'${txt_update_to}'<span class="text-success"> '${git_version}'</span>
+					<div class="float-end">
+						<a href="https://github.com/toafez/'${app_name}'/releases" class="btn btn-sm text-dark text-decoration-none" style="background-color: #e6e6e6;" target="_blank">Update</a>
+					</div>
+				</div>
+			</div><br />'
 		fi
+	fi
+
+	# Überprüfen der App-Berechtigung
+	# --------------------------------------------------------------
+	if [ -z "${permissions}" ] || [[ "${permissions}" == "false" ]]; then
+		echo '
+		<div class="card">
+			<div class="card-header bg-danger-subtle"><strong>'${txt_group_status}'</strong></div>
+			<div class="card-body">'${txt_group_status_false}'
+				<div class="float-end"> 
+					<a href="#help-permissions" class="btn btn-sm text-dark text-decoration-none" style="background-color: #e6e6e6;" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_button_extend_permission}'</a>
+				</div>
+			</div>
+		</div><br />'
+	fi
 
 	echo '
 	<div class="row mt-2">'
 		# Linke Spalte - Ordnerstruktur
 		# ------------------------------------------------------
 		echo '
-		<div class="col-4 pr-1">
-			<div class="card">'
+		<div class="col-4 pe-1">
+			<div class="card border-0 mb-3">'
 				if [[ "${get[path]}" == "/var/log" ]]; then
 					# Aufbau des Hauptordners
 					echo '
-					<div class="card-header clearfix">
-						<i class="bi-icon bi-geo-fill text-secondary float-start" style="cursor: help;" title="'${txtDisplayFolderContent}'"></i>
-						<span class="text-secondary float-start">'${get[path]}'</span>
-						<a href="index.cgi?page=main&section=reset" title="'${btnReset}'">
-							<i class="bi-icon bi-house text-secondary float-end"></i>
-						</a>
-						<a href="index.cgi?page=debug&section=start" title="'${btnDebug}'">
-							<i class="bi-icon bi-bug text-secondary float-end"></i>
-						</a>
-						<i id="load_loading" class="spinner-border text-secondary mt-1 float-end" style="width: 1rem; height: 1rem;" role="status">
-							<span class="visually-hidden">Loading...</span>
-						</i>
+					<div class="card-header border-0">
+						<span class="text-secondary">
+							'${txt_link_folder}' <strong>'${get[path]}'</strong>
+						</span>
 					</div>
-					<div class="card-body pt-1">
+					<div class="card-body">
 						<ul class="list-unstyled mb-0" style="line-height: 1.2rem;">
-							<li>
+							<li class="pb-1">
 								<nobr>
 									<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
-										<span class="text-secondary">
-											<i class="bi-folder-x text-secondary"></i>
+										<span class="text-secondary align-middle pe-1">
+											<i class="bi bi-folder-fill text-secundary" style="font-size: 1.3rem;"></i>
 											<small style="font-weight: 600;">'${get[path]}'</small>
 										</span>
 									</a>
@@ -86,11 +104,11 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 								# Anzeige der Ordner
 								if [ `ls -a "${folder}" | wc -l` -gt 2 ] ; then
 									echo '
-									<li>
-										<nobr>&nbsp;
+									<li class="pb-1 ps-3">
+										<nobr>
 											<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
-												<span class="text-secondary" title="'${txtFolderWithContent}'" style="cursor: help;">
-													<i class="bi-folder-plus text-secondary"></i>
+												<span class="text-secondary align-middle pe-1" title="'${txtFolderWithContent}'" style="cursor: help;">
+													<i class="bi bi-folder-fill text-warning" style="font-size: 1.3rem;"></i>
 												</span>
 												<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
 											</a>
@@ -98,11 +116,11 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 									</li>'
 								else
 									echo '
-									<li>
-										<nobr>&nbsp;
+									<li class="pb-1 ps-3">
+										<nobr>
 											<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
-												<span class="text-secondary" title="'${txtFolderWithoutContent}'" style="cursor: help;">
-													<i class="bi-folder text-secondary"></i>
+												<span class="text-secondary align-middle pe-1" title="'${txtFolderWithoutContent}'" style="cursor: help;">
+													<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>
 												</span>
 												<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
 											</a>
@@ -113,24 +131,19 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 				elif [ -d "${get[path]}" ]; then
 					# Verzweigung in einen Unterordner
 					echo '
-					<div class="card-header clearfix">
-						<i class="bi-icon bi-geo-fill text-secondary float-start" style="cursor: help;" title="'${txtDisplayFolderContent}'"></i>
-						<span class="text-secondary float-start">'${get[path]}'</span>
-						<a href="index.cgi?page=main&section=reset" title="'${btnReset}'">
-							<i class="bi-icon bi-house text-secondary float-end"></i>
-						</a>
-						<i id="load_loading" class="spinner-border text-secondary mt-1 float-end" style="width: 1rem; height: 1rem;" role="status">
-							<span class="visually-hidden">Loading...</span>
-						</i>
+					<div class="card-header border-0">
+						<span class="text-secondary">
+							'${txt_link_folder}' <strong>'${get[path]}'</strong>
+						</span>
 					</div>
-					<div class="card-body pt-1">
+					<div class="card-body">
 						<ul class="list-unstyled mb-0" style="line-height: 1.2rem;">
-							<li>
+							<li class="pb-1">
 								<nobr>
 									<a href="index.cgi?page=main&section=start&path='${get[path]%/*}'&file=&query=" class="text-secondary text-decoration-none" title="'${btnBack}'">
-										<span class="text-secondary">
-											<i class="bi-box-arrow-left text-secondary"></i>
-											<small style="font-weight: 600;">'${get[path]%/*}'/<span style="font-weight: 400; font-style: italic; cursor: auto;" title="">'${get[path]##*/}'</span>
+										<span class="text-secondary align-middle pe-1">
+											<i class="bi bi-box-arrow-left text-secondary" style="font-size: 1.3rem;"></i>
+											<small style="font-weight: 600;">'${get[path]%/*}'</span>
 											</small>
 										</span>
 									</a>
@@ -142,23 +155,23 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 								# Anzeige der Ordner
 								if [ `ls -a "${folder}" | wc -l` -gt 2 ] ; then
 									echo '
-									<li>
-										<nobr>&nbsp;
+									<li class="pb-1 ps-3">
+										<nobr>
 											<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-info text-decoration-none">
-												<span class="text-secondary" title="'${txtFolderWithContent}'" style="cursor: help;">
-													<i class="bi-folder text-secondary"></i>
+												<span class="text-secondary align-middle pe-1" title="'${txtFolderWithContent}'" style="cursor: help;">
+													<i class="bi bi-folder-fill text-warning" style="font-size: 1.3rem;"></i>
 												</span>
-													<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
+												<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
 											</a>
 										</nobr>
 									</li>'
 								else
 									echo '
-									<li>
-										<nobr>&nbsp;
+									<li class="pb-1 ps-3">
+										<nobr>
 											<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-muted text-decoration-none">
-												<span class="text-secondary" title="'${txtFolderWithoutContent}'" style="cursor: help;">
-													<i class="bi-folder text-secondary"></i>
+												<span class="text-secondary align-middle pe-1" title="'${txtFolderWithoutContent}'" style="cursor: help;">
+													<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>
 												</span>
 													<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
 											</a>
@@ -167,80 +180,73 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 								fi
 							done <<< "$( find ${get[path]}/* -mindepth 0 -maxdepth 0 -xtype d | sort )"
 				fi
-				echo '
-							<div class="clearfix">'
-								while IFS= read -r file; do
-									IFS="${backupIFS}"
-									[[ -z "${file}" ]] && continue
-									filesize=$(du -sh "$file" | sed "s#/.*##")
-									# Anzeige der Dateien
-									if [[ "${file}" == *.xz || "${file}" == *.tgz || "${file}" == *.txz ]]; then
-										echo '
-										<li>
-											<nobr>&nbsp;
-												<span class="text-warning" title="'${txtFileIsArchive}'" style="cursor: help;">
-													<i class="bi-file-earmark-zip text-warning"></i>
-												</span>
-												<small class="text-warning" style="cursor: not-allowed;">'${file##*/}'</small>
-											</nobr>
-											<span class="float-end">
-												<small><span class="text-secondary">'${filesize}'</span></small>
+							while IFS= read -r file; do
+								IFS="${backupIFS}"
+								[[ -z "${file}" ]] && continue
+								filesize=$(du -sh "$file" | sed "s#/.*##")
+								# Anzeige der Dateien
+								if [[ "${file}" == *.xz || "${file}" == *.tgz || "${file}" == *.txz ]]; then
+									echo '
+									<li class="pb-1 ps-2">
+										<nobr>&nbsp;
+											<span class="text-warning align-middle pe-1" title="'${txtFileIsArchive}'" style="cursor: help;">
+												<i class="bi bi-file-earmark-zip text-danger" style="font-size: 1.3rem;"></i>
 											</span>
-										</li>'
-									elif [ ! -r "${file}" ]; then
-										echo '
-										<li>
-											<nobr>&nbsp;
-												<span class="text-secondary" title="'${txtFileNoReadingRights}'" style="cursor: help;">
-													<i class="bi-file-earmark-x text-danger"></i>
-												</span>
-												<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
-											</nobr>
-											<span class="float-end">
-												<small><span class="text-secondary">'${filesize}'</span></small>
+											<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
+										</nobr>
+										<span class="float-end">
+											<small><span class="text-secondary">'${filesize}'</span></small>
+										</span>
+									</li>'
+								elif [ ! -r "${file}" ]; then
+									echo '
+									<li class="pb-1 ps-2">
+										<nobr>&nbsp;
+											<span class="text-secondary align-middle pe-1" title="'${txtFileNoReadingRights}'" style="cursor: help;">
+												<i class="bi bi-file-earmark-x text-danger" style="font-size: 1.3rem;"></i>
 											</span>
-										</li>'
-									elif [ ! -w "${file}" ]; then
-										echo '
-										<li>
-											<nobr>&nbsp;
-												<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
-													<span class="text-secondary" title="'${txtFileNoWritingRights}'" style="cursor: help;">
-														<i class="bi-file-earmark-font-fill text-secondary"></i>
-													</span>
+											<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
+										</nobr>
+										<span class="float-end">
+											<small><span class="text-secondary">'${filesize}'</span></small>
+										</span>
+									</li>'
+								elif [ ! -w "${file}" ]; then
+									echo '
+									<li class="pb-1 ps-2">
+										<nobr>&nbsp;
+											<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
+												<span class="text-secondary align-middle pe-1" title="'${txtFileNoWritingRights}'" style="cursor: help;">
+													<i class="bi bi-file-earmark-font text-warning" style="font-size: 1.3rem;"></i>
+												</span>
+												<small style="cursor: pointer;">'${file##*/}'</small>
+											</a>
+										</nobr>
+										<span class="float-end">
+											<small><span class="text-secondary">'${filesize}'</span></small>
+										</span>
+									</li>'
+								else
+									echo '
+									<li class="pb-1 ps-2">
+										<nobr>&nbsp;
+											<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
+												<span class="text-secondary align-middle pe-1" title="'${txtFileOpen}'" style="cursor: help;">
+													<i class="bi bi-file-earmark-font text-success" style="font-size: 1.3rem;"></i>
+												</span>
 													<small style="cursor: pointer;">'${file##*/}'</small>
-												</a>
-											</nobr>
-											<span class="float-end">
-												<small><span class="text-secondary">'${filesize}'</span></small>
-											</span>
-										</li>'
-									else
-										echo '
-										<li>
-											<nobr>&nbsp;
-												<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
-													<span class="text-secondary" title="'${txtFileOpen}'" style="cursor: help;">
-														<i class="bi-file-earmark-font text-secondary"></i>
-													</span>
-														<small style="cursor: pointer;">'${file##*/}'</small>
-												</a>
-											</nobr>
-											<span class="float-end">
-												<small><span class="text-secondary">'${filesize}'</span></small>
-											</span>
-										</li>'
-									fi
-								done <<< "$( find -L ${get[path]} -maxdepth 1 -type f | sort )"
-								echo '
-							</div>
+											</a>
+										</nobr>
+										<span class="float-end">
+											<small><span class="text-secondary">'${filesize}'</span></small>
+										</span>
+									</li>'
+								fi
+							done <<< "$( find -L ${get[path]} -maxdepth 1 -type f | sort )"
+							echo '
 						</ul>
 					</div>
-					<!-- card-body -->'
-				echo '
 			</div>
-			<!-- card -->
-			<br />
 		</div>
 		<!-- col -->'
 
@@ -255,14 +261,16 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 			hour_now=$(date +%H)
 			minute_now=$(date +%M)
 			echo '
-			<div class="card mb-3">
-				<div class="card-header">
-					<i class="bi-icon bi-search text-secondary float-start" style="cursor: help;" title="'${txtSearchForTerms}'"></i>
-					<span class="text-secondary">&nbsp;&nbsp;'${txtSearch}''
+			<div class="card border-0 mb-3">
+				<div class="card-header border-0">
+					<span class="text-secondary">'${txtSearch}''
 						get[file]=$(urldecode ${get[file]})
-						[ -f "${get[file]}" ] && echo ' <b>'${get[file]}'</b>' || echo '<b>'${get[path]}'</b>'
+						[ -f "${get[file]}" ] && echo ' <strong>'${get[file]}'</strong>' || echo '<strong>'${get[path]}'</strong>'
 						echo '
 					</span>
+					<i id="load_loading" class="spinner-border text-secondary mt-1 ms-2" style="width: 1rem; height: 1rem;" role="status">
+						<span class="visually-hidden">Loading...</span>
+					</i>
 				</div>
 				<div class="card-body pb-0">
 					<div class="form-group px-4 mb-3">'
@@ -395,10 +403,9 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 			# --------------------------------------------------
 			if [[ -z "${post[formular]}" ]] && [[ "${get[query]}" != "view" ]] && [[ "${get[query]}" != "clear" ]]; then
 				echo '
-				<div class="card mb-3">
-					<div class="card-header">
-						<i class="bi-icon bi-question text-secondary float-start" style="cursor: help;" title="'${txtHelp}'"></i>
-						<span class="text-secondary">&nbsp;&nbsp;'${txtHelp}'
+				<div class="card border-0 mb-3">
+					<div class="card-header border-0">
+						<span class="text-secondary">'${txtHelpHeader}'
 						</span>
 					</div>
 					<div class="card-body pb-0">'
@@ -406,128 +413,47 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 						# Hilfe: Zeichenerklärung
 						# --------------------------------------
 						echo '
-						<span class="text-secondary"><strong>'${txtHelpHeader}'</strong></span><br />
 						<ul style="list-style-type: none">
-							<li><span class="text-secondary">
-									<i class="bi-house text-secondary"></i>
+							<li><span class="text-secondary pe-1">
+									<i class="bi bi-house-door text-secondary" style="font-size: 1.3rem;"></i>
 									<small>'${txtBtnReset}'</small>
 								</span>
 							</li>
 							<li>
-								<span class="text-secondary">
-									<i class="bi-folder-plus text-secondary"></i>
+								<span class="text-secondary pe-1">
+									<i class="bi bi-folder-fill text-warning" style="font-size: 1.3rem;"></i>
 									<small>'${txtFolderWithContent}'</small>
 								</span>
 							</li>
 							<li>
-								<span class="text-secondary">
-									<i class="bi-folder text-secondary"></i>
+								<span class="text-secondary pe-1">
+									<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>
 									<small>'${txtFolderWithoutContent}'</small>
 								</span>
 							</li>
-								<span class="text-secondary">
-									<i class="bi-file-earmark-font text-secondary"></i>
+								<span class="text-secondary pe-1">
+									<i class="bi bi-file-earmark-font text-success" style="font-size: 1.3rem;"></i>
 									<small>'${txtFileOpen}'</small>
 								</span>
 							<li>
-								<span class="text-secondary">
-									<i class="bi-file-earmark-font-fill text-secondary"></i>
+								<span class="text-secondary pe-1">
+									<i class="bi bi-file-earmark-font text-warning" style="font-size: 1.3rem;"></i>
 									<small>'${txtFileNoWritingRights}'</small>
 								</span>
 							</li>
 							<li>
-								<span class="text-secondary">
-									<i class="bi-file-earmark-x text-danger"></i>
+								<span class="text-secondary pe-1">
+									<i class="bi bi-file-earmark-x text-danger" style="font-size: 1.3rem;"></i>
 									<small>'${txtFileNoReadingRights}'</small>
 								</span>
 							</li>
 							<li>
-								<span class="text-secondary">
-									<i class="bi-file-earmark-zip text-warning"></i>
+								<span class="text-secondary pe-1">
+									<i class="bi bi-file-earmark-zip text-danger" style="font-size: 1.3rem;"></i>
 									<small>'${txtFileIsArchive}'</small>
 								</span>
 							</li>
-						</ul>'
-
-						# Hinweis: Erweitern von Berechtigungen
-						# --------------------------------------
-						if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
-							echo '
-							<span class="text-secondary"><strong>'${txt_help_permissions_Note}'</strong></span>'
-								if cat /etc/group | grep ^log | grep -q LogAnalysis ; then
-									app_permissions="true"
-								else
-									app_permissions="false"
-								fi
-								if [[ "${app_permissions}" == "true" ]]; then
-									echo '
-									<ul style="list-style-type: none">
-										<li class="pb-2">
-											<strong class="text-success">'${txt_help_permissions_is_expand}'</strong><br />
-											<span class="text-secondary">'${txt_help_permissions_revoke}'</span>
-										</li>
-										<strong class="text-secondary">'${txt_help_permissions_revoke_terminal}'</strong>'
-								else
-									echo '
-									<ul style="list-style-type: none">
-										<li class="pb-2">
-											<strong class="text-danger">'${txt_help_permissions_is_revoke}'</strong><br />
-											<span class="text-secondary">'${txt_help_permissions_expand}'</span>
-										</li>
-										<strong class="text-secondary">'${txt_help_permissions_expand_terminal}'</strong>'
-								fi
-										echo '
-										<ul class="text-secondary list-unstyled ps-4">
-											<ol>
-												<li>'${txt_help_permissions_step_1}'</li>
-													<ul class="list-unstyled ps-3 pt-2">
-														<li>
-															<small>'
-																if [[ "${app_permissions}" == "true" ]]; then
-																	echo '<pre class="text-dark p-1 border border-1 rounded bg-light">/usr/syno/synoman/webman/3rdparty/'${app_name}'/app_permissions.sh "deluser"</pre>'
-																else
-																	echo '<pre class="text-dark p-1 border border-1 rounded bg-light">/usr/syno/synoman/webman/3rdparty/'${app_name}'/app_permissions.sh "adduser"</pre>'
-																fi						
-																echo '
-															</small>
-														</li>
-													</ul>
-											</ol>
-										</ul>'
-										if [[ "${app_permissions}" == "true" ]]; then
-											echo '<strong class="text-secondary">'${txt_help_permissions_revoke_dsm}'</strong>'
-										else
-											echo '<strong class="text-secondary">'${txt_help_permissions_expand_dsm}'</strong>'
-										fi
-										echo '	
-										<ul class="text-secondary list-unstyled ps-4">
-											<ol>
-												<li>'${txt_help_permissions_step_2}'</li>
-												<li>'${txt_help_permissions_step_3}'</li>
-												<li>'${txt_help_permissions_step_4}'</li>
-												<li>'${txt_help_permissions_step_5}'</li>
-													<ul class="list-unstyled ps-3 pt-2">
-														<li>
-															<small>'
-																if [[ "${app_permissions}" == "true" ]]; then
-																	echo '<pre class="text-dark p-1 border border-1 rounded bg-light">/usr/syno/synoman/webman/3rdparty/'${app_name}'/app_permissions.sh "deluser"</pre>'
-																else
-																	echo '<pre class="text-dark p-1 border border-1 rounded bg-light">/usr/syno/synoman/webman/3rdparty/'${app_name}'/app_permissions.sh "adduser"</pre>'
-																fi						
-																echo '
-															</small>
-														</li>
-													</ul>
-												<li>'${txt_help_permissions_step_6}'</li>
-												<li>'${txt_help_permissions_step_7}'</li>
-												<li>'${txt_help_permissions_step_8}'</li>
-												<li>'${txt_help_permissions_step_9}'</li>
-												<li>'${txt_help_permissions_step_10}'</li>
-											</ol>
-										</ul>
-									</ul><br />'
-							fi
-						echo '
+						</ul>
 					</div>
 					<!-- card-body -->
 				</div>
@@ -597,24 +523,23 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 				if [ -f "${result}" ]; then
 					# Gebe Suchergebnis aus
 					echo '
-					<div class="card">
-						<div class="card-header clearfix">
-							<i class="bi-icon bi-text-left text-secondary float-start" style="cursor: help;" title="'${txtWithLineBreaks}'"></i>
-							<span class="text-secondary">&nbsp;&nbsp;'${txtSearchResult}''
+					<div class="card border-0">
+						<div class="card-header border-0">
+							<span class="text-secondary">'${txtSearchResult}''
 								#get[file]=$(urldecode ${get[file]})
-								[ -z "${get[file]}" ] && echo ' '${txtFolder}' <b>'${get[path]}'</b>' || echo ' '${txtFile}' <b>'${get[file]##*/}'</b>'
+								[ -z "${get[file]}" ] && echo ' '${txtFolder}' <strong>'${get[path]}'</strong>' || echo ' '${txtFile}' <strong>'${get[file]##*/}'</strong>'
 								echo '
 							</span>'
 							if [ -s "${result}" ]; then
 								echo '
 								<a class="float-end" href="index.cgi?page=main&section=start&query=view&file='${get[file]}'" title="'${btnClose}'">
-									<i class="bi-icon bi-x text-secondary float-end"></i>
+									<i class="bi bi-x-lg text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
 								</a>
 								<a href="index.cgi?page=contentview&path='${get[path]}'&file='${get[file]}'&resultfile='${result}'" onclick="return popup(this,992,600)" title="'${txtWhitoutLineBreaks}'">
-									<i class="bi-icon bi-justify text-secondary float-end"></i>
+									<i class="bi bi-list text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
 								</a>
 								<a class="float-end" href="temp/result.txt" title="Download" download >
-									<i class="bi-icon bi-download text-secondary float-end"></i>
+									<i class="bi bi-cloud-arrow-down text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
 								</a>
 							</i>'
 							fi
@@ -658,20 +583,19 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 					#[ -f "${get_request}" ] && rm "${get_request}"
 					# Gebe Dateiinhalt als ganzes aus
 					echo '
-					<div class="card">
-						<div class="card-header clearfix">
-							<i class="bi-icon bi-text-left text-secondary float-start" style="cursor: help;" title="'${txtWithLineBreaks}'"></i>
-								<span class="text-secondary float-start">&nbsp;&nbsp;'${txtFileContent}' <b>'${get[file]##*/}'</b></span>'
+					<div class="card border-0">
+						<div class="card-header border-0">
+							<span class="text-secondary">'${txtFileContent}' <strong>'${get[file]##*/}'</strong></span>'
 							if [ -s "${get[file]}" ]; then
 								if [ -w "${get[file]}" ]; then
 									echo '
 									<a href="index.cgi?page=main&section=start&query=clear&path='${get[path]}'&file='${get[file]}'" title="'${txtDeleteFileContent}'">
-										<i class="bi-icon bi-journal-x text-secondary float-end"></i>
+										<i class="bi bi-x-lg text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
 									</a>'
 								fi
 								echo '
 								<a href="index.cgi?page=contentview&resultfile='${get[file]}'" onclick="return popup(this,992,600)" title="'${txtWhitoutLineBreaks}'">
-									<i class="bi-icon bi-justify text-secondary float-end"></i>
+									<i class="bi bi-list text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
 								</a>'
 							fi
 							echo '

@@ -36,6 +36,18 @@
 	btnClose="Close"
 	btnHistoryBack="<a href=\"javascript:history.back()\" class=\"btn btn-secondary btn-sm\">${btnBack}</a>"
 
+	txt_link_help="Help"
+	txt_link_folder="Directory"
+	txt_link_settings="System Settings"
+	txt_link_debug="Debug mode"
+	txt_link_expand_permissions="Expand app permissions"
+	txt_link_revoke_permissions="Revoke app permission"
+	txt_button_extend_permission="Extend permission"
+	txt_button_revoke_permission="Revoke permission"
+
+	txt_group_status="App permission status"
+	txt_group_status_false="${app_name} only has <span class=\"text-danger\">limited</span> app or system permissions."
+
 	txtAlertSystemError="System error!"
 	txtAlertInputError="Input error!"
 	txtAlertInputConfirmation="Input Confirmation!"
@@ -43,7 +55,9 @@
 	txtAlertAccessDenied_step1="Access to the folder"
 	txtAlertAccessDenied_step2="was denied because it is located outside the <strong class=\"text-success\">/var/log</strong> folder."
 	txtAlertOnlyAdmin="Access to the contents of LogAnalysis is only permitted to users from the administrators' group."
-	txt_update_available="<span class=\"text-danger\">A new update is available on GitHub.</span></br >Please update your LogAnaysis version ${local_version} to version"
+	txt_update_available="A new <span class=\"text-success fst-italic\">update</span> is available on GitHub."
+	txt_update_from="Please update your ${app_name} version"
+	txt_update_to="to version"
 
 # Hinweis Erweitern von Berechtigungen
 # --------------------------------------------------------------
@@ -65,7 +79,7 @@
 	txt_help_permissions_step_7="In order for the task to be added to the task scheduler, you must finally enter the password of the user currently logged into the DSM and confirm the process with the <span class=\"text-danger fst-italic\">Send</span> button ."
 	txt_help_permissions_step_8="In the overview of the task planner, you must now <span class=\"text-danger fst-italic\">highlight</span> the just created task with the mouse (the line should have a blue background after highlighting), however <span class=\"text-decoration-underline\">do not tick</span> the checkbox to activate the task permanently."
 	txt_help_permissions_step_9="Now run the task once by pressing the <span class=\"text-danger fst-italic\">Run</span> button."
-	txt_help_permissions_step_10="Close and re-enter ${app_name} for the changes to take effect."
+	txt_help_permissions_step_10="Close the app and run ${app_name} again for the changes to take effect."
 
 # Hilfe Ordnerstruktur
 # --------------------------------------------------------------
@@ -124,3 +138,4 @@
 	txt_debug_get="GET Request Method"
 	txt_debug_post="POST Request Method"
 	txt_debug_global="Global Environment Variables"
+

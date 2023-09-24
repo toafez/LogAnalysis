@@ -36,6 +36,18 @@
 	btnClose="Schließen"
 	btnHistoryBack="<a href=\"javascript:history.back()\" class=\"btn btn-secondary btn-sm\">${btnBack}</a>"
 
+	txt_link_help="Hilfe"
+	txt_link_folder="Verzeichnis"
+	txt_link_settings="Systemeinstellungen"
+	txt_link_debug="Debug Modus"
+	txt_link_expand_permissions="App-Berechtigung erweitern"
+	txt_link_revoke_permissions="App-Berechtigung zurücknehmen"
+	txt_button_extend_permission="Berechtigung erweitern"
+	txt_button_revoke_permission="Berechtigung zurücknehmen"
+
+	txt_group_status="App Berechtigungsstatus"
+	txt_group_status_false="${app_name} verfügt nur über <span class=\"text-danger\">eingeschränkte</span> App- bzw. Systemberechtigungen."
+
 	txtAlertSystemError="Systemfehler!"
 	txtAlertInputError="Eingabefehler!"
 	txtAlertInputConfirmation="Eingabebestätigung!"
@@ -43,7 +55,9 @@
 	txtAlertAccessDenied_step1="Der Zugriff auf den Ordner"
 	txtAlertAccessDenied_step2="wurde verweigert, da sich dieser außerhalb des Ordners <strong class=\"text-success\">/var/log</strong> befindet."
 	txtAlertOnlyAdmin="Der Zugriff auf die Inhalte von LogAnalysis ist nur Benutzern aus der Gruppe der Administratoren gestattet."
-	txt_update_available="<span class=\"text-danger\">Ein neues Update ist auf GitHub verfügbar.</span></br >Bitte aktualisiere deine LogAnalysis Version ${local_version} auf die Version"
+	txt_update_available="Auf GitHub steht ein neues <span class=\"text-success fst-italic\">Update</span> zur Verfügung."
+	txt_update_from="Bitte aktualisiere deine ${app_name} Version"
+	txt_update_to="auf die Version"
 
 # Hinweis Erweitern von Berechtigungen
 # --------------------------------------------------------------
@@ -65,7 +79,7 @@
 	txt_help_permissions_step_7="Damit die Aufgabe dem Aufgabenplaner hinzugefügt wird, musst du abschließend das Passwort deines aktuell am DSM angemeldeten Benutzers eingeben und den Vorgang über die Schaltfläche <span class=\"text-danger fst-italic\">Senden</span> bestätigen."
 	txt_help_permissions_step_8="In der Übersicht des Aufgabenplaners musst du nun die grade erstellte Aufgabe mit der Maus <span class=\"text-danger fst-italic\">markieren</span> die Zeile sollte nach dem markieren blau hinterlegt sein), jedoch <span class=\"text-decoration-underline\">keinen</span> Haken in der Checkbox setzen, um die Aufgabe dauerhaft zu aktivieren."
 	txt_help_permissions_step_9="Führe die Aufgabe nun durch betätigen der Schaltfläche <span class=\"text-danger fst-italic\">Ausführen</span> einmalig aus."
-	txt_help_permissions_step_10="Schließe die ${app_name} und rufe sie erneut auf, damit die Änderungen wirksam werden."
+	txt_help_permissions_step_10="Schließe die App und ruf ${app_name} erneut auf, damit die Änderungen wirksam werden."
 
 # Hilfe Ordnerstruktur
 # --------------------------------------------------------------
@@ -124,3 +138,4 @@
 	txt_debug_get="GET Request Methode"
 	txt_debug_post="POST Request Methode"
 	txt_debug_global="Globale Umgebungsvariablen"
+

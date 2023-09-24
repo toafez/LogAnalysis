@@ -63,6 +63,13 @@
 		unset OLD_REQUEST_METHOD
 	fi
 
+# App-Berechtigungen auswerten
+# --------------------------------------------------------------
+if cat /etc/group | grep ^log | grep -q ${app_name} ; then
+	permissions="true"
+else
+	permissions="false"
+fi
 
 # Umgebungsvariablen festlegen
 # --------------------------------------------------------------
@@ -195,6 +202,70 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 				<!-- container -->
 				<div class="container-lg">'
 
+					# Funktion: Hauptnavigation anzeigen
+					# --------------------------------------------------------------
+					function mainnav()
+					{
+						echo '
+						<nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+							<div class="container-fluid">
+								<a class="btn btn-sm text-dark text-decoration-none py-0" role="button" style="background-color: #e6e6e6;" href="index.cgi?page=main&section=reset" title="'${txt_button_refresh}'">
+									<i class="bi bi-house-door text-dark" style="font-size: 1.2rem;"></i>
+								</a>
+								<div class="float-end">
+									<ul class="navbar-nav">
+										<li class="nav-item dropdown pt-1">
+											<a class="dropdown-toggle btn btn-sm text-dark text-decoration-none" style="background-color: #e6e6e6;" href="#" id="navDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+												'${txt_link_settings}'
+											</a>
+											<ul class="dropdown-menu dropdown-menu-sm-end" aria-labelledby="navDropdown">
+												<li><a class="dropdown-item" href="index.cgi?page=debug&section=start">'${txt_link_debug}'</a></li>'
+												if [[ "${permissions}" == "true" ]]; then
+													echo '<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_link_revoke_permissions}'</button></li>'
+												else
+													echo '<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_link_expand_permissions}'</button></li>'
+												fi
+												echo '
+											</ul>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</nav>
+						<p>&nbsp;</p>
+						<br />'
+					}
+
+					# Funktion: Hilfeartikel im Popupfenster anzeigen
+					# --------------------------------------------------------------
+					function help_modal ()
+					{
+						echo '
+						<!-- Modal -->
+						<div class="modal fade" id="help-'${1}'" tabindex="-1" aria-labelledby="help-'${1}'-label" aria-hidden="true">
+							<div class="modal-dialog modal-fullscreen">
+								<div class="modal-content">
+									<div class="modal-header bg-light">
+										<h5 class="modal-title" style="color: #FF8C00;" id="help-'${1}'-label"><span class="navbar-brand">'${2}'</span></h5>
+										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="'${txt_button_Close}'"></button>
+									</div>
+									<div class="modal-body">'
+										[ -f "${app_home}/help/${1}.sh" ] && source "${app_home}/help/${1}.sh" || echo "Page not found"
+										echo '
+									</div>
+								</div>
+							</div>
+						</div>'
+					}
+
+					# Hilfeartikel laden
+					# --------------------------------------------------------------
+					if [[ "${permissions}" == "true" ]]; then
+						help_modal "app_permissions" "${txt_link_revoke_permissions}"
+					else
+						help_modal "app_permissions" "${txt_link_expand_permissions}"
+					fi
+
 					# Dynamische Seitenausgabe
 					if [ -f "${post[page]}.sh" ]; then
 						. ./"${post[page]}.sh"
@@ -208,8 +279,8 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 					if [[ "${debugging}" == "on" ]]; then
 						echo '
 						<p>&nbsp;</p>
-						<div class="card mb-3">
-							<div class="card-header">
+						<div class="card border-0 mb-3">
+							<div class="card-header border-0">
 								<i class="bi-icon bi-bug text-secondary float-start" style="cursor: help;" title="Debug"></i>
 								<span class="text-secondary">&nbsp;&nbsp;<b>Debug</b></span>
 							</div>
