@@ -21,6 +21,10 @@
 # have received a copy of the GNU General Public  License  along
 # with this program. If not, see http://www.gnu.org/licenses/  !
 
+# Horizontale Navigationsleiste laden
+# --------------------------------------------------------------
+mainnav
+
 # Startseite anzeigen
 # --------------------------------------------------------------
 if [[ "${get[page]}" == "debug" && "${get[section]}" == "start" ]]; then
@@ -30,13 +34,9 @@ if [[ "${get[page]}" == "debug" && "${get[section]}" == "start" ]]; then
 	echo '
 	<div class="row mt-2">
 		<div class="col pr-1">
-			<div class="card">
-				<div class="card-header clearfix">
-					<i class="bi-icon bi-bug text-secondary float-start" style="cursor: help;" title="'${txt_debug_title}'"></i>
-						<span class="text-secondary float-start">'${txt_debug_title}'</span>
-						<a href="index.cgi?page=main&section=start" title="'${btnBack}'">
-							<i class="bi-icon bi-house text-secondary float-end"></i>
-						</a>
+			<div class="card border-0">
+				<div class="card-header border-0">
+					<span class="text-secondary">'${txt_debug_title}'</span>
 				</div>
 				<div class="card-body">
 					<div class="row">
