@@ -47,8 +47,8 @@ rootdir()
 		# Show root directory
         echo '
 		<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
-			<span class="text-secondary align-middle pe-1">
-				<i class="bi bi-folder-fill text-secundary" style="font-size: 1.3rem;"></i>
+			<span class="text-secondary pe-1">
+				<i class="bi bi-folder-fill text-secundary align-middle" style="font-size: 1.3rem;"></i>
 				<small class="fw-bold">'${subfolder}'</small>
 			</span>
 		</a>'
@@ -296,9 +296,17 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 			echo '
 			<div class="card border-0 mb-3">
 				<div class="card-header border-0">
-					<span class="text-secondary">'${txtSearch}''
+					<span class="text-secondary"><strong>'${txtSearch}'&nbsp;&nbsp;</strong>'
 						get[file]=$(urldecode ${get[file]})
-						[ -f "${get[file]}" ] && echo ' <strong>'${get[file]}'</strong>' || echo '<strong>'${get[path]}'</strong>'
+						if [ -f "${get[file]}" ]; then
+							if [ ! -w "${get[file]}" ]; then 
+								echo '<i class="bi bi-file-earmark-font text-warning align-middle" style="font-size: 1.3rem;"></i>&nbsp;&nbsp;'${get[file]}''
+							else
+								echo '<i class="bi bi-file-earmark-font text-success align-middle" style="font-size: 1.3rem;"></i>&nbsp;&nbsp;'${get[file]}''
+							fi
+						else
+							echo '<i class="bi bi-folder-fill text-secundary align-middle" style="font-size: 1.3rem;"></i>&nbsp;&nbsp;'${get[path]}''
+						fi
 						echo '
 					</span>
 					<i id="load_loading" class="spinner-border text-secondary mt-1 ms-2" style="width: 1rem; height: 1rem;" role="status">
@@ -558,25 +566,37 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 					echo '
 					<div class="card border-0">
 						<div class="card-header border-0">
-							<span class="text-secondary">'${txtSearchResult}''
+							<span class="text-secondary"><strong>'${txtSearchResult}'&nbsp;&nbsp;</strong>'
 								#get[file]=$(urldecode ${get[file]})
-								[ -z "${get[file]}" ] && echo ' '${txtFolder}' <strong>'${get[path]}'</strong>' || echo ' '${txtFile}' <strong>'${get[file]##*/}'</strong>'
+								if [ -z "${get[file]}" ]; then
+									echo '<i class="bi bi-folder-fill text-secundary align-middle" style="font-size: 1.3rem;"></i>&nbsp;&nbsp;'${get[path]}''
+									#echo ' '${txtFolder}' '${get[path]}''
+								else
+									if [ -f "${get[file]}" ]; then
+										if [ ! -w "${get[file]}" ]; then 
+											echo '<i class="bi bi-file-earmark-font text-warning align-middle" style="font-size: 1.3rem;"></i>&nbsp;&nbsp;'${get[file]}''
+										else
+											echo '<i class="bi bi-file-earmark-font text-success align-middle" style="font-size: 1.3rem;"></i>&nbsp;&nbsp;'${get[file]}''
+										fi
+									fi
+								fi
+									#echo ' '${txtFile}' '${get[file]##*/}''
+								fi
+								if [ -s "${result}" ]; then
+									echo '
+									<a class="float-end" href="index.cgi?page=main&section=start&query=view&file='${get[file]}'" title="'${btnClose}'">
+										<i class="bi bi-x-lg text-secondary align-middle float-end pe-1" style="font-size: 1.3rem;"></i>
+									</a>
+									<a href="index.cgi?page=contentview&path='${get[path]}'&file='${get[file]}'&resultfile='${result}'" onclick="return popup(this,992,600)" title="'${txtWhitoutLineBreaks}'">
+										<i class="bi bi-card-text text-secondary align-middle float-end pe-3" style="font-size: 1.3rem;"></i>
+									</a>
+									<a class="float-end" href="temp/result.txt" title="Download" download >
+										<i class="bi bi-cloud-arrow-down text-secondary align-middle float-end pe-3" style="font-size: 1.3rem;"></i>
+									</a>
+								</i>'
+								fi
 								echo '
-							</span>'
-							if [ -s "${result}" ]; then
-								echo '
-								<a class="float-end" href="index.cgi?page=main&section=start&query=view&file='${get[file]}'" title="'${btnClose}'">
-									<i class="bi bi-x-lg text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
-								</a>
-								<a href="index.cgi?page=contentview&path='${get[path]}'&file='${get[file]}'&resultfile='${result}'" onclick="return popup(this,992,600)" title="'${txtWhitoutLineBreaks}'">
-									<i class="bi bi-list text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
-								</a>
-								<a class="float-end" href="temp/result.txt" title="Download" download >
-									<i class="bi bi-cloud-arrow-down text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
-								</a>
-							</i>'
-							fi
-							echo '
+							</span>
 						</div>
 						<div class="card-body px-1 py-1">
 							<div id="file-content-box" class="form-group">
@@ -618,20 +638,28 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 					echo '
 					<div class="card border-0">
 						<div class="card-header border-0">
-							<span class="text-secondary">'${txtFileContent}' <strong>'${get[file]##*/}'</strong></span>'
-							if [ -s "${get[file]}" ]; then
-								if [ -w "${get[file]}" ]; then
+							<span class="text-secondary"><strong>'${txtFileContent}'&nbsp;&nbsp;</strong>'
+								if [ -f "${get[file]}" ]; then
+									if [ ! -w "${get[file]}" ]; then 
+										echo '<i class="bi bi-file-earmark-font text-warning align-middle" style="font-size: 1.3rem;"></i>&nbsp;&nbsp;'${get[file]}''
+									else
+										echo '<i class="bi bi-file-earmark-font text-success align-middle" style="font-size: 1.3rem;"></i>&nbsp;&nbsp;'${get[file]}''
+									fi
+								fi
+								if [ -s "${get[file]}" ]; then
+									if [ -w "${get[file]}" ]; then
+										echo '
+										<a href="index.cgi?page=main&section=start&query=clear&path='${get[path]}'&file='${get[file]}'" title="'${txtDeleteFileContent}'">
+											<i class="bi bi-file-earmark-x text-secondary align-middle float-end pe-1" style="font-size: 1.3rem;"></i>
+										</a>'
+									fi
 									echo '
-									<a href="index.cgi?page=main&section=start&query=clear&path='${get[path]}'&file='${get[file]}'" title="'${txtDeleteFileContent}'">
-										<i class="bi bi-x-lg text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
+									<a href="index.cgi?page=contentview&resultfile='${get[file]}'" onclick="return popup(this,992,600)" title="'${txtWhitoutLineBreaks}'">
+										<i class="bi bi-card-text text-secondary align-middle float-end pe-3" style="font-size: 1.3rem;"></i>
 									</a>'
 								fi
 								echo '
-								<a href="index.cgi?page=contentview&resultfile='${get[file]}'" onclick="return popup(this,992,600)" title="'${txtWhitoutLineBreaks}'">
-									<i class="bi bi-list text-secondary float-end pe-1" style="font-size: 1.3rem;"></i>
-								</a>'
-							fi
-							echo '
+							</span>
 						</div>
 						<div class="card-body px-0 py-1">
 							<div id="file-content-box" class="form-group">
