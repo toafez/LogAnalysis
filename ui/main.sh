@@ -34,6 +34,205 @@ fi
 # --------------------------------------------------------------
 mainnav
 
+# Funktionen zur Anzeige des Verzeichnisbaumes laden
+# --------------------------------------------------------------
+rootdir()
+{
+	maindir="/var/log"
+	dirlevel="0"
+	tabstop="0"
+
+    for subfolder in "${1}"; do
+
+		# Show root directory
+        echo '
+		<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
+			<span class="text-secondary align-middle pe-1">
+				<i class="bi bi-folder-fill text-secundary" style="font-size: 1.3rem;"></i>
+				<small class="fw-bold">'${subfolder}'</small>
+			</span>
+		</a>'
+
+        if [ -d "${subfolder}" ]; then
+            thisfolder=${subfolder}
+
+			# Show all subdirectories of the root directory
+			subdir $(ls ${thisfolder})
+
+			# Show all files in the root directory
+			subfiles "${thisfolder}"
+        fi
+    done
+    unset tabstop
+}
+
+subdir()
+{
+	dirlevel=$[${dirlevel}+1]
+    tabstop=$[${tabstop}+20]
+
+    for folder in "${@}"; do
+
+        thisfolder=${thisfolder}/${folder}
+
+        # Show all subdirectories of the root directory (directory level 0)
+		if [ -d "${thisfolder}" ]; then
+			echo '
+			<a class="text-start text-secondary text-decoration-none" data-bs-toggle="collapse" href="#'${thisfolder}'" role="button" aria-expanded="false" aria-controls="'${thisfolder}'">
+				<span style="margin-left: '${tabstop}'px;">
+					<nobr>
+						<span class="text-secondary align-middle pe-1" title="'${txtFolderWithContent}'">'
+							if [ -z "$(ls -A ${thisfolder})" ]; then
+								mousecursor="not-allowed"
+								echo '<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>'
+							else
+								mousecursor="pointer"
+								echo '<i class="bi bi-folder-fill text-warning" style="font-size: 1.3rem;"></i>'
+							fi
+							echo '
+						</span>
+						<small style="cursor: '${mousecursor}';">'${folder}'</small>
+					</nobr>
+				</span>
+			</a>'
+
+			# Show all files in the root directory (directory level 0)
+			if [[ "${dirlevel}" -eq 0 ]]; then
+				subfiles "${thisfolder}"
+
+			# Hide all subdirectories and files, except for the path to the selected file
+			elif [[ "${dirlevel}" -ne 0 ]]; then
+
+				# Extract the third directory name from the path, starting from the left
+				subdir=$(echo "${get[file]%/*}" | awk -v FS='/' '{print $4}')
+
+				# Show all files and subdirectories around the selected file
+				if [[ "${thisfolder}" == "${get[file]%/*}" ]]; then
+					echo '
+					<div class="collapse.show" id="'${thisfolder}'">'
+						subfiles "${thisfolder}"
+						echo '
+					</div>
+					<div class="collapse.show" id="'${thisfolder}'">'
+						subdir $(ls ${thisfolder})
+						echo '
+					</div>'
+
+				# Hide all files in all other subdirectories
+				else
+					echo '
+					<div class="collapse" id="'${thisfolder}'">'
+						subfiles "${thisfolder}"
+						echo '
+					</div>'
+
+					# Show all directorys and subdirectories around the selected file
+					if [[ "${get[file]%/*}" == ${maindir}/${subdir}/* ]]; then
+						if [[ "${thisfolder}" == ${maindir}/${subdir} ]]; then
+							echo '
+							<div class="collapse.show" id="'${thisfolder}'">'
+								subdir $(ls ${thisfolder})
+								echo '
+							</div>'
+						elif [[ "${thisfolder}" == ${maindir}/${subdir}/* ]]; then
+							echo '
+							<div class="collapse.show" id="'${thisfolder}'">'
+								subdir $(ls ${thisfolder})
+								echo '
+							</div>'
+						else
+							echo '
+							<div class="collapse" id="'${thisfolder}'">'
+								subdir $(ls ${thisfolder})
+								echo '
+							</div>'
+						fi
+
+					# Hide directorys and subdirectories in all other subdirectories
+					else
+						echo '
+						<div class="collapse" id="'${thisfolder}'">'
+							subdir $(ls ${thisfolder})
+							echo '
+						</div>'
+					fi
+				fi
+			fi
+        fi
+        thisfolder=${thisfolder%/*}
+    done
+
+    tabstop=$[${tabstop}-20]
+	dirlevel=$[${dirlevel}-1]
+}
+
+subfiles()
+{
+	while IFS= read -r file; do
+		[[ -z "${file}" ]] && continue
+		tabstop=$[${tabstop}+20]
+		filesize=$(du -s "$file" | sed "s#/.*##")
+		filesize=$(bytesToHumanReadable "$filesize")
+		# Anzeige der Dateien
+		[[ "${file}" == "${get[file]}" ]] && blodtext="class=\"fw-bold\""
+		if [[ "${file}" == *.xz || "${file}" == *.tgz || "${file}" == *.txz ]]; then
+			echo '
+			<div style="margin-left: '${tabstop}'px;">
+				<span class="text-warning align-middle pe-1" title="'${txtFileIsArchive}'" style="cursor: help;">
+					<i class="bi bi-file-earmark-zip text-danger" style="font-size: 1.3rem;"></i>
+				</span>
+				<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
+				<span class="float-end">
+					<small><span class="text-secondary">'${filesize}'</span></small>
+				</span>
+			</div>'
+		elif [ ! -r "${file}" ]; then
+			echo '
+			<div style="margin-left: '${tabstop}'px;">
+				<span class="text-secondary align-middle pe-1" title="'${txtFileNoReadingRights}'" style="cursor: help;">
+					<i class="bi bi-file-earmark-x text-danger" style="font-size: 1.3rem;"></i>
+				</span>
+				<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
+				<span class="float-end">
+					<small><span class="text-secondary">'${filesize}'</span></small>
+				</span>
+			</div>'
+		elif [ ! -w "${file}" ]; then
+			echo '
+			<div style="margin-left: '${tabstop}'px;">
+				<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
+					<span class="text-secondary align-middle pe-1" title="'${txtFileNoWritingRights}'" style="cursor: help;">
+						<i class="bi bi-file-earmark-font text-warning" style="font-size: 1.3rem;"></i>
+					</span>
+					<small '${blodtext}' style="cursor: pointer;">'${file##*/}'</small>
+				</a>
+				<span class="float-end">
+					<small><span class="text-secondary">'${filesize}'</span></small>
+				</span>
+			</div>'
+		else
+			echo '
+			<div style="margin-left: '${tabstop}'px;">
+				<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
+					<span class="text-secondary align-middle pe-1" title="'${txtFileOpen}'" style="cursor: help;">
+						<i class="bi bi-file-earmark-font text-success" style="font-size: 1.3rem;"></i>
+					</span>
+						<small '${blodtext}' style="cursor: pointer;">'${file##*/}'</small>
+				</a>
+				<span class="float-end">
+					<small><span class="text-secondary">'${filesize}'</span></small>
+				</span>
+			</div>'
+		fi
+		unset blodtext
+		tabstop=$[${tabstop}-20]
+	done <<< "$( find ${1} -maxdepth 1 -type f | sort )"
+}
+
+# Load library function for byte conversion
+# --------------------------------------------------------------
+[ -f "${app_home}/modules/bytes2human.sh" ] && source "${app_home}/modules/bytes2human.sh"
+
 # Startseite anzeigen
 # --------------------------------------------------------------
 if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
@@ -68,184 +267,18 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 					<a href="#help-permissions" class="btn btn-sm text-dark text-decoration-none" style="background-color: #e6e6e6;" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_button_extend_permission}'</a>
 				</div>
 			</div>
-		</div><br />'
+		</div>'
 	fi
 
 	echo '
-	<div class="row mt-2">'
+	<div class="row my-2 mx-1">'
 		# Linke Spalte - Ordnerstruktur
 		# ------------------------------------------------------
 		echo '
-		<div class="col-4 pe-1">
+		<div class="col-4">
 			<div class="card border-0 mb-3">'
-				if [[ "${get[path]}" == "/var/log" ]]; then
-					# Aufbau des Hauptordners
-					echo '
-					<div class="card-header border-0">
-						<span class="text-secondary">
-							'${txt_link_folder}' <strong>'${get[path]}'</strong>
-						</span>
-					</div>
-					<div class="card-body">
-						<ul class="list-unstyled mb-0" style="line-height: 1.2rem;">
-							<li class="pb-1">
-								<nobr>
-									<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
-										<span class="text-secondary align-middle pe-1">
-											<i class="bi bi-folder-fill text-secundary" style="font-size: 1.3rem;"></i>
-											<small style="font-weight: 600;">'${get[path]}'</small>
-										</span>
-									</a>
-								</nobr>
-							</li>'
-							while IFS= read -r folder; do
-								IFS="${backupIFS}"
-								[[ -z "${folder}" ]] && continue
-								# Anzeige der Ordner
-								if [ `ls -a "${folder}" | wc -l` -gt 2 ] ; then
-									echo '
-									<li class="pb-1 ps-3">
-										<nobr>
-											<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
-												<span class="text-secondary align-middle pe-1" title="'${txtFolderWithContent}'" style="cursor: help;">
-													<i class="bi bi-folder-fill text-warning" style="font-size: 1.3rem;"></i>
-												</span>
-												<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
-											</a>
-										</nobr>
-									</li>'
-								else
-									echo '
-									<li class="pb-1 ps-3">
-										<nobr>
-											<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
-												<span class="text-secondary align-middle pe-1" title="'${txtFolderWithoutContent}'" style="cursor: help;">
-													<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>
-												</span>
-												<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
-											</a>
-										</nobr>
-									</li>'
-								fi
-							done <<< "$( find "${get[path]}"/* -mindepth 0 -maxdepth 0 -xtype d | sort )"
-				elif [ -d "${get[path]}" ]; then
-					# Verzweigung in einen Unterordner
-					echo '
-					<div class="card-header border-0">
-						<span class="text-secondary">
-							'${txt_link_folder}' <strong>'${get[path]}'</strong>
-						</span>
-					</div>
-					<div class="card-body">
-						<ul class="list-unstyled mb-0" style="line-height: 1.2rem;">
-							<li class="pb-1">
-								<nobr>
-									<a href="index.cgi?page=main&section=start&path='${get[path]%/*}'&file=&query=" class="text-secondary text-decoration-none" title="'${btnBack}'">
-										<span class="text-secondary align-middle pe-1">
-											<i class="bi bi-box-arrow-left text-secondary" style="font-size: 1.3rem;"></i>
-											<small style="font-weight: 600;">'${get[path]%/*}'</span>
-											</small>
-										</span>
-									</a>
-								</nobr>
-							</li>'
-							while IFS= read -r folder; do
-								IFS="${backupIFS}"
-								[[ -z "${folder}" ]] && continue
-								# Anzeige der Ordner
-								if [ `ls -a "${folder}" | wc -l` -gt 2 ] ; then
-									echo '
-									<li class="pb-1 ps-3">
-										<nobr>
-											<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-info text-decoration-none">
-												<span class="text-secondary align-middle pe-1" title="'${txtFolderWithContent}'" style="cursor: help;">
-													<i class="bi bi-folder-fill text-warning" style="font-size: 1.3rem;"></i>
-												</span>
-												<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
-											</a>
-										</nobr>
-									</li>'
-								else
-									echo '
-									<li class="pb-1 ps-3">
-										<nobr>
-											<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-muted text-decoration-none">
-												<span class="text-secondary align-middle pe-1" title="'${txtFolderWithoutContent}'" style="cursor: help;">
-													<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>
-												</span>
-													<small style="font-weight: 600; cursor: pointer;">'${folder##*/}'</small>
-											</a>
-										</nobr>
-									</li>'
-								fi
-							done <<< "$( find ${get[path]}/* -mindepth 0 -maxdepth 0 -xtype d | sort )"
-				fi
-							while IFS= read -r file; do
-								IFS="${backupIFS}"
-								[[ -z "${file}" ]] && continue
-								filesize=$(du -sh "$file" | sed "s#/.*##")
-								# Anzeige der Dateien
-								if [[ "${file}" == *.xz || "${file}" == *.tgz || "${file}" == *.txz ]]; then
-									echo '
-									<li class="pb-1 ps-2">
-										<nobr>&nbsp;
-											<span class="text-warning align-middle pe-1" title="'${txtFileIsArchive}'" style="cursor: help;">
-												<i class="bi bi-file-earmark-zip text-danger" style="font-size: 1.3rem;"></i>
-											</span>
-											<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
-										</nobr>
-										<span class="float-end">
-											<small><span class="text-secondary">'${filesize}'</span></small>
-										</span>
-									</li>'
-								elif [ ! -r "${file}" ]; then
-									echo '
-									<li class="pb-1 ps-2">
-										<nobr>&nbsp;
-											<span class="text-secondary align-middle pe-1" title="'${txtFileNoReadingRights}'" style="cursor: help;">
-												<i class="bi bi-file-earmark-x text-danger" style="font-size: 1.3rem;"></i>
-											</span>
-											<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
-										</nobr>
-										<span class="float-end">
-											<small><span class="text-secondary">'${filesize}'</span></small>
-										</span>
-									</li>'
-								elif [ ! -w "${file}" ]; then
-									echo '
-									<li class="pb-1 ps-2">
-										<nobr>&nbsp;
-											<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
-												<span class="text-secondary align-middle pe-1" title="'${txtFileNoWritingRights}'" style="cursor: help;">
-													<i class="bi bi-file-earmark-font text-warning" style="font-size: 1.3rem;"></i>
-												</span>
-												<small style="cursor: pointer;">'${file##*/}'</small>
-											</a>
-										</nobr>
-										<span class="float-end">
-											<small><span class="text-secondary">'${filesize}'</span></small>
-										</span>
-									</li>'
-								else
-									echo '
-									<li class="pb-1 ps-2">
-										<nobr>&nbsp;
-											<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
-												<span class="text-secondary align-middle pe-1" title="'${txtFileOpen}'" style="cursor: help;">
-													<i class="bi bi-file-earmark-font text-success" style="font-size: 1.3rem;"></i>
-												</span>
-													<small style="cursor: pointer;">'${file##*/}'</small>
-											</a>
-										</nobr>
-										<span class="float-end">
-											<small><span class="text-secondary">'${filesize}'</span></small>
-										</span>
-									</li>'
-								fi
-							done <<< "$( find -L ${get[path]} -maxdepth 1 -type f | sort )"
-							echo '
-						</ul>
-					</div>
+				rootdir "${get[path]}" 
+				echo '
 			</div>
 		</div>
 		<!-- col -->'
@@ -253,7 +286,7 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 		# Rechte Spalte - Suchformular
 		# ------------------------------------------------------
 		echo '
-		<div class="col-8 pl-1">'
+		<div class="col-8 ps-1">'
 			# Datum und Uhrzeit formatieren
 			day_now=$(date +%d)
 			month_now=$(date +%m)
