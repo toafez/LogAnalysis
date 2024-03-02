@@ -3,10 +3,18 @@ LogAnalysis - DSM 7 - Release Notes
 Version 1.1-200 vom 
 
  -Deutsch
+    - Update Bootstrap Framework auf 5.3.3
+    - Update Bootstrap JavaScript auf 5.3.3
+	- Update Bootsrap Icons auf 1.11.3
     - Die Anzeige und die Funktion des Verzeichnisbaums wurde komplett erneuert. Unterverzeichnisse lassen sich jetzt beliebig auf- und zuklappen um auf die darin liegenden Dateien zuzugreifen.
+    - Funktion zur Konvertierung von Bytes in ein menschenlesbares Format hinzugefügt. Danke @luddinho
 
  -English
+    - Update Bootstrap Framework to 5.3.3
+    - Update Bootstrap JavaScript to 5.3.3
+	- Update Bootsrap Icons to 1.11.3
     - The display and function of the directory tree has been completely redesigned. Subdirectories can now be expanded and collapsed as required to access the files they contain.
+    - Function for converting bytes into a human-readable format added. Thanks @luddinho
 
 
 Version 1.1-100 vom 24.09.2023
