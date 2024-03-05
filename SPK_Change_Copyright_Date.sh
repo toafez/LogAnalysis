@@ -3,7 +3,7 @@
 
 #                     LogAnalysis for DSM 7
 #
-#        Copyright (C) 2023 by Tommes | License GNU GPLv3
+#        Copyright (C) 2024 by Tommes | License GNU GPLv3
 #        Member from the  German Synology Community Forum
 #
 # Extract from  GPL3   https://www.gnu.org/licenses/gpl-3.0.html
@@ -27,12 +27,12 @@
 # -------------------------------------------------------------------------------------------------
 
 # Changing the copyright
-copyright="Copyright (C) 2023 by"
+copyright="Copyright (C) 2024 by"
 
 # -------------------------------------------------------------------------------------------------
 # Please do not make any changes below, unless you know what you are doing!
 # -------------------------------------------------------------------------------------------------
-old_copyright="Copyright (C) 2023 by"
+old_copyright="Copyright (C) 2024 by"
 path=$(pwd)
 
 # Costumize Copyright

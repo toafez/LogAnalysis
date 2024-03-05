@@ -3,7 +3,7 @@
 
 #                     LogAnalysis for DSM 7
 #
-#        Copyright (C) 2023 by Tommes | License GNU GPLv3
+#        Copyright (C) 2024 by Tommes | License GNU GPLv3
 #        Member from the  German Synology Community Forum
 #
 # Extract from  GPL3   https://www.gnu.org/licenses/gpl-3.0.html
@@ -183,10 +183,10 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 		<!-- Einbinden eigener CSS Formatierungen -->
 		<link rel="stylesheet" href="template/css/mystyle.css" />
 
-		<!-- Einbinden von bootstrap Framework 5.3.2 -->
+		<!-- Einbinden von bootstrap Framework 5.3.3 -->
 		<link rel="stylesheet" href="template/bootstrap/css/bootstrap.min.css" />
 
-		<!-- Einbinden von bootstrap Icons 1.11.1 -->
+		<!-- Einbinden von bootstrap Icons 1.11.3 -->
 		<link rel="stylesheet" href="template/bootstrap/font/bootstrap-icons.css" />
 
 		<!-- Einbinden von jQuery 3.7.1 -->
@@ -196,171 +196,171 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 		<script src="template/js/resize.js"></script>
 	</head>
 	<body>
-		<form action="index.cgi" method="post" id="myform" autocomplete="on">
-			<header></header>
-			<article>
-				<!-- container -->
-				<div class="container-lg">'
+	<header></header>
+	<article>
+		<!-- container -->
+		<div class="container-fluid">
+			<form action="index.cgi" method="post" id="myform" autocomplete="on">'
 
-					# Funktion: Hauptnavigation anzeigen
-					# --------------------------------------------------------------
-					function mainnav()
-					{
-						echo '
-						<nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
-							<div class="container-fluid">
-								<a class="btn btn-sm text-dark text-decoration-none py-0" role="button" style="background-color: #e6e6e6;" href="index.cgi?page=main&section=reset" title="'${txt_button_refresh}'">
-									<i class="bi bi-house-door text-dark" style="font-size: 1.2rem;"></i>
-								</a>
-								<div class="float-end">
-									<ul class="navbar-nav">
-										<li class="nav-item dropdown pt-1">
-											<a class="dropdown-toggle btn btn-sm text-dark text-decoration-none" style="background-color: #e6e6e6;" href="#" id="navDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-												'${txt_link_settings}'
-											</a>
-											<ul class="dropdown-menu dropdown-menu-sm-end" aria-labelledby="navDropdown">
-												<li><a class="dropdown-item" href="index.cgi?page=debug&section=start">'${txt_link_debug}'</a></li>'
-												if [[ "${permissions}" == "true" ]]; then
-													echo '<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_link_revoke_permissions}'</button></li>'
-												else
-													echo '<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_link_expand_permissions}'</button></li>'
-												fi
-												echo '
-											</ul>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</nav>
-						<p>&nbsp;</p>
-						<br />'
-					}
-
-					# Funktion: Hilfeartikel im Popupfenster anzeigen
-					# --------------------------------------------------------------
-					function help_modal ()
-					{
-						echo '
-						<!-- Modal -->
-						<div class="modal fade" id="help-'${1}'" tabindex="-1" aria-labelledby="help-'${1}'-label" aria-hidden="true">
-							<div class="modal-dialog modal-fullscreen">
-								<div class="modal-content">
-									<div class="modal-header bg-light">
-										<h5 class="modal-title" style="color: #FF8C00;" id="help-'${1}'-label"><span class="navbar-brand">'${2}'</span></h5>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="'${txt_button_Close}'"></button>
-									</div>
-									<div class="modal-body">'
-										[ -f "${app_home}/help/${1}.sh" ] && source "${app_home}/help/${1}.sh" || echo "Page not found"
-										echo '
-									</div>
-								</div>
-							</div>
-						</div>'
-					}
-
-					# Hilfeartikel laden
-					# --------------------------------------------------------------
-					if [[ "${permissions}" == "true" ]]; then
-						help_modal "app_permissions" "${txt_link_revoke_permissions}"
-					else
-						help_modal "app_permissions" "${txt_link_expand_permissions}"
-					fi
-
-					# Dynamische Seitenausgabe
-					if [ -f "${post[page]}.sh" ]; then
-						. ./"${post[page]}.sh"
-					elif [ -f "${get[page]}.sh" ]; then
-						. ./"${get[page]}.sh"
-					else
-						echo 'Page '${get[page]}''${post[page]}'.sh not found!'
-					fi
-
-					# Debugging
-					if [[ "${debugging}" == "on" ]]; then
-						echo '
-						<p>&nbsp;</p>
-						<div class="card border-0 mb-3">
-							<div class="card-header border-0">
-								<i class="bi-icon bi-bug text-secondary float-start" style="cursor: help;" title="Debug"></i>
-								<span class="text-secondary">&nbsp;&nbsp;<b>Debug</b></span>
-							</div>
-							<div class="card-body pb-0">'
-								if [ -z "${group_membership}" ] && [ -z "${http_requests}" ] && [ -z "${global_enviroment}" ]; then
-									echo "<p>Bitte wählen Sie eine oder mehrere Debug Optionen aus der Liste aus!</p>"
-								fi
-
-								# Gruppenmitgliedschaften der App
-								if [[ "${group_membership}" == "on" ]]; then
-									echo '
-									<ul class="list-unstyled">
-										<li class="text-dark list-style-square"><strong>'${txt_debug_membership}'</strong>
-											<ul class="list-unstyled ps-3">'
-												if cat /etc/group | grep ^${app_name} | grep -q ${app_name} ; then
-													echo ''${app_name}'<br />'
-												fi
-												if cat /etc/group | grep ^system | grep -q ${app_name} ; then
-													echo 'system<br />'
-												fi
-												if cat /etc/group | grep ^administrators | grep -q ${app_name} ; then
-													echo 'administrators<br />'
-												fi
-												if cat /etc/group | grep ^log | grep -q ${app_name} ; then
-													echo 'log<br />'
-												fi
-												echo '
-											</ul>
-										</li>
-									</ul>'
-								fi
-
-								# GET und POST Requests
-								if [[ "${http_requests}" == "on" ]]; then
-									echo '
-									<ul class="list-unstyled">
-										<li class="text-dark list-style-square"><strong>'${txt_debug_get}'</strong>
-											<ul class="list-unstyled ps-3">
-												<pre>'; cat ${get_request}; echo '</pre>
-											</ul>
-										</li>
-										<li class="text-dark list-style-square"><strong>'${txt_debug_post}'</strong>
-											<ul class="list-unstyled ps-3">
-												<pre>'; cat ${post_request}; echo '</pre>
-											</ul>
-										</li>
-									</ul>'
-								fi
-
-								# Globale Umgebung
-								if [[ "${global_enviroment}" == "on" ]]; then
-									echo '
-									<ul class="list-unstyled">
-										<li class="text-dark list-style-square"><strong>'${txt_debug_global}'</strong>
-											<ul class="list-unstyled ps-3">
-												<pre>'; (set -o posix ; set | sed '/txt.*/d;'); echo '</pre>
-											</ul>
-										</li>
-									</ul>'
-								fi
-								echo '
-							</div>
-							<!-- card-body -->
-						</div>
-						<!-- card -->'
-					fi
+				# Funktion: Hauptnavigation anzeigen
+				# --------------------------------------------------------------
+				function mainnav()
+				{
 					echo '
-				</div>
-				<!-- container -->
-			</article>
-		</form>
+					<nav class="navbar fixed-top navbar-expand-sm navbar-light bg-light">
+						<div class="container-fluid">
+							<a class="btn btn-sm text-dark text-decoration-none py-0" role="button" style="background-color: #e6e6e6;" href="index.cgi?page=main&section=reset" title="'${txt_button_refresh}'">
+								<i class="bi bi-house-door text-dark" style="font-size: 1.2rem;"></i>
+							</a>
+							<div class="float-end">
+								<ul class="navbar-nav">
+									<li class="nav-item dropdown pt-1">
+										<a class="dropdown-toggle btn btn-sm text-dark text-decoration-none" style="background-color: #e6e6e6;" href="#" id="navDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+											'${txt_link_settings}'
+										</a>
+										<ul class="dropdown-menu dropdown-menu-sm-end" aria-labelledby="navDropdown">
+											<li><a class="dropdown-item" href="index.cgi?page=debug&section=start">'${txt_link_debug}'</a></li>'
+											if [[ "${permissions}" == "true" ]]; then
+												echo '<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_link_revoke_permissions}'</button></li>'
+											else
+												echo '<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_link_expand_permissions}'</button></li>'
+											fi
+											echo '
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</nav>
+					<p>&nbsp;</p>
+					<br />'
+				}
 
-		<!-- Einbinden von bootstrap JavaScript 5.3.2 -->
-		<script src="template/bootstrap/js/bootstrap.bundle.min.js"></script>
+				# Funktion: Hilfeartikel im Popupfenster anzeigen
+				# --------------------------------------------------------------
+				function help_modal ()
+				{
+					echo '
+					<!-- Modal -->
+					<div class="modal fade" id="help-'${1}'" tabindex="-1" aria-labelledby="help-'${1}'-label" aria-hidden="true">
+						<div class="modal-dialog modal-fullscreen">
+							<div class="modal-content">
+								<div class="modal-header bg-light">
+									<h5 class="modal-title" style="color: #FF8C00;" id="help-'${1}'-label"><span class="navbar-brand">'${2}'</span></h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" title="'${txt_button_Close}'"></button>
+								</div>
+								<div class="modal-body">'
+									[ -f "${app_home}/help/${1}.sh" ] && source "${app_home}/help/${1}.sh" || echo "Page not found"
+									echo '
+								</div>
+							</div>
+						</div>
+					</div>'
+				}
 
-		<!-- Script für Popupfenster (z.B. für die Hilfe) -->
-		<script src="template/js/popup.js"></script>
+				# Hilfeartikel laden
+				# --------------------------------------------------------------
+				if [[ "${permissions}" == "true" ]]; then
+					help_modal "app_permissions" "${txt_link_revoke_permissions}"
+				else
+					help_modal "app_permissions" "${txt_link_expand_permissions}"
+				fi
 
-		<!-- Ladeanzeige ein- bzw. ausblenden -->
-		<script src="template/js/loading.js"></script>
+				# Dynamische Seitenausgabe
+				if [ -f "${post[page]}.sh" ]; then
+					. ./"${post[page]}.sh"
+				elif [ -f "${get[page]}.sh" ]; then
+					. ./"${get[page]}.sh"
+				else
+					echo 'Page '${get[page]}''${post[page]}'.sh not found!'
+				fi
+
+				# Debugging
+				if [[ "${debugging}" == "on" ]]; then
+					echo '
+					<p>&nbsp;</p>
+					<div class="card border-0 mb-3">
+						<div class="card-header border-0">
+							<i class="bi-icon bi-bug text-secondary float-start" style="cursor: help;" title="Debug"></i>
+							<span class="text-secondary">&nbsp;&nbsp;<b>Debug</b></span>
+						</div>
+						<div class="card-body pb-0">'
+							if [ -z "${group_membership}" ] && [ -z "${http_requests}" ] && [ -z "${global_enviroment}" ]; then
+								echo "<p>Bitte wählen Sie eine oder mehrere Debug Optionen aus der Liste aus!</p>"
+							fi
+
+							# Gruppenmitgliedschaften der App
+							if [[ "${group_membership}" == "on" ]]; then
+								echo '
+								<ul class="list-unstyled">
+									<li class="text-dark list-style-square"><strong>'${txt_debug_membership}'</strong>
+										<ul class="list-unstyled ps-3">'
+											if cat /etc/group | grep ^${app_name} | grep -q ${app_name} ; then
+												echo ''${app_name}'<br />'
+											fi
+											if cat /etc/group | grep ^system | grep -q ${app_name} ; then
+												echo 'system<br />'
+											fi
+											if cat /etc/group | grep ^administrators | grep -q ${app_name} ; then
+												echo 'administrators<br />'
+											fi
+											if cat /etc/group | grep ^log | grep -q ${app_name} ; then
+												echo 'log<br />'
+											fi
+											echo '
+										</ul>
+									</li>
+								</ul>'
+							fi
+
+							# GET und POST Requests
+							if [[ "${http_requests}" == "on" ]]; then
+								echo '
+								<ul class="list-unstyled">
+									<li class="text-dark list-style-square"><strong>'${txt_debug_get}'</strong>
+										<ul class="list-unstyled ps-3">
+											<pre>'; cat ${get_request}; echo '</pre>
+										</ul>
+									</li>
+									<li class="text-dark list-style-square"><strong>'${txt_debug_post}'</strong>
+										<ul class="list-unstyled ps-3">
+											<pre>'; cat ${post_request}; echo '</pre>
+										</ul>
+									</li>
+								</ul>'
+							fi
+
+							# Globale Umgebung
+							if [[ "${global_enviroment}" == "on" ]]; then
+								echo '
+								<ul class="list-unstyled">
+									<li class="text-dark list-style-square"><strong>'${txt_debug_global}'</strong>
+										<ul class="list-unstyled ps-3">
+											<pre>'; (set -o posix ; set | sed '/txt.*/d;'); echo '</pre>
+										</ul>
+									</li>
+								</ul>'
+							fi
+							echo '
+						</div>
+						<!-- card-body -->
+					</div>
+					<!-- card -->'
+				fi
+				echo '
+			</form>
+		</div>
+		<!-- container -->
+	</article>
+
+	<!-- Einbinden von bootstrap JavaScript 5.3.3 -->
+	<script src="template/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+	<!-- Script für Popupfenster (z.B. für die Hilfe) -->
+	<script src="template/js/popup.js"></script>
+
+	<!-- Ladeanzeige ein- bzw. ausblenden -->
+	<script src="template/js/loading.js"></script>
 
 	</body>
 	</html>'
