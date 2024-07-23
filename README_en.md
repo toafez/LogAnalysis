@@ -48,6 +48,14 @@ Download the **most recent version** of LogAnalysis from the [Releases](https://
       - Mark the task you have just created in the overview of the task planner, but **do not** activate it (the line should be highlighted in blue after marking).
       - Execute the task once by pressing the **Execute** button.
 
+# Screenshots
+  - ### Start page - search all files within /var/log
+    ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_01_en.png)
+  - ### Display the contents of a specific log file
+    ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_02_en.png)
+  - ### Search within a specific log file
+    ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_03_en.png)
+
 # Version history
 - Details of the version history can be found in the file [CHANGELOG](CHANGELOG).
 
