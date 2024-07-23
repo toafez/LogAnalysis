@@ -48,6 +48,14 @@ Laden Sie sich die **jeweils aktuellste Version** von LogAnalysis aus dem Bereic
       - Die grade erstellte Aufgabe in der Übersicht des Aufgabenplaners markieren, jedoch **nicht** aktivieren (die Zeile sollte nach dem markieren blau hinterlegt sein).
       - Führen Sie die Aufgabe durch Betätigen Sie Schaltfläche **Ausführen** einmalig aus.
 
+# Screenshots
+  - ### Startseite - alle Dateien innerhalb /var/log durchsuchen
+    ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_01.png)
+  - ### Inhalt einer bestimmten Log-Datei anzeigen lassen
+    ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_02.png)
+  - ### Innerhalb einer bestimmten Log-Datei suchen
+    ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_03.png)
+    
 # Versionsgeschichte
 - Details zur Versionsgeschichte finden Sie in der Datei [CHANGELOG](CHANGELOG).
 
