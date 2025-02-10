@@ -92,13 +92,13 @@ fi
 	usr_systemconfig="${usr_settings}/system"
 	[ ! -d "${usr_systemconfig}" ] && mkdir -p -m 755 "${usr_systemconfig}"
 	
-	# Konfigurationsdatei für Debug Modus einrichten
-	usr_debugfile="${usr_systemconfig}/debug.config"
-	if [ ! -f "${usr_debugfile}" ]; then
-		touch "${usr_debugfile}"
-		chmod 777 "${usr_debugfile}"
+	# Konfigurationsdatei für benutzerdefinierte Einstellungen einrichten
+	usr_appsettings="${usr_systemconfig}/loganalysis.config"
+	if [ ! -f "${usr_appsettings}" ]; then
+		touch "${usr_appsettings}"
+		chmod 777 "${usr_appsettings}"
 	fi
-	[ -f "${usr_debugfile}" ] && source "${usr_debugfile}"
+	[ -f "${usr_appsettings}" ] && source "${usr_appsettings}"
 
 	# Wenn keine Seite gesetzt, dann Startseite anzeigen
 	if [ -z "${get[page]}" ]; then
@@ -216,10 +216,10 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 								<ul class="navbar-nav">
 									<li class="nav-item dropdown pt-1">
 										<a class="dropdown-toggle btn btn-sm text-dark text-decoration-none" style="background-color: #e6e6e6;" href="#" id="navDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-											'${txt_link_settings}'
+											'${txt_link_system_settings}'
 										</a>
 										<ul class="dropdown-menu dropdown-menu-sm-end" aria-labelledby="navDropdown">
-											<li><a class="dropdown-item" href="index.cgi?page=debug&section=start">'${txt_link_debug}'</a></li>'
+											<li><a class="dropdown-item" href="index.cgi?page=settings&section=start">'${txt_link_settings}'</a></li>'
 											if [[ "${permissions}" == "true" ]]; then
 												echo '<li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#help-app_permissions">'${txt_link_revoke_permissions}'</button></li>'
 											else
