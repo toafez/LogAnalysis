@@ -3,7 +3,7 @@
 
 #                     LogAnalysis for DSM 7
 #
-#        Copyright (C) 2024 by Tommes | License GNU GPLv3
+#        Copyright (C) 2025 by Tommes | License GNU GPLv3
 #        Member from the  German Synology Community Forum
 #
 # Extract from  GPL3   https://www.gnu.org/licenses/gpl-3.0.html
@@ -49,7 +49,16 @@ rootdir()
 		<a href="index.cgi?page=main&section=start&path='${folder}'&file=&query=" class="text-secondary text-decoration-none">
 			<span class="text-secondary pe-1">
 				<i class="bi bi-folder-fill text-secundary align-middle" style="font-size: 1.3rem;"></i>
-				<small class="fw-bold">'${subfolder}'</small>
+				<small class="fw-bold">'${subfolder}'</small>'
+				if [[ "${folder_attributes}" == "on" ]]; then
+					foldersize=$(du -sb "${maindir}" | sed "s#/.*##")
+					foldersize=$(bytesToHumanReadable "$foldersize")
+					echo '
+					<span class="float-end">
+						<small><span class="text-secondary fw-bold">'${foldersize}'</span></small>
+					</span>'
+				fi
+				echo '
 			</span>
 		</a>'
 
@@ -77,24 +86,50 @@ subdir()
 
         # Show all subdirectories of the root directory (directory level 0)
 		if [ -d "${thisfolder}" ]; then
-			echo '
-			<a class="text-start text-secondary text-decoration-none" data-bs-toggle="collapse" href="#'${thisfolder}'" role="button" aria-expanded="false" aria-controls="'${thisfolder}'">
-				<span style="margin-left: '${tabstop}'px;">
-					<nobr>
-						<span class="text-secondary align-middle pe-1" title="'${txtFolderWithContent}'">'
-							if [ -z "$(ls -A ${thisfolder})" ]; then
-								mousecursor="not-allowed"
-								echo '<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>'
-							else
-								mousecursor="pointer"
-								echo '<i class="bi bi-folder-fill text-warning" style="font-size: 1.3rem;"></i>'
-							fi
+			if [ -z "$(ls -A ${thisfolder})" ] && [[ -z "${folder_access}" || "${folder_access}" == "off" ]]; then
+				echo '
+				<a class="text-start text-secondary text-decoration-none" data-bs-toggle="collapse" href="#'${thisfolder}'" role="button" aria-expanded="false" aria-controls="'${thisfolder}'">
+					<span style="margin-left: '${tabstop}'px;">
+						<nobr>
+							<span class="text-secondary align-middle pe-1" title="'${txtFolderWithoutContent}'">
+								<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>
+								<small style="cursor: not-allowed;">'${folder}'</small>
+							</span>
+						</nobr>'
+						if [[ "${folder_attributes}" == "on" ]]; then
+							foldersize=$(du -sb "${thisfolder}" | sed "s#/.*##")
+							foldersize=$(bytesToHumanReadable "$foldersize")
 							echo '
-						</span>
-						<small style="cursor: '${mousecursor}';">'${folder}'</small>
-					</nobr>
-				</span>
-			</a>'
+							<span class="float-end">
+								<small><span class="text-secondary">'${foldersize}'</span></small>
+							</span>'
+						fi
+						echo '
+					</span>
+				</a>'
+			elif [ -n "$(ls -A ${thisfolder})" ]; then
+				echo '
+				<a class="text-start text-secondary text-decoration-none" data-bs-toggle="collapse" href="#'${thisfolder}'" role="button" aria-expanded="false" aria-controls="'${thisfolder}'">
+					<span style="margin-left: '${tabstop}'px;">
+						<nobr>
+							<span class="text-secondary align-middle pe-1" title="'${txtFolderWithContent}'">
+								<i class="bi bi-folder-fill text-warning" style="font-size: 1.3rem;"></i>
+								<small style="cursor: pointer;">'${folder}'</small>'
+								echo '
+							</span>
+						</nobr>'
+						if [[ "${folder_attributes}" == "on" ]]; then
+							foldersize=$(du -sb "${thisfolder}" | sed "s#/.*##")
+							foldersize=$(bytesToHumanReadable "$foldersize")
+							echo '
+							<span class="float-end">
+								<small><span class="text-secondary">'${foldersize}'</span></small>
+							</span>'
+						fi
+						echo '
+					</span>
+				</a>'
+			fi
 
 			# Show all files in the root directory (directory level 0)
 			if [[ "${dirlevel}" -eq 0 ]]; then
@@ -171,60 +206,104 @@ subfiles()
 	while IFS= read -r file; do
 		[[ -z "${file}" ]] && continue
 		tabstop=$[${tabstop}+20]
-		filesize=$(du -s "$file" | sed "s#/.*##")
-		filesize=$(bytesToHumanReadable "$filesize")
+		if [[ "${file_attributes}" == "on" ]]; then
+			filesize=$(du -sb "${file}" | sed "s#/.*##")
+			filesize=$(bytesToHumanReadable "$filesize")
+			permissions=$(ls -l "$file" | cut -d' ' -f1)
+			lastmodified=$(date -r "$file" "+%Y-%m-%d %H:%M:%S")
+		fi
 		# Anzeige der Dateien
-		[[ "${file}" == "${get[file]}" ]] && blodtext="class=\"fw-bold\""
+		[[ "${file}" == "${get[file]}" ]] && boldtext="class=\"fw-bold\""
 		if [[ "${file}" == *.xz || "${file}" == *.tgz || "${file}" == *.txz ]]; then
-			echo '
-			<div style="margin-left: '${tabstop}'px;">
-				<span class="text-warning align-middle pe-1" title="'${txtFileIsArchive}'" style="cursor: help;">
-					<i class="bi bi-file-earmark-zip text-danger" style="font-size: 1.3rem;"></i>
-				</span>
-				<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
-				<span class="float-end">
-					<small><span class="text-secondary">'${filesize}'</span></small>
-				</span>
-			</div>'
+			if [ -z "${file_access}" ] || [[ "${file_access}" == "off" ]]; then
+				echo '
+				<div style="margin-left: '${tabstop}'px;">
+					<div>
+						<span class="text-warning align-middle pe-1" title="'${txtFileIsArchive}'" style="cursor: help;">
+							<i class="bi bi-file-earmark-zip text-danger" style="font-size: 1.3rem;"></i>
+						</span>
+						<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
+					</div>'
+					if [[ "${file_attributes}" == "on" ]]; then
+						echo '
+						<div style="border-bottom:1px #cccccc solid;">
+							<small><span class="text-secondary" style="padding-left:25px;">'${lastmodified}'</span></small>
+							<span class="float-end">
+								<small><span class="text-secondary">'${filesize}'</span></small>
+							</span>
+						</div>'
+					fi
+					echo '
+				</div>'
+			fi
 		elif [ ! -r "${file}" ]; then
-			echo '
-			<div style="margin-left: '${tabstop}'px;">
-				<span class="text-secondary align-middle pe-1" title="'${txtFileNoReadingRights}'" style="cursor: help;">
-					<i class="bi bi-file-earmark-x text-danger" style="font-size: 1.3rem;"></i>
-				</span>
-				<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
-				<span class="float-end">
-					<small><span class="text-secondary">'${filesize}'</span></small>
-				</span>
-			</div>'
+			if [ -z "${file_access}" ] || [[ "${file_access}" == "off" ]]; then
+				echo '
+				<div style="margin-left: '${tabstop}'px;">
+					<div>
+						<span class="text-secondary align-middle pe-1" title="'${txtFileNoReadingRights}'" style="cursor: help;">
+							<i class="bi bi-file-earmark-x text-danger" style="font-size: 1.3rem;"></i>
+						</span>
+						<small class="text-danger" style="cursor: not-allowed;">'${file##*/}'</small>
+					</div>'
+					if [[ "${file_attributes}" == "on" ]]; then
+						echo '
+						<div style="border-bottom:1px #cccccc solid;">
+							<small><span class="text-secondary" style="padding-left:25px;">'${lastmodified}'</span></small>
+							<span class="float-end">
+								<small><span class="text-secondary">'${filesize}'</span></small>
+							</span>
+						</div>'
+					fi
+					echo '
+				</div>'
+			fi
 		elif [ ! -w "${file}" ]; then
 			echo '
 			<div style="margin-left: '${tabstop}'px;">
-				<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
-					<span class="text-secondary align-middle pe-1" title="'${txtFileNoWritingRights}'" style="cursor: help;">
-						<i class="bi bi-file-earmark-font text-warning" style="font-size: 1.3rem;"></i>
-					</span>
-					<small '${blodtext}' style="cursor: pointer;">'${file##*/}'</small>
-				</a>
-				<span class="float-end">
-					<small><span class="text-secondary">'${filesize}'</span></small>
-				</span>
+				<div>
+					<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
+						<span class="text-secondary align-middle pe-1" title="'${txtFileNoWritingRights}'" style="cursor: help;">
+							<i class="bi bi-file-earmark-font text-warning" style="font-size: 1.3rem;"></i>
+						</span>
+						<small '${boldtext}' style="cursor: pointer;">'${file##*/}'</small>
+					</a>
+				</div>'
+				if [[ "${file_attributes}" == "on" ]]; then
+					echo '
+					<div style="border-bottom:1px #cccccc solid;">
+						<small '${boldtext}'><span class="text-secondary" style="padding-left:25px;">'${lastmodified}'</span></small>
+						<span class="float-end">
+							<small '${boldtext}'><span class="text-secondary">'${filesize}'</span></small>
+						</span>
+					</div>'
+				fi
+				echo '
 			</div>'
 		else
 			echo '
 			<div style="margin-left: '${tabstop}'px;">
-				<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
-					<span class="text-secondary align-middle pe-1" title="'${txtFileOpen}'" style="cursor: help;">
-						<i class="bi bi-file-earmark-font text-success" style="font-size: 1.3rem;"></i>
-					</span>
-						<small '${blodtext}' style="cursor: pointer;">'${file##*/}'</small>
-				</a>
-				<span class="float-end">
-					<small><span class="text-secondary">'${filesize}'</span></small>
-				</span>
+				<div>
+					<a href="index.cgi?page=main&section=start&query=view&path='${get[path]}'&file='${file}'" class="text-secondary text-decoration-none">
+						<span class="text-secondary align-middle pe-1" title="'${txtFileOpen}'" style="cursor: help;">
+							<i class="bi bi-file-earmark-font text-success" style="font-size: 1.3rem;"></i>
+						</span>
+							<small '${boldtext}' style="cursor: pointer;">'${file##*/}'</small>
+					</a>
+				</div>'
+				if [[ "${file_attributes}" == "on" ]]; then
+					echo '
+					<div style="border-bottom:1px #cccccc solid;">
+						<small '${boldtext}'><span class="text-secondary" style="padding-left:25px;">'${lastmodified}'</span></small>
+						<span class="float-end">
+							<small '${boldtext}'><span class="text-secondary">'${filesize}'</span></small>
+						</span>
+					</div>'
+				fi
+				echo '
 			</div>'
 		fi
-		unset blodtext
+		unset boldtext
 		tabstop=$[${tabstop}-20]
 	done <<< "$( find ${1} -maxdepth 1 -type f | sort )"
 }
