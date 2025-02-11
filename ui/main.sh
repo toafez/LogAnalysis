@@ -91,7 +91,7 @@ subdir()
 				<a class="text-start text-secondary text-decoration-none" data-bs-toggle="collapse" href="#'${thisfolder}'" role="button" aria-expanded="false" aria-controls="'${thisfolder}'">
 					<span style="margin-left: '${tabstop}'px;">
 						<nobr>
-							<span class="text-secondary align-middle pe-1" title="'${txtFolderWithContent}'">
+							<span class="text-secondary align-middle pe-1" title="'${txtFolderWithoutContent}'">
 								<i class="bi bi-folder text-warning" style="font-size: 1.3rem;"></i>
 								<small style="cursor: not-allowed;">'${folder}'</small>
 							</span>
