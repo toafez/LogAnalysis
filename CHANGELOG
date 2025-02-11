@@ -1,5 +1,20 @@
 LogAnalysis Release Notes
 
+Version 1.1-300 vom 11.02.2025
+
+ -Deutsch
+    - Hinzufügen einer Option zum Anzeigen oder Ausblenden von leeren Verzeichnissen oder Verzeichnissen, auf die nicht zugegriffen werden kann.
+    - Hinzufügen einer Option zum Anzeigen oder Ausblenden von Archiven oder Dateien, auf die nicht zugegriffen werden kann.
+    - Hinzufügen einer Option zum Anzeigen oder Ausblenden der Dateigröße und des Datums der letzten Änderung einer Datei.
+    - Kleinere Rechtschreib- bzw. Formulierungsfehler korrigiert.
+
+ -English
+    - Add option to show or hide empty or inaccessible directories.
+    - Add option to show or hide archives or files that are not accessible.
+    - Add option to show or hide the file size and the date a file was last modified.
+    - Minor spelling and formatting errors corrected.
+
+
 Version 1.1-200 vom 02.03.2024
 
  -Deutsch
