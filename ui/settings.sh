@@ -30,7 +30,6 @@ mainnav
 if [[ "${get[page]}" == "settings" && "${get[section]}" == "start" ]]; then
 
 
-txt_file_attributes="Speicherbelegung und Zeitpunkt der letzten Änderung einer Datei anzeigen"
 # Folder settings
 	# --------------------------------------------------------------
 	echo '

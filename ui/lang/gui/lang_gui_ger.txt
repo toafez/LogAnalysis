@@ -131,6 +131,7 @@ txt_folder_access="Ausblenden von Verzeichnissen, die leer sind oder auf die kei
 txt_file_title="Dateieinstellungen"
 txt_file_access="Ausblenden von Dateien, bei denen es sich um ein Archiv handelt oder auf die kein Zugriff möglich ist"
 txt_folder_attributes="Speicherbelegung von Verzeichnissen anzeigen"
+txt_file_attributes="Speicherbelegung und Zeitpunkt der letzten Änderung einer Datei anzeigen"
 txt_debug_title="Debug-Modus - Optionen zur Fehleranalyse"
 txt_debug_mode_on="Debugging Konsole einschalten"
 txt_debug_mode_off="Debugging Konsole ausschalten"
