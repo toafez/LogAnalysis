@@ -8,15 +8,10 @@ Das dem DSM zugrunde liegende Linux-System protokolliert in sogenannten Protokol
 # Systemvoraussetzungen
 **LogAnalysis** wurde speziell für die Verwendung auf **Synology NAS Systemen** entwickelt die das Betriebsystem **DiskStation Mangager 7** verwenden.
 
-  - ### Hinweise zur Installation von LogAnalysis auf DSM 6 Systemen
-    - **LogAnalysis** kann in der jeweils aktuellsten Version über die alternative Paketquelle - **Community Package Hub** - (https://www.cphub.net/?p=loganalysis) heruntergeladen und im Anschluss über das **DSM Paket-Zentrum** manuell installiert werden.
-    - Weiterhin kann **LogAnalysis** auch direkt über das **DSM Paket-Zentrum** als Installationspaket, sowie für die Bereitstellung zukünftiger Updates zur Verfügung gestellt werden. Hierfür muß im Vorfeld https://www.cphub.net dem Paket-Zentrum als **"alternative Paketquelle"** hinzugefügt werden.
-
 ## Installationshinweise
 Eine ausführliche Anleitung zum Installieren, Einrichten und Ausführen von LogAnalysis ist im [Wiki des deutschen Synology Forums](https://www.synology-forum.de/wiki/Hauptseite) hinterlegt. Diese können über die folgenden externen Links abgerufen werden.
 
-- **LogAnalysis**
-  - [LogAnalysis herunterladen, installieren und einrichten](https://www.synology-forum.de/wiki/LogAnalysis_herunterladen,_installieren_und_einrichten)
+- [LogAnalysis herunterladen, installieren und einrichten](https://www.synology-forum.de/wiki/LogAnalysis_herunterladen,_installieren_und_einrichten)
  
 # Screenshots
   - ### Startseite - alle Dateien innerhalb /var/log durchsuchen
