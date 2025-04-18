@@ -14,11 +14,11 @@ Eine ausführliche Anleitung zum Installieren, Einrichten und Ausführen von Log
 - [LogAnalysis herunterladen, installieren und einrichten](https://www.synology-forum.de/wiki/LogAnalysis_herunterladen,_installieren_und_einrichten)
  
 ## Screenshots
-  - ### Startseite - alle Dateien innerhalb /var/log durchsuchen
+  - #### Startseite - alle Dateien innerhalb /var/log durchsuchen
     ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_01.png)
-  - ### Inhalt einer bestimmten Log-Datei anzeigen lassen
+  - #### Inhalt einer bestimmten Log-Datei anzeigen lassen
     ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_02.png)
-  - ### Innerhalb einer bestimmten Log-Datei suchen
+  - #### Innerhalb einer bestimmten Log-Datei suchen
     ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_03.png)
     
 ## Versionsgeschichte
