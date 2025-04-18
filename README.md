@@ -1,8 +1,7 @@
 [English](https://github.com/toafez/LogAnalysis/blob/main/README_en.md) | Deutsch 
 
-# ![Package icon](/ui/images/logo_24.png) LogAnalysis - Paket für Synology NAS (DSM 7)
+# ![Package icon](/ui/images/logo_24.png) LogAnalysis
 ![GitHub Release](https://img.shields.io/github/v/release/toafez/LogAnalysis?link=https%3A%2F%2Fgithub.com%2Ftoafez%2FLogAnalysis%2Freleases)
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Ftoafez%2FLogAnalysis&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 Das dem DSM zugrunde liegende Linux-System protokolliert in sogenannten Protokoll- oder auch Logdateien (engl. logfiles) sämtliche Ereignisse, Probleme und Fehler des Systems sowie laufender Dienste. Abgelegt werden diese Informationen hierbei in unterschiedlichen Textdateien, welche sich in der Regel im Ordner /var/log sowie angeschlossenen Unterordnern befinden. Das Betrachten dieser Textdateien erfolgt normalerweise in einem beliebigen Editor, welcher über das Terminal ausgeführt wird. Innerhalb des Synology DiskStation Managers (DSM) können diese Dateien nun komfortabel über die GUI von LogAnalysis betrachtet und durchsucht werden.
 
@@ -13,44 +12,12 @@ Das dem DSM zugrunde liegende Linux-System protokolliert in sogenannten Protokol
     - **LogAnalysis** kann in der jeweils aktuellsten Version über die alternative Paketquelle - **Community Package Hub** - (https://www.cphub.net/?p=loganalysis) heruntergeladen und im Anschluss über das **DSM Paket-Zentrum** manuell installiert werden.
     - Weiterhin kann **LogAnalysis** auch direkt über das **DSM Paket-Zentrum** als Installationspaket, sowie für die Bereitstellung zukünftiger Updates zur Verfügung gestellt werden. Hierfür muß im Vorfeld https://www.cphub.net dem Paket-Zentrum als **"alternative Paketquelle"** hinzugefügt werden.
 
+## Installationshinweise
+Eine ausführliche Anleitung zum Installieren, Einrichten und Ausführen von LogAnalysis ist im [Wiki des deutschen Synology Forums](https://www.synology-forum.de/wiki/Hauptseite) hinterlegt. Diese können über die folgenden externen Links abgerufen werden.
 
-# Installationshinweise
-Laden Sie sich die **jeweils aktuellste Version** von LogAnalysis aus dem Bereich [Releases](https://github.com/toafez/LogAnalysis/releases) herunter. Öffnen Sie anschließend im **DiskStation Manager (DSM)** das **Paket-Zentrum**, wählen oben rechts die Schaltfläche **Manuelle Installation** aus und folgen dem **Assistenten**, um das neue **Paket** bzw. die entsprechende **.spk-Datei** hochzuladen und zu installieren. Dieser Vorgang ist sowohl für eine Erstinstallation als auch für die Durchführung eines Updates identisch. 
-
-**Nach dem Start** von LogAnaysis wird die lokal **installierte Version** mit der auf GitHub **verfügbaren Version** verglichen. Steht ein Update zur Verfügung, wird der Benutzer über die App darüber **informiert** und es wird ein entsprechender **Link** zu dem ensprechenden Release eingeblendet. Der Download sowie der anschließende Updatevorgang wurde bereits weiter oben erläutert. 
-
-  - ## App-Berechtigung erweitern
-    Unter DSM 7 wird eine 3rd_Party Anwendung wie LogAnalysis (im folgenden App genannt) mit stark eingeschränkten Benutzer- und Gruppenrechten ausgestattet. Dies hat u.a. zur Folge, das systemnahe Befehle nicht ausgeführt werden können. Für den reibungslosen Betrieb von LogAnalysis werden jedoch erweiterte Systemrechte benötigt um z.B. auf die Ordnerstuktur des Ordners "/var/log" zugreifen zu können. Zum erweitern der App-Berechtigungen muss LogAnalysis in die Gruppe **log** aufgenommen werden, was jedoch nur durch den Benutzer selbst durchgeführt werden kann. Die nachfolgende Anleitung beschreibt diesen Vorgang.
-
-    - ### Erweitern der App-Berechtigungen über die Konsole
-
-      - Melden Sie sich als Benutzer **root** auf der Konsole Ihrer Synology NAS an.
-      - Befehl zum erweitern der App-Berechtigungen
-
-        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/permissions.sh "adduser"`
-        
-      - Befehl, um die erweiterten App-Berechtigungen wieder zurückzunehmen
-
-        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/permissions.sh "deluser"`
+- **LogAnalysis**
+  - [LogAnalysis herunterladen, installieren und einrichten](https://www.synology-forum.de/wiki/LogAnalysis_herunterladen,_installieren_und_einrichten)
  
-    - ### Erweitern der App-Berechtigungen über den Aufgabenplaner
-
-      - Im **DSM** unter **Hauptmenü** > **Systemsteuerung** den **Aufgabenplaner** öffnen.
-      - Im **Aufgabenplaner** über die Schaltfläche **Erstellen** > **Geplante Aufgabe** > **Benutzerdefiniertes Script** auswählen.
-      - In dem nun geöffneten Pop-up-Fenster im Reiter **Allgemein** > **Allgemeine Einstellungen** der Aufgabe einen Namen geben und als Benutzer: **root** auswählen. Außerdem den Haken bei Aktiviert entfernen.
-      - Im Reiter **Aufgabeneinstellungen** > **Befehl ausführen** > **Benutzerdefiniertes Script** nachfolgenden Befehl in das Textfeld einfügen...
-      - Befehl zum erweitern der App-Berechtigungen
-
-        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/permissions.sh "adduser"`
-        
-      - Befehl, um die erweiterten App-Berechtigungen wieder zurückzunehmen
-
-        `/usr/syno/synoman/webman/3rdparty/LogAnalysis/permissions.sh "deluser"`
-   
-      - Eingaben mit **OK** speichern und die anschließende Warnmeldung ebenfalls mit **OK** bestätigen.
-      - Die grade erstellte Aufgabe in der Übersicht des Aufgabenplaners markieren, jedoch **nicht** aktivieren (die Zeile sollte nach dem markieren blau hinterlegt sein).
-      - Führen Sie die Aufgabe durch Betätigen Sie Schaltfläche **Ausführen** einmalig aus.
-
 # Screenshots
   - ### Startseite - alle Dateien innerhalb /var/log durchsuchen
     ![alt text](https://github.com/toafez/LogAnalysis/blob/main/images/App_Snapshot_01.png)
