@@ -470,7 +470,7 @@ if [[ "${get[page]}" == "main" && "${get[section]}" == "start" ]]; then
 						</div>
 						<div class="form-group col-md-2">
 							<select id="hour" name="hour" class="form-select form-select-sm">'
-								for i in {01..24}; do
+								for i in {00..23}; do
 									if [[ "${i}" == "${post[hour]}" ]]; then
 										echo '<option value="'${post[hour]}'" selected>'${post[hour]}'</option>'
 									elif [ -z "${post[hour]}" ] && [[ "${i}" == "${hour_now}" ]]; then
