@@ -1,5 +1,14 @@
 LogAnalysis Release Notes
 
+Version 1.1-400 vom 13.12.2025
+
+ -Deutsch
+    - In der Datumssuche wurden im Aufklappmenü fälschlicherweise die Stunden von 1 bis 24 statt von 0 bis 23 zur Auswahl gestellt. 
+
+ -English
+    - In the date search, the drop-down menu was displaying hours from 1 to 24 instead of from 0 to 23.
+
+
 Version 1.1-300 vom 11.02.2025
 
  -Deutsch
