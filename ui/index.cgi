@@ -3,7 +3,7 @@
 
 #                     LogAnalysis for DSM 7
 #
-#        Copyright (C) 2025 by Tommes | License GNU GPLv3
+#        Copyright (C) 2026 by Tommes | License GNU GPLv3
 #        Member from the  German Synology Community Forum
 #
 # Extract from  GPL3   https://www.gnu.org/licenses/gpl-3.0.html
@@ -183,14 +183,14 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 		<!-- Einbinden eigener CSS Formatierungen -->
 		<link rel="stylesheet" href="template/css/mystyle.css" />
 
-		<!-- Einbinden von bootstrap Framework 5.3.3 -->
+		<!-- Einbinden von bootstrap Framework 5.3.8 -->
 		<link rel="stylesheet" href="template/bootstrap/css/bootstrap.min.css" />
 
-		<!-- Einbinden von bootstrap Icons 1.11.3 -->
+		<!-- Einbinden von bootstrap Icons 1.13.1 -->
 		<link rel="stylesheet" href="template/bootstrap/font/bootstrap-icons.css" />
 
-		<!-- Einbinden von jQuery 3.7.1 -->
-		<script src="template/jquery/jquery-3.7.1.min.js"></script>
+		<!-- Einbinden von jQuery 4.0.0 -->
+		<script src="template/jquery/jquery-4.0.0.slim.min.js"></script>
 
 		<!-- Einbinden von resize für box mit Logfile-Inhalt (class="card-body px-0 py-1" in main.sh) -->
 		<script src="template/js/resize.js"></script>
@@ -353,7 +353,7 @@ if [ $(synogetkeyvalue /etc.defaults/VERSION majorversion) -ge 7 ]; then
 		<!-- container -->
 	</article>
 
-	<!-- Einbinden von bootstrap JavaScript 5.3.3 -->
+	<!-- Einbinden von bootstrap JavaScript 5.3.8 -->
 	<script src="template/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Script für Popupfenster (z.B. für die Hilfe) -->
