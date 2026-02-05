@@ -1,5 +1,22 @@
 LogAnalysis Release Notes
 
+Version 1.1-500 vom 05.02.2026
+
+ -Deutsch
+    - Update Bootstrap Framework auf 5.3.8
+    - Update Bootstrap JavaScript auf 5.3.8
+    - Update Bootsrap Icons auf 1.13.1
+    - Update jQuery auf 4.0.0
+    - Die Spracheinstellungen wurden angepasst. Wenn die Anzeigesprache Deutsch ist, wird Deutsch ausgewählt. Bei jeder anderen Sprache wird Englisch ausgewählt.
+
+ - English
+    - Update Bootstrap Framework to 5.3.8
+    - Update Bootstrap JavaScript to 5.3.8
+    - Update Bootsrap Icons to 1.13.1
+    - Update jQuery to 4.0.0
+    - The language settings have been adjusted. If the display language is German, German will be selected. For any other language, English will be selected.
+
+
 Version 1.1-400 vom 13.12.2025
 
  -Deutsch
